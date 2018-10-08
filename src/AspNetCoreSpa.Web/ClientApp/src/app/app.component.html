@@ -1,0 +1,15 @@
+<!-- cookie consent component -->
+<appc-cookie-consent></appc-cookie-consent>
+
+<!-- header component -->
+<appc-header></appc-header>
+
+<!-- component routing placeholder -->
+<main [@routerTransition]="getState(o)">
+  <router-outlet #o="outlet"></router-outlet>
+</main>
+
+<!-- footer component -->
+<appc-footer></appc-footer>
+
+<appc-simple-notifications [options]="notificationOptions"></appc-simple-notifications>
