@@ -1,8 +1,8 @@
 version: '3.6'
 
 services:
-  aspnetcorespa.web:
-    image: ${DOCKER_REGISTRY}aspnetcorespaweb
+  TNMarketplace.web:
+    image: ${DOCKER_REGISTRY}TNMarketplaceweb
     build:
       context: .
-      dockerfile: src/AspNetCoreSpa.Web/Dockerfile
+      dockerfile: src/TNMarketplace.Web/Dockerfile

@@ -182,7 +182,7 @@ ClientBin/
 [Ss]tyle[Cc]op.*
 ~$*
 *~
-AspNetCoreSpa.db
+TNMarketplace.db
 *.dbmdl
 *.dbproj.schemaview
 *.pfx
@@ -232,4 +232,4 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 /Properties/PublishProfiles/*
-/src/AspNetCoreSpa.Web/Properties/PublishProfiles/aspnetcorespa - Web Deploy.pubxml
+/src/TNMarketplace.Web/Properties/PublishProfiles/TNMarketplace - Web Deploy.pubxml

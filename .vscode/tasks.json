@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/AspNetCoreSpa.sln"
+                "${workspaceFolder}/TNMarketplace.sln"
             ],
             "problemMatcher": "$msCompile"
         }

@@ -10,13 +10,13 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceRoot}/src/AspNetCoreSpa.Web/bin/Debug/netcoreapp2.1/AspNetCoreSpa.Web.dll",
+            "program": "${workspaceRoot}/src/TNMarketplace.Web/bin/Debug/netcoreapp2.1/TNMarketplace.Web.dll",
             "args": [
                 // "dropdb",
                 // "migratedb",
                 // "seeddb"
             ],
-            "cwd": "${workspaceRoot}/src/AspNetCoreSpa.Web",
+            "cwd": "${workspaceRoot}/src/TNMarketplace.Web",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {

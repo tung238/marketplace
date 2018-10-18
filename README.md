@@ -1,5 +1,5 @@
 [![Build status](https://asadsahi.visualstudio.com/_apis/public/build/definitions/a1519ab8-9104-47eb-96cc-6c37519c8b69/7/badge)](https://asadsahi.visualstudio.com/playground/_build/index?context=allDefinitions&path=%5C&definitionId=7&_a=completed)
-[![Join the chat at https://gitter.im/asadsahi-AspNetCoreSpa/Lobby](https://badges.gitter.im/asadsahi-AspNetCoreSpa/Lobby.svg)](https://gitter.im/asadsahi-AspNetCoreSpa/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/asadsahi-TNMarketplace/Lobby](https://badges.gitter.im/asadsahi-TNMarketplace/Lobby.svg)](https://gitter.im/asadsahi-TNMarketplace/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
 ## Features
@@ -23,7 +23,7 @@
 * Token based authentication using [Openiddict](https://github.com/openiddict/openiddict-core)
      * Get public key access using: http://127.0.0.1:5000/.well-known/jwks
 * Extensible User/Role identity implementation
-* Social logins support with token based authentication, Follow [this](https://github.com/asadsahi/AspNetCoreSpa/wiki/Social-Login-Setup) wiki page to see how it will work.
+* Social logins support with token based authentication, Follow [this](https://github.com/asadsahi/TNMarketplace/wiki/Social-Login-Setup) wiki page to see how it will work.
 * [Angular dynamic forms](https://angular.io/docs/ts/latest/cookbook/dynamic-form.html) for reusability and to keep html code DRY.
 * [Swagger](http://swagger.io/) as Api explorer (Visit url **http://127.0.0.1:5000/swagger** OR whatever port visual studio has launched the website.). More [details](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)
  
@@ -38,9 +38,9 @@
 ## Installation
 ```
 1. Clone the repo
-    git clone https://github.com/asadsahi/AspNetCoreSpa
+    git clone https://github.com/asadsahi/TNMarketplace
 2. Change directory
-    cd AspNetCoreSpa
+    cd TNMarketplace
 3. Run Server
     F5 from either [VScode] (https://code.visualstudio.com/) or [Visual Studio IDE](https://www.visualstudio.com/):
 
@@ -113,13 +113,13 @@ From powershell:
 ./deploy-azure.ps1
 ```
 # Deploy to heroku using its container service
-### Replace your app name where it is `aspnetcorespa`
+### Replace your app name where it is `TNMarketplace`
 * dotnet publish -c release
-* docker build -t aspnetcorespa ./bin/release/netcoreapp2.1/publish
+* docker build -t TNMarketplace ./bin/release/netcoreapp2.1/publish
 * heroku login
 * heroku container:login
-* docker tag aspnetcorespa registry.heroku.com/aspnetcorespa/web
-* docker push registry.heroku.com/aspnetcorespa/web
+* docker tag TNMarketplace registry.heroku.com/TNMarketplace/web
+* docker push registry.heroku.com/TNMarketplace/web
 Note: There is a `deploy.heroku.ps1` script included with this project which automates above steps.
 
 # Deploy to Azure as App Service
