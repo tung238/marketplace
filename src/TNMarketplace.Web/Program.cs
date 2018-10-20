@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore;
 using System;
-using TNMarketplace.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
+using TNMarketplace.Repository.EfCore;
 
 namespace TNMarketplace.Web
 {

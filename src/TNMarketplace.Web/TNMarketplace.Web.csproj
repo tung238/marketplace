@@ -23,6 +23,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.2" />
     <PackageReference Include="OpenIddict" Version="2.0.0-rc2-final" />
     <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="2.0.0-rc2-final" />
+    <PackageReference Include="OpenIddict.Models" Version="2.0.0-rc2-final" />
     <PackageReference Include="OpenIddict.Mvc" Version="2.0.0-rc2-final" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="3.0.0" />
@@ -39,7 +40,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TNMarketplace.Core\TNMarketplace.Core.csproj" />
-    <ProjectReference Include="..\TNMarketplace.Infrastructure\TNMarketplace.Infrastructure.csproj" />
+    <ProjectReference Include="..\TNMarketplace.Service\TNMarketplace.Service.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

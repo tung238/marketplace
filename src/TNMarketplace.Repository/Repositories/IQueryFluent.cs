@@ -4,11 +4,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using TNMarketplace.Repository.Infrastructure;
 
 namespace TNMarketplace.Repository.Repositories
 {
-    public interface IQueryFluent<TEntity> where TEntity : IObjectState
+    public interface IQueryFluent<TEntity> 
     {
         IQueryFluent<TEntity> OrderBy(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy);
         IQueryFluent<TEntity> Include(Expression<Func<TEntity, object>> expression);

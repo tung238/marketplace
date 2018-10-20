@@ -5,7 +5,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="2.0.0-rc2-final" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TNMarketplace.Core\TNMarketplace.Core.csproj" />
+    <ProjectReference Include="..\TNMarketplace.Repository.EfCore\TNMarketplace.Repository.EfCore.csproj" />
     <ProjectReference Include="..\TNMarketplace.Repository\TNMarketplace.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.http.abstractions\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Features">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.http.features\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Localization">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.localization\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Localization.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

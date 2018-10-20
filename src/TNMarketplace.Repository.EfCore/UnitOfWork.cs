@@ -73,22 +73,12 @@ namespace TNMarketplace.Repository.EfCore
             _disposed = true;
         }
 
-        #endregion Constuctor/Dispose
+        #endregion Constructor/Dispose
 
         public int SaveChanges()
         {
             return _dataContext.SaveChanges();
         }
-
-        //public IRepository<TEntity> Repository<TEntity>() where TEntity : class, IObjectState
-        //{
-        //    if (ServiceLocator.IsLocationProviderSet)
-        //    {
-        //        return ServiceLocator.Current.GetInstance<IRepository<TEntity>>();
-        //    }
-
-        //    return RepositoryAsync<TEntity>();
-        //}
 
         public Task<int> SaveChangesAsync()
         {
@@ -99,58 +89,5 @@ namespace TNMarketplace.Repository.EfCore
         {
             return _dataContext.SaveChangesAsync(cancellationToken);
         }
-
-        //public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : class, IObjectState
-        //{
-        //    if (ServiceLocator.IsLocationProviderSet)
-        //    {
-        //        return ServiceLocator.Current.GetInstance<IRepositoryAsync<TEntity>>();
-        //    }
-
-        //    if (_repositories == null)
-        //    {
-        //        _repositories = new Dictionary<string, dynamic>();
-        //    }
-
-        //    var type = typeof(TEntity).Name;
-
-        //    if (_repositories.ContainsKey(type))
-        //    {
-        //        return (IRepositoryAsync<TEntity>)_repositories[type];
-        //    }
-
-        //    var repositoryType = typeof(Repository<>);
-
-        //    _repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _dataContext, this));
-
-        //    return _repositories[type];
-        //}
-
-        //#region Unit of Work Transactions
-
-        //public void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.Unspecified)
-        //{
-        //    _objectContext = ((IObjectContextAdapter)_dataContext).ObjectContext;
-        //    if (_objectContext.Connection.State != ConnectionState.Open)
-        //    {
-        //        _objectContext.Connection.Open();
-        //    }
-
-        //    _transaction = _dataContext.Database.BeginTransaction()
-        //}
-
-        //public bool Commit()
-        //{
-        //    _transaction.Commit();
-        //    return true;
-        //}
-
-        //public void Rollback()
-        //{
-        //    _transaction.Rollback();
-        //    _dataContext.SyncObjectsStatePostCommit();
-        //}
-
-        //#endregion
     }
 }

@@ -1,12 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using TNMarketplace.Core;
-using TNMarketplace.Core.Entities;
-using TNMarketplace.Core.ViewModels;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
@@ -14,8 +6,17 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using TNMarketplace.Core;
+using TNMarketplace.Core.Entities;
+using TNMarketplace.Core.ViewModels;
 
-namespace TNMarketplace.Infrastructure.Services
+namespace TNMarketplace.Service
 {
     public class ApplicationDataService : IApplicationDataService
     {

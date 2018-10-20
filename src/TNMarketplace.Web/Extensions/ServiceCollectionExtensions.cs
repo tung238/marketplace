@@ -1,6 +1,5 @@
 ﻿using AspNet.Security.OpenIdConnect.Primitives;
 using TNMarketplace.Web.Filters;
-using TNMarketplace.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -15,10 +14,14 @@ using System.Globalization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using TNMarketplace.Core.Entities;
-using TNMarketplace.Infrastructure;
 using System.IO;
 using System.Linq;
 using TNMarketplace.Core;
+using TNMarketplace.Repository.EfCore;
+using TNMarketplace.Service.EFLocalizer;
+using TNMarketplace.Repository.UnitOfWork;
+using TNMarketplace.Service;
+using TNMarketplace.Repository;
 
 namespace TNMarketplace.Web.Extensions
 {

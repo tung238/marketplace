@@ -1,6 +1,9 @@
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace TNMarketplace.Infrastructure.Services
+namespace TNMarketplace.Repository
 {
     public class UserResolverService
     {

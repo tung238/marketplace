@@ -25,17 +25,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TNMarketplace.Core", "src\T
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A345DA20-825C-4494-9DC6-748C1192E135}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TNMarketplace.Infrastructure", "src\TNMarketplace.Infrastructure\TNMarketplace.Infrastructure.csproj", "{67B30E75-5595-4E7A-9907-91530038983D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TNMarketplace.Web.Integration", "tests\TNMarketplace.Web.Integration\TNMarketplace.Web.Integration.csproj", "{B108BD65-6F78-4F53-998C-EE8CA6D34167}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TNMarketplace.Web.Tests", "tests\TNMarketplace.Web.Tests\TNMarketplace.Web.Tests.csproj", "{E56EEE09-1000-4A00-A304-7C81DCD2B315}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNMarketplace.Repository", "src\TNMarketplace.Repository\TNMarketplace.Repository.csproj", "{BD01FA3A-D2CF-4B20-AAB2-B304BCFD5B48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TNMarketplace.Repository", "src\TNMarketplace.Repository\TNMarketplace.Repository.csproj", "{BD01FA3A-D2CF-4B20-AAB2-B304BCFD5B48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNMarketplace.Repository.EfCore", "src\TNMarketplace.Repository.EfCore\TNMarketplace.Repository.EfCore.csproj", "{5F122CE4-1797-4BE7-8367-FD44993CAD5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TNMarketplace.Repository.EfCore", "src\TNMarketplace.Repository.EfCore\TNMarketplace.Repository.EfCore.csproj", "{5F122CE4-1797-4BE7-8367-FD44993CAD5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNMarketplace.Service", "src\TNMarketplace.Service\TNMarketplace.Service.csproj", "{4FAF61F6-B4AD-4FFF-8D39-3AEF99C95831}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TNMarketplace.Service", "src\TNMarketplace.Service\TNMarketplace.Service.csproj", "{4FAF61F6-B4AD-4FFF-8D39-3AEF99C95831}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,10 +53,6 @@ Global
 		{A345DA20-825C-4494-9DC6-748C1192E135}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A345DA20-825C-4494-9DC6-748C1192E135}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A345DA20-825C-4494-9DC6-748C1192E135}.Release|Any CPU.Build.0 = Release|Any CPU
-		{67B30E75-5595-4E7A-9907-91530038983D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{67B30E75-5595-4E7A-9907-91530038983D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{67B30E75-5595-4E7A-9907-91530038983D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{67B30E75-5595-4E7A-9907-91530038983D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B108BD65-6F78-4F53-998C-EE8CA6D34167}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B108BD65-6F78-4F53-998C-EE8CA6D34167}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B108BD65-6F78-4F53-998C-EE8CA6D34167}.Release|Any CPU.Build.0 = Release|Any CPU
@@ -85,7 +79,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{66CD6482-8A49-4D55-97E5-4E97935F8F92} = {DE75BCFF-DB7E-48F6-BD0F-FBC5D36D560E}
 		{FE862C6C-F04A-4663-BDB2-5F62FC98DED7} = {DE75BCFF-DB7E-48F6-BD0F-FBC5D36D560E}
-		{67B30E75-5595-4E7A-9907-91530038983D} = {DE75BCFF-DB7E-48F6-BD0F-FBC5D36D560E}
 		{B108BD65-6F78-4F53-998C-EE8CA6D34167} = {70506EDC-51C6-4ED4-AF6C-B5FFA508972A}
 		{E56EEE09-1000-4A00-A304-7C81DCD2B315} = {70506EDC-51C6-4ED4-AF6C-B5FFA508972A}
 		{BD01FA3A-D2CF-4B20-AAB2-B304BCFD5B48} = {DE75BCFF-DB7E-48F6-BD0F-FBC5D36D560E}

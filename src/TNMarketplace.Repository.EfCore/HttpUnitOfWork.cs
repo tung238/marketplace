@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using AspNet.Security.OpenIdConnect.Primitives;
+﻿using AspNet.Security.OpenIdConnect.Primitives;
+using Microsoft.AspNetCore.Http;
 
-namespace TNMarketplace.Infrastructure
+namespace TNMarketplace.Repository.EfCore
 {
     public class HttpUnitOfWork : UnitOfWork
     {

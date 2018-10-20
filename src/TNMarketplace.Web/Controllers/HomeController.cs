@@ -2,12 +2,12 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using TNMarketplace.Infrastructure.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
 using System;
 using TNMarketplace.Core.Entities;
 using Microsoft.AspNetCore.Http.Features;
+using TNMarketplace.Service;
 
 namespace TNMarketplace.Web.Controllers
 {

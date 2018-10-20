@@ -12,9 +12,9 @@ using TNMarketplace.Web.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Text.Encodings.Web;
-using TNMarketplace.Infrastructure;
 using TNMarketplace.Core.Entities;
-using TNMarketplace.Infrastructure.Services;
+using TNMarketplace.Repository.EfCore;
+using TNMarketplace.Service;
 
 namespace TNMarketplace.Web.Controllers.api
 {

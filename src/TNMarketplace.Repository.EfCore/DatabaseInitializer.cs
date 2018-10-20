@@ -1,6 +1,4 @@
 ﻿using AspNet.Security.OpenIdConnect.Primitives;
-using TNMarketplace.Core;
-using TNMarketplace.Core.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -10,13 +8,13 @@ using OpenIddict.Core;
 using OpenIddict.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading;
 using System.Threading.Tasks;
+using TNMarketplace.Core;
+using TNMarketplace.Core.Entities;
 
-namespace TNMarketplace.Infrastructure
+namespace TNMarketplace.Repository.EfCore
 {
     public interface IDatabaseInitializer
     {

@@ -3,8 +3,9 @@ using System.Globalization;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using TNMarketplace.Repository.EfCore;
 
-namespace TNMarketplace.Infrastructure
+namespace TNMarketplace.Service.EFLocalizer
 {
     public class EFStringLocalizer : IStringLocalizer
     {

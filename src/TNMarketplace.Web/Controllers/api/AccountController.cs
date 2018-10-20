@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using TNMarketplace.Infrastructure.Services;
 using Microsoft.Extensions.Options;
 using TNMarketplace.Web.Filters;
 using TNMarketplace.Core.Entities;
 using System.Security.Claims;
 using AspNet.Security.OpenIdConnect.Primitives;
+using TNMarketplace.Service;
 
 namespace TNMarketplace.Web.Controllers.api
 {
