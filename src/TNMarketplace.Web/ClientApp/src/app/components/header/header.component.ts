@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
     public logout() {
         this.dataService.post('api/account/logout').subscribe(() => {
             this.oAuthService.logOut();
-            this.router.navigate(['/login']);
+            this.router.navigate(['/dang-nhap']);
         });
     }
 

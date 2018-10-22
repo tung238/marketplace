@@ -17,6 +17,15 @@ import { AppComponent } from './app.component';
 import { CookieConsentComponent, FooterComponent, HeaderComponent, ModalComponent, PrivacyComponent } from './components';
 import { HomeComponent } from './home/home.component';
 import { AppService } from './app.service';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+import { CategoryModule } from './category/category.module';
+import { ProductModule } from './product/product.module';
+
+registerLocaleData(en);
 export function appServiceFactory(appService: AppService): Function {
   return () => appService.getAppData();
 }
@@ -42,18 +51,26 @@ export function appServiceFactory(appService: AppService): Function {
     OAuthModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full', data: { state: 'home' } },
-      { path: 'login', loadChildren: './account/+login/login.module#LoginModule' },
-      { path: 'register', loadChildren: './account/+register/register.module#RegisterModule' },
+      { path: 'dang-nhap', loadChildren: './account/+login/login.module#LoginModule' },
+      { path: 'dang-ky', loadChildren: './account/+register/register.module#RegisterModule' },
+      { path: 'abc', loadChildren: './product/product.module#ProductModule' },
+
       { path: 'createaccount', loadChildren: './account/+create/create.module#CreateAccountModule' },
-      { path: 'profile', loadChildren: './account/+profile/profile.module#ProfileModule' },
+      { path: 'thong-tin', loadChildren: './account/+profile/profile.module#ProfileModule' },
       { path: 'signalr', loadChildren: './+signalr/signalr.module#SignalrModule' },
       { path: 'privacy', component: PrivacyComponent },
     ], { initialNavigation: 'enabled' }),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    FormsModule,
+    HttpClientModule,
+    NgZorroAntdModule,
+    CategoryModule,
+    ProductModule,
   ],
   providers: [
     AppService,
-    { provide: APP_INITIALIZER, useFactory: appServiceFactory, deps: [AppService], multi: true }
+    { provide: APP_INITIALIZER, useFactory: appServiceFactory, deps: [AppService], multi: true },
+    { provide: NZ_I18N, useValue: en_US }
   ],
   exports: [],
   bootstrap: [AppComponent]

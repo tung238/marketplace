@@ -1,3 +1,218 @@
+/*-- footer --*/
 .footer {
-  bottom: 0;
+  margin: 60px 0;
 }
+.w3-agileits-footer-top {
+  padding: 60px 0;
+}
+.agileits-footer-bottom p {
+  margin: 20px 0 0 0;
+  color: #fff;
+  font-size: 14px;
+}
+.agileits-footer-bottom {
+  background: #1d292f;
+  padding: 30px 0;
+}
+h4.footer-head {
+  font-size: 28px;
+  color: #ff4c4c;
+  margin-bottom: 16px;
+}
+.wthree-footer-grid p {
+  color: #979797;
+  font-size: 13px;
+  line-height: 26px;
+  margin-top: 15px;
+}
+.wthree-footer-grid ul li {
+list-style-type: none;
+  margin: 13px 0;
+}
+.wthree-footer-grid ul li a {
+  color: #979797;
+  font-size: 13px;
+  font-weight: 400;
+text-decoration:none;
+}
+.wthree-footer-grid ul li a:hover {
+color: #1d292f;
+}
+.wthree-footer-grid ul li a i.fa.fa-long-arrow-right {
+  margin-right: 12px;
+  font-size: 10px;
+  color: #848383;
+transition:0.5s all;
+-webkit-transition:0.5s all;
+-o-transition:0.5s all;
+-moz-transition:0.5s all;
+-ms-transition:0.5s all;
+}
+.wthree-footer-grid ul li a:hover i.fa.fa-long-arrow-right {
+color: #1d292f;
+margin-right:8px;
+transition:0.5s all;
+-webkit-transition:0.5s all;
+-o-transition:0.5s all;
+-moz-transition:0.5s all;
+-ms-transition:0.5s all;
+}
+span.hq {
+  color: rgba(0, 153, 229, 0.73);
+  font-size: 1em;
+  margin-bottom: 1em;
+  display: block;
+}
+address {
+  width: 100%;
+  color: #767676;
+  font-size: 0.9em;
+  line-height: 2.4em;
+}
+ul.location {
+  margin-top: 1em;
+}
+ul.location li {
+  display: inline-block;
+  margin: 0;
+}
+span.glyphicon.glyphicon-map-marker {
+  margin-top: 3px;
+}
+span.glyphicon.glyphicon-map-marker, span.glyphicon.glyphicon-earphone, .glyphicon.glyphicon-envelope {
+  color: #fff;
+  font-size: 12px;
+  background-color: rgba(0, 153, 229, 0.73);
+  padding: 6px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  vertical-align: top;
+}
+ul.location li:nth-child(2) {
+  float: right;
+  width: 85%;
+  color: #979797;
+  font-size: 0.95em;
+  line-height: 2em;
+  text-transform: lowercase;
+  margin: 0;
+}
+.copyrights p,.diff p {
+  color: #dcdcdc;
+  font-size: 14px;
+margin-top:0;
+letter-spacing: 1px;
+}
+.copyrights p a,.diff p a {
+color:#2baae9;
+margin-left:2px;
+}
+.copyrights p a:hover,.diff p a:hover {
+color:#ff4c4c;
+}
+.w3-footer-social-icons ul li {
+display:inline-block;
+margin:0 0.2em;
+}
+.w3-footer-social-icons ul li a{
+width:30px;
+height:30px;
+display:inline-block;
+position: relative;
+}
+.w3-footer-social-icons ul li a i {
+  font-size: 15px;
+  color: #dedede;
+  border: 1px solid #dedede;
+  width: 30px;
+  padding-top: 6px;
+  height: 30px;
+  text-align: center;
+transition:0.5s all;
+-webkit-transition:0.5s all;
+-o-transition:0.5s all;
+-ms-transition:0.5s all;
+-moz-transition:0.5s all;
+}
+.w3-footer-social-icons ul li a i:hover{
+background:rgba(0, 153, 229, 0.83);
+  border: 1px solid rgba(0, 153, 229, 0.83);
+transition:0.5s all;	
+transition:0.5s all;
+-webkit-transition:0.5s all;
+-o-transition:0.5s all;
+-ms-transition:0.5s all;
+-moz-transition:0.5s all;
+}
+.w3-footer-social-icons ul li a span {
+  color: #fff;
+  position: absolute;
+  bottom: 0;
+  left: -25px;
+  right: -25px;
+  padding: 5px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  border-radius: 2px;
+  background: #ff4c4c;
+  visibility: hidden;
+  opacity: 0;
+  -o-transition: all .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  -webkit-transition: all .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  -moz-transition: all .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: all .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.w3-footer-social-icons ul li a span:before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #ff4c4c;
+  position: absolute;
+  bottom: -5px;
+  left: 34px;
+}
+.w3-footer-social-icons ul li a:hover span {
+  bottom: 41px;
+  visibility: visible;
+  opacity: 1;
+}
+.w3-footer-social-icons {
+  margin: 40px 0 20px 0;
+}
+.w3-footer-logo a {
+  font-family: 'Ubuntu Condensed', sans-serif;
+  font-size: 40px;
+  color: #ff4c4c;
+  text-decoration: none;
+}
+.w3-footer-logo a span {
+  color: #0099e5;
+}
+.w3-footer-logo a {
+position:relative;
+display:block;
+}
+.w3-footer-logo a:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 42%;
+  height: 1px;
+  background: #545556;
+}
+.w3-footer-logo a:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 42%;
+  height: 1px;
+  background: #545556;
+}
+/*-- //footer --*/

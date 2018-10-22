@@ -6,13 +6,13 @@ import { Params, ActivatedRoute, Router } from '@angular/router';
 import { OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
 import { authConfig } from './auth.config';
 
-import { routerTransition } from './router.animations';
+// import { routerTransition } from './router.animations';
 import { ExternalLoginStatus } from './app.models';
 import { AppService } from './app.service';
 
 @Component({
   selector: 'appc-root',
-  animations: [routerTransition],
+  // animations: [routerTransition],
   styleUrls: ['./app.component.scss'],
   templateUrl: './app.component.html'
 })

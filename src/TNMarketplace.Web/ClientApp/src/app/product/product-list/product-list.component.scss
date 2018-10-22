@@ -1,0 +1,124 @@
+/*-- products-page --*/
+.ads-list {
+	width:33.333%;
+	float:left;
+}
+.select-box {
+    background: rgba(255, 76, 76, 0.66);
+    padding: 30px 30px;
+    margin: 40px 0;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+}
+.ads-list label {
+	display: block;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000;
+    margin-bottom: 6px;
+}
+.ads-list select {
+	width: 70%;
+    outline: none;
+    color: #000;
+    font-size: 15px;
+    border: 1px solid #eee;
+    padding: 7px 8px;
+}
+.btn-group.bootstrap-select.show-tick button {
+    padding: 8px 10px;
+}
+.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+    width: 260px;
+}
+#custom-search-input {
+    padding: 3px;
+    border: solid 1px #D1E0EE;
+    border-radius: 0;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    -ms-border-radius: 0px;
+    -o-border-radius: 0px;
+    background-color: #fff;
+    width: 80%;
+    color: #000;
+}
+
+#custom-search-input input{
+    border: 0;
+    box-shadow: none;
+}
+
+#custom-search-input button{
+    margin: 2px 0 0 0;
+    background: none;
+    box-shadow: none;
+    border: 0;
+    color: #666666;
+    padding: 0 8px 0 10px;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input button:hover{
+    border: 0;
+    box-shadow: none;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input .glyphicon-search{
+    font-size: 23px;
+}
+.input-lg {
+    height: 29px;
+    padding: 0px 10px;
+    font-size: 15px;
+    line-height: 1.3333333;
+    border-radius: 0;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    -ms-border-radius: 0px;
+    -o-border-radius: 0px;
+}
+#custom-search-input .glyphicon-search {
+    font-size: 16px;
+}
+.btn-default {
+    border-color: #D1E0EE;
+}
+.btn {
+    display: inline-block;
+}
+.search-hotel input[type="text"] {
+  background:#fff;
+  border: none;
+  width: 81%;
+  outline: none;
+  padding: 11px 10px 10px 10px;
+  font-size: 13px;
+  color: #c4c4c4;
+}
+.search-hotel form input[type="submit"]{
+  background: url(/assets/images/search.png) no-repeat 13px 11px rgb(255, 137, 137);
+  width: 44px;
+  height: 39px;
+  border: none;
+  padding:0;
+  margin-top: 0;
+  }
+.search-grid-left{
+  padding: 15px;
+  background:#f5f4f0;
+  }
+h3.agileits-sear-head {
+    color: rgba(255, 76, 76, 0.86);
+    margin-bottom: 10px;
+    font-size: 22px;
+    font-weight: 400;
+}
+.search-hotel{
+padding: 15px 0;
+border-bottom: 1px solid #e5e3db; 
+}

@@ -1,4 +1,4 @@
-<header class="header">
+<!-- <header class="header">
     <nav class="inner">
         <a routerLink="">
             <img class="logo" src="/assets/android-chrome-192x192.png" alt="logo">
@@ -18,4 +18,65 @@
             {{'app_title' | translate}}
         </a>
     </nav>
+</header> -->
+<!-- <nz-header>
+</nz-header> -->
+
+<header>
+    <div class="w3ls-header"><!--header-one--> 
+        <div class="w3ls-header-left">
+            <p><a href="mobileapp.html"><i class="fa fa-download" aria-hidden="true"></i>Download Mobile App </a></p>
+        </div>
+        <div class="w3ls-header-right">
+            <ul>
+                <li class="dropdown head-dpdn">
+                    <a  routerLinkActive="active" routerLink="dang-nhap" *ngIf="!isLoggedIn"><i class="fa fa-user" aria-hidden="true"></i> Sign In</a>
+                </li>
+                <li class="dropdown head-dpdn">
+                    <a href="help.html"><i class="fa fa-question-circle" aria-hidden="true"></i> Help</a>
+                </li>
+                <li class="dropdown head-dpdn">
+                    <a href="#"><span class="active uls-trigger"><i class="fa fa-language" aria-hidden="true"></i>languages</span></a>
+                </li>
+                <li class="dropdown head-dpdn">
+                    <div class="header-right">			
+
+    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="clearfix"> </div> 
+    </div>
+    <div class="container">
+        <div class="agile-its-header">
+            <div class="logo">
+                <h1><a routerLink="/"><span>Rao</span>diaoc</a></h1>
+            </div>
+            <div class="agileits_search">
+                <form action="#" method="post">
+                    <input name="Search" type="text" placeholder="How can we help you today?" required=" ">
+                    <select id="agileinfo_search" name="agileinfo_search" required="">
+                        <option value="">All Categories</option>
+                        <option value="Mobiles">Mobiles</option>
+                        <option value="Electronics &amp; Appliances">Electronics &amp; Appliances</option>
+                        <option value="Cars">Cars</option>
+                        <option value="Bikes">Bikes</option>
+                        <option value="Furnitures">Furnitures</option>
+                        <option value="Books, Sports &amp; Hobbies">Books, Sports &amp; Hobbies</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Kids">Kids</option>
+                        <option value="Services">Services</option>
+                        <option value="Jobs">Jobs</option>
+                        <option value="Real Estates">Real Estates</option>
+                    </select>
+                    <button type="submit" class="btn btn-default" aria-label="Left Align">
+                        <i class="fa fa-search" aria-hidden="true"> </i>
+                    </button>
+                </form>
+            <a class="post-w3layouts-ad" href="post-ad.html">Post Free Ad</a>
+            </div>	
+            <div class="clearfix"></div>
+        </div>
+    </div>
 </header>

@@ -14,6 +14,8 @@ import { UppercasePipe } from './pipes/uppercase.pipe';
 // Services
 import { FormControlService } from './forms/form-control.service';
 import { SubMenuComponent } from './components/sub-menu/sub-menu.component';
+import { ProductGridRowComponent } from './components/product-grid-row/product-grid-row.component';
+import { ProductListRowComponent } from './components/product-list-row/product-list-row.component';
 
 @NgModule({
   imports: [
@@ -30,7 +32,9 @@ import { SubMenuComponent } from './components/sub-menu/sub-menu.component';
     DynamicFormControlComponent,
     ErrorSummaryComponent,
     UppercasePipe,
-    SubMenuComponent
+    SubMenuComponent,
+    ProductGridRowComponent,
+    ProductListRowComponent
   ],
   exports: [
     // Modules
@@ -44,6 +48,8 @@ import { SubMenuComponent } from './components/sub-menu/sub-menu.component';
     DynamicFormControlComponent,
     ErrorSummaryComponent,
     SubMenuComponent,
+    ProductGridRowComponent,
+    ProductListRowComponent,
     UppercasePipe,
   ],
   providers: [

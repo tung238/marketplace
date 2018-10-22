@@ -1,15 +1,21 @@
-<!-- cookie consent component -->
-<appc-cookie-consent></appc-cookie-consent>
-
-<!-- header component -->
-<appc-header></appc-header>
-
-<!-- component routing placeholder -->
-<main [@routerTransition]="getState(o)">
-  <router-outlet #o="outlet"></router-outlet>
-</main>
-
-<!-- footer component -->
-<appc-footer></appc-footer>
-
+<nz-layout>
+  <!-- cookie consent component -->
+  <appc-cookie-consent></appc-cookie-consent>
+    <!-- header component -->
+    <appc-header></appc-header>
+  <nz-content>
+    <!-- component routing placeholder -->
+    <main >
+      <router-outlet #o="outlet"></router-outlet>
+    </main>
+    <!-- <main [@routerTransition]="getState(o)">
+      <router-outlet #o="outlet"></router-outlet>
+    </main> -->
+  </nz-content>
+  <nz-footer>
+    <!-- footer component -->
+    <appc-footer></appc-footer>
+  </nz-footer>
+  <nz-back-top></nz-back-top>
+</nz-layout>
 <appc-simple-notifications [options]="notificationOptions"></appc-simple-notifications>

@@ -1,35 +1,126 @@
-
-            .separator {
-                font-size: 15px;
-                font-weight: 600;
-                margin: 24px auto 16px auto;
-                position: relative;
-                overflow: hidden;
-                width: 100px;
-                color: rgba(0, 0, 0, 0.54);
-
-                .text {
-                    display: inline-block;
-                    vertical-align: baseline;
-                    position: relative;
-                    padding: 0 8px;
-                    z-index: 9999;
-
-                    &:before, &:after {
-                        content: '';
-                        display: block;
-                        width: 30px;
-                        position: absolute;
-                        top: 10px;
-                        border-top: 1px solid rgba(0, 0, 0, 0.12);
-                    }
-
-                    &:before {
-                        right: 100%;
-                    }
-
-                    &:after {
-                        left: 100%;
-                    }
-                }
-            }
+/*-- sign-in --*/
+.sign-in-wrapper{
+	background: url("/assets/images/account-bg.jpg") no-repeat 0px 0px;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+    background-attachment: fixed;
+	padding: 80px 0;
+}
+.agileinfo_signin h3 {
+	font-size: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #000;
+	margin-bottom:20px;
+}
+.agileinfo_signin{
+	width: 50%;
+    padding: 60px 40px;
+    background: #fff;
+    margin: 0 auto;
+    box-shadow: 0px 0px 25px #242424;
+}
+.agileinfo_signin form{
+	display:block;
+}
+.agileinfo_signin input[type="text"],.agileinfo_signin input[type="tel"],.agileinfo_signin input[type="email"],.agileinfo_signin input[type="password"] {
+    outline: none;
+    padding: 10px;
+    border: 1px solid #086FDF;
+    color: #000;
+    font-size: 14px;
+    letter-spacing: 1px;
+    width: 100%;
+    margin-bottom: 15px;
+	transition:0.5s all;
+	-webkit-transition:0.5s all;
+	-o-transition:0.5s all;
+	-ms-transition:0.5s all;
+	-moz-transition:0.5s all;
+}
+.agileinfo_signin input[type="text"]:hover,.agileinfo_signin input[type="tel"]:hover,.agileinfo_signin input[type="email"]:hover, .agileinfo_signin input[type="password"]:hover {
+	border: 1px solid #ff4c4c;
+	transition:0.5s all;
+	-webkit-transition:0.5s all;
+	-o-transition:0.5s all;
+	-ms-transition:0.5s all;
+	-moz-transition:0.5s all;
+}
+.agileinfo_signin input[type="submit"]{
+	outline: none;
+    padding: 10px 0;
+    background: #033b79;
+    border: none;
+    color: #fff;
+    font-size: 1em;
+    text-transform: uppercase;
+    width: 100%;
+    margin: 2em 0 0;
+    cursor: pointer;
+    border-radius: 3px;
+	font-weight:600;
+	letter-spacing:2px;
+}
+.agileinfo_signin input[type="submit"]:hover{
+	background:#060e56;
+}
+.forgot-grid {
+    margin-top: 2em;
+}
+.agileinfo_signin label.checkbox {
+    float: left;
+    margin: 0;
+}
+.checkbox {
+    position: relative;
+    cursor: pointer;
+    line-height: initial;
+    font-size: 1em;
+    color: #353F49;
+    font-weight: 300;
+    margin: 0 0 1.5em;
+}
+.checkbox input + i:after {
+    content: '';
+    background: url("/assets/images/tick.png") no-repeat 4px 3px;
+    top: -1px;
+    left: -1px;
+    width: 17px;
+    height: 17px;
+    font: normal 12px/16px FontAwesome;
+    text-align: center;
+}
+.forgot {
+    float: right;
+}
+.forgot a {
+    font-size: 1em;
+    color: #353F49;
+    display: block;
+    font-weight: 300;
+    text-decoration: none;
+}
+.agileinfo_signin h6 {
+    font-size: 15px;
+    text-align: center;
+    margin-top: 30px;
+    color: #000;
+    letter-spacing: 2px;
+}
+.agileinfo_signin h6 a {
+    font-size: 15px;
+    color: #ff4c4c;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+a.w3layouts-t {
+    color: #ff4c4c;
+    margin: 0 5px;
+}
+a.w3layouts-t:hover {
+    text-decoration:underline;
+}
