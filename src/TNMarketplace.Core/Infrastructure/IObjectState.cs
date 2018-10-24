@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace TNMarketplace.Repository.Infrastructure
+namespace TNMarketplace.Core.Infrastructure
 {
     public interface IObjectState
     {

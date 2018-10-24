@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TNMarketplace.Core.Entities
 {
-    public class ContactUs : IEntityBase
+    public class ContactUs : Entity
     {
         [Key]
         public int Id { get; set; }

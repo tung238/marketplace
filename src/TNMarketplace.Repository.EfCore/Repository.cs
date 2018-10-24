@@ -8,8 +8,8 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TNMarketplace.Core.Infrastructure;
 using TNMarketplace.Repository.DataContext;
-using TNMarketplace.Repository.Infrastructure;
 using TNMarketplace.Repository.Repositories;
 using TNMarketplace.Repository.UnitOfWork;
 

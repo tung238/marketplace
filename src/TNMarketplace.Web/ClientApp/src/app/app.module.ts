@@ -22,8 +22,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
-import { CategoryModule } from './category/category.module';
-import { ProductModule } from './product/product.module';
 
 registerLocaleData(en);
 export function appServiceFactory(appService: AppService): Function {
@@ -53,7 +51,7 @@ export function appServiceFactory(appService: AppService): Function {
       { path: '', component: HomeComponent, pathMatch: 'full', data: { state: 'home' } },
       { path: 'dang-nhap', loadChildren: './account/+login/login.module#LoginModule' },
       { path: 'dang-ky', loadChildren: './account/+register/register.module#RegisterModule' },
-      { path: 'abc', loadChildren: './product/product.module#ProductModule' },
+      { path: 'adslisting', loadChildren: './product/product.module#ProductModule' },
 
       { path: 'createaccount', loadChildren: './account/+create/create.module#CreateAccountModule' },
       { path: 'thong-tin', loadChildren: './account/+profile/profile.module#ProfileModule' },
@@ -63,9 +61,7 @@ export function appServiceFactory(appService: AppService): Function {
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     FormsModule,
     HttpClientModule,
-    NgZorroAntdModule,
-    CategoryModule,
-    ProductModule,
+    NgZorroAntdModule
   ],
   providers: [
     AppService,

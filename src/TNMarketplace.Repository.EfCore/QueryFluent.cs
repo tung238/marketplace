@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using TNMarketplace.Repository.Infrastructure;
+using TNMarketplace.Core.Infrastructure;
 using TNMarketplace.Repository.Repositories;
 
 namespace TNMarketplace.Repository.EfCore

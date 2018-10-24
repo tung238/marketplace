@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
-using TNMarketplace.Repository.Infrastructure;
+using TNMarketplace.Core.Infrastructure;
 
 namespace TNMarketplace.Repository.Repositories
 {

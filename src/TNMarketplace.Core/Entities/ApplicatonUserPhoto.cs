@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace TNMarketplace.Core.Entities
 {
     // Add profile data for application users by adding properties to the ApplicationUser class
-    public class ApplicationUserPhoto : IEntityBase
+    public class ApplicationUserPhoto : Entity
     {
 
         [Key]

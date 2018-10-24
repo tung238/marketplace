@@ -9,12 +9,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TNMarketplace.Core.Entities;
+using TNMarketplace.Core.Infrastructure;
 using TNMarketplace.Repository.DataContext;
-using TNMarketplace.Repository.Infrastructure;
 
 namespace TNMarketplace.Repository.EfCore
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int, ApplicationUserClaim, ApplicationUserRole, ApplicationUserLogin, ApplicationRoleClaim, ApplicationUserToken>, IDataContextAsync
+    public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int, ApplicationUserClaim, ApplicationUserRole, ApplicationUserLogin, ApplicationRoleClaim, ApplicationUserToken>, IDataContextAsync
     {
         private readonly UserResolverService _userService;
         bool _disposed;
@@ -26,6 +26,28 @@ namespace TNMarketplace.Repository.EfCore
         public DbSet<ApplicationRole> ApplicationRoles { get; set; }
         public DbSet<Culture> Cultures { get; set; }
         public DbSet<Resource> Resources { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<CategoryListingType> CategoryListingTypes { get; set; }
+        public DbSet<CategoryStat> CategoryStats { get; set; }
+        public DbSet<ContentPage> ContentPages { get; set; }
+        public DbSet<EmailTemplate> EmailTemplates { get; set; }
+        public DbSet<ListingMeta> ListingMetas { get; set; }
+        public DbSet<ListingPicture> ListingPictures { get; set; }
+        public DbSet<ListingReview> ListingReviews { get; set; }
+        public DbSet<Listing> Listings { get; set; }
+        public DbSet<ListingStat> ListingStats { get; set; }
+        public DbSet<ListingType> ListingTypes { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<MessageParticipant> MessageParticipants { get; set; }
+        public DbSet<MessageReadState> MessageReadStates { get; set; }
+        public DbSet<MessageThread> MessageThreads { get; set; }
+        public DbSet<MetaCategory> MetaCategories { get; set; }
+        public DbSet<MetaField> MetaFields { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Picture> Pictures { get; set; }
+        public DbSet<SettingDictionary> SettingDictionaries { get; set; }
+        public DbSet<Setting> Settings { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, UserResolverService userService) : base(options)
         {

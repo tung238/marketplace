@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TNMarketplace.Repository.Infrastructure;
+using TNMarketplace.Core.Infrastructure;
 
 namespace TNMarketplace.Repository.DataContext
 {

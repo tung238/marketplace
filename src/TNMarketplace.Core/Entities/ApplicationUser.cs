@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using TNMarketplace.Repository.Infrastructure;
+using TNMarketplace.Core.Infrastructure;
 
 namespace TNMarketplace.Core.Entities
 {
