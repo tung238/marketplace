@@ -25,7 +25,7 @@
 <header>
     <div class="w3ls-header"><!--header-one--> 
         <div class="w3ls-header-left">
-            <p><a href="mobileapp.html"><i class="fa fa-download" aria-hidden="true"></i>Download Mobile App </a></p>
+            <p><a routerLink="/mobileapp.html"><i class="fa fa-download" aria-hidden="true"></i>Download Mobile App </a></p>
         </div>
         <div class="w3ls-header-right">
             <ul>
@@ -33,7 +33,7 @@
                     <a  routerLinkActive="active" routerLink="dang-nhap" *ngIf="!isLoggedIn"><i class="fa fa-user" aria-hidden="true"></i> Sign In</a>
                 </li>
                 <li class="dropdown head-dpdn">
-                    <a href="help.html"><i class="fa fa-question-circle" aria-hidden="true"></i> Help</a>
+                    <a routerLink="/help.html"><i class="fa fa-question-circle" aria-hidden="true"></i> Help</a>
                 </li>
                 <li class="dropdown head-dpdn">
                     <a href="#"><span class="active uls-trigger"><i class="fa fa-language" aria-hidden="true"></i>languages</span></a>
@@ -74,7 +74,7 @@
                         <i class="fa fa-search" aria-hidden="true"> </i>
                     </button>
                 </form>
-            <a class="post-w3layouts-ad" href="post-ad.html">Post Free Ad</a>
+            <a class="post-w3layouts-ad" routerLink="/post-ad.html">Post Free Ad</a>
             </div>	
             <div class="clearfix"></div>
         </div>

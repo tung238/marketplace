@@ -8,7 +8,7 @@ namespace TNMarketplace.Core.Entities
     {
         public int ID { get; set; }
         public int MessageID { get; set; }
-        public string UserID { get; set; }
+        public int UserID { get; set; }
         public Nullable<System.DateTime> ReadDate { get; set; }
         public System.DateTime Created { get; set; }
         public virtual ApplicationUser AspNetUser { get; set; }

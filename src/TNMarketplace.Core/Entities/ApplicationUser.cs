@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using TNMarketplace.Core.Infrastructure;
+using System.Collections.Generic;
 
 namespace TNMarketplace.Core.Entities
 {
@@ -32,5 +33,14 @@ namespace TNMarketplace.Core.Entities
         }
         [NotMapped]
         public ObjectState ObjectState { get; set; }
+
+        public virtual ICollection<Listing> Listings { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
+        public virtual ICollection<MessageParticipant> MessageParticipants { get; set; }
+        public virtual ICollection<MessageReadState> MessageReadStates { get; set; }
+        public virtual ICollection<Order> OrdersProvider { get; set; }
+        public virtual ICollection<Order> OrdersReceiver { get; set; }
+        public virtual ICollection<ListingReview> ListingReviewsUserFrom { get; set; }
+        public virtual ICollection<ListingReview> ListingReviewsUserTo { get; set; }
     }
 }

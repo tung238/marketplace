@@ -21,7 +21,7 @@ namespace TNMarketplace.Core.Entities
         public string Description { get; set; }
         public int CategoryID { get; set; }
         public int ListingTypeID { get; set; }
-        public string UserID { get; set; }
+        public int UserID { get; set; }
         public Nullable<double> Price { get; set; }
         public string Currency { get; set; }
         public string ContactName { get; set; }

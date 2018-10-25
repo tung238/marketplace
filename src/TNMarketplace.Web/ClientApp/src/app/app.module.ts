@@ -1,7 +1,7 @@
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
+import { RouterModule, UrlSegment } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { PrebootModule } from 'preboot';
@@ -22,6 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 registerLocaleData(en);
 export function appServiceFactory(appService: AppService): Function {
@@ -36,7 +37,8 @@ export function appServiceFactory(appService: AppService): Function {
     FooterComponent,
     HeaderComponent,
     ModalComponent,
-    PrivacyComponent
+    PrivacyComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -51,12 +53,13 @@ export function appServiceFactory(appService: AppService): Function {
       { path: '', component: HomeComponent, pathMatch: 'full', data: { state: 'home' } },
       { path: 'dang-nhap', loadChildren: './account/+login/login.module#LoginModule' },
       { path: 'dang-ky', loadChildren: './account/+register/register.module#RegisterModule' },
-      { path: 'adslisting', loadChildren: './product/product.module#ProductModule' },
-
       { path: 'createaccount', loadChildren: './account/+create/create.module#CreateAccountModule' },
       { path: 'thong-tin', loadChildren: './account/+profile/profile.module#ProfileModule' },
       { path: 'signalr', loadChildren: './+signalr/signalr.module#SignalrModule' },
       { path: 'privacy', component: PrivacyComponent },
+      { path: 'not-found', component: NotFoundComponent},
+      { matcher: listings, loadChildren: './listings/listings.module#ListingsModule' },
+      { matcher: listingItem, loadChildren: './listing-item/listing-item.module#ListingItemModule'}
     ], { initialNavigation: 'enabled' }),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     FormsModule,
@@ -71,4 +74,15 @@ export function appServiceFactory(appService: AppService): Function {
   exports: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  
+}
+
+export function listings(url: UrlSegment[]) {
+  return !url[url.length - 1].path.endsWith('.html') ? ({consumed: url}) : null;
+}
+
+export function listingItem(url: UrlSegment[]) {
+  return url[url.length - 1].path.endsWith('.html') ? {consumed: url} : null;
+  // return url.length === 1 && url[0].path.endsWith('.html') ? ({consumed: url}) : null;
+}

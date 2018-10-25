@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TNMarketplace.Core.Entities;
+using TNMarketplace.Core.Entities.Mapping;
 using TNMarketplace.Core.Infrastructure;
 using TNMarketplace.Repository.DataContext;
 
@@ -55,7 +56,34 @@ namespace TNMarketplace.Repository.EfCore
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        {   
+            //modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.OneToManyCascadeDeleteConvention>();
+            //modelBuilder.ApplyConfiguration(new AspNetRoleMap());
+            //modelBuilder.Configurations.Add(new AspNetUserClaimMap());
+            //modelBuilder.Configurations.Add(new AspNetUserLoginMap());
+            //modelBuilder.Configurations.Add(new AspNetUserMap());
+            modelBuilder.ApplyConfiguration(new CategoryMap());
+            modelBuilder.ApplyConfiguration(new CategoryListingTypeMap());
+            modelBuilder.ApplyConfiguration(new CategoryStatMap());
+            modelBuilder.ApplyConfiguration(new ContentPageMap());
+            modelBuilder.ApplyConfiguration(new EmailTemplateMap());
+            modelBuilder.ApplyConfiguration(new ListingMetaMap());
+            modelBuilder.ApplyConfiguration(new ListingPictureMap());
+            modelBuilder.ApplyConfiguration(new ListingReviewMap());
+            modelBuilder.ApplyConfiguration(new ListingMap());
+            modelBuilder.ApplyConfiguration(new ListingStatMap());
+            modelBuilder.ApplyConfiguration(new ListingTypeMap());
+            modelBuilder.ApplyConfiguration(new MessageMap());
+            modelBuilder.ApplyConfiguration(new MessageParticipantMap());
+            modelBuilder.ApplyConfiguration(new MessageReadStateMap());
+            modelBuilder.ApplyConfiguration(new MessageThreadMap());
+            modelBuilder.ApplyConfiguration(new MetaCategoryMap());
+            modelBuilder.ApplyConfiguration(new MetaFieldMap());
+            modelBuilder.ApplyConfiguration(new OrderMap());
+            modelBuilder.ApplyConfiguration(new PictureMap());
+            modelBuilder.ApplyConfiguration(new SettingDictionaryMap());
+            modelBuilder.ApplyConfiguration(new SettingMap());
+
             foreach (var entityType in modelBuilder.Model.GetEntityTypes()
             .Where(e => typeof(IAuditable).IsAssignableFrom(e.ClrType)))
             {
@@ -71,6 +99,7 @@ namespace TNMarketplace.Repository.EfCore
                 modelBuilder.Entity(entityType.ClrType)
                     .Property<string>("UpdatedBy");
             }
+
 
             base.OnModelCreating(modelBuilder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
