@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace TNMarketplace.Core.Entities
 {
     // Add profile data for application users by adding properties to the ApplicationUser class
-    public class ApplicationUser : IdentityUser<int>, IObjectState
+    public class ApplicationUser : IdentityUser<string>
     {
         public bool IsEnabled { get; set; }
         [DataType(DataType.DateTime)]

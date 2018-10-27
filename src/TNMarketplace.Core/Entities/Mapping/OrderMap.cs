@@ -19,12 +19,12 @@ namespace TNMarketplace.Core.Entities.Mapping
                     .HasMaxLength(3);
 
             builder.Property(t => t.UserProvider)
-                    .IsRequired();
-                    //.HasMaxLength(128);
+                    .IsRequired()
+                    .HasMaxLength(128);
 
             builder.Property(t => t.UserReceiver)
-                    .IsRequired();
-                    //.HasMaxLength(128);
+                    .IsRequired()
+                    .HasMaxLength(128);
 
             builder.Property(t => t.PaymentPlugin)
                     .HasMaxLength(250);
@@ -52,10 +52,10 @@ namespace TNMarketplace.Core.Entities.Mapping
             // Relationships
             builder.HasOne(t => t.AspNetUserProvider)
                     .WithMany(t => t.OrdersProvider).IsRequired()
-                    .HasForeignKey(d => d.UserProvider);
+                    .HasForeignKey(d => d.UserProvider).OnDelete(DeleteBehavior.Restrict);
             builder.HasOne(t => t.AspNetUserReceiver)
                     .WithMany(t => t.OrdersReceiver).IsRequired()
-                    .HasForeignKey(d => d.UserReceiver);
+                    .HasForeignKey(d => d.UserReceiver).OnDelete(DeleteBehavior.Restrict);
             builder.HasOne(t => t.Listing)
                     .WithMany(t => t.Orders).IsRequired()
                     .HasForeignKey(d => d.ListingID);

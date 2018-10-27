@@ -15,11 +15,11 @@ using TNMarketplace.Repository.DataContext;
 
 namespace TNMarketplace.Repository.EfCore
 {
-    public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int, ApplicationUserClaim, ApplicationUserRole, ApplicationUserLogin, ApplicationRoleClaim, ApplicationUserToken>, IDataContextAsync
+    public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string, ApplicationUserClaim, ApplicationUserRole, ApplicationUserLogin, ApplicationRoleClaim, ApplicationUserToken>, IDataContextAsync
     {
         private readonly UserResolverService _userService;
         bool _disposed;
-        private readonly Guid _instanceId;
+        //private readonly Guid _instanceId;
 
         public string CurrentUserId { get; internal set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
@@ -56,12 +56,12 @@ namespace TNMarketplace.Repository.EfCore
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {   
+        {
             //modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.OneToManyCascadeDeleteConvention>();
             //modelBuilder.ApplyConfiguration(new AspNetRoleMap());
             //modelBuilder.Configurations.Add(new AspNetUserClaimMap());
             //modelBuilder.Configurations.Add(new AspNetUserLoginMap());
-            //modelBuilder.Configurations.Add(new AspNetUserMap());
+            modelBuilder.ApplyConfiguration(new ApplicationUserMap());
             modelBuilder.ApplyConfiguration(new CategoryMap());
             modelBuilder.ApplyConfiguration(new CategoryListingTypeMap());
             modelBuilder.ApplyConfiguration(new CategoryStatMap());
@@ -186,7 +186,7 @@ namespace TNMarketplace.Repository.EfCore
             base.Dispose();
         }
 
-        public Guid InstanceId { get { return _instanceId; } }
+        //public Guid InstanceId { get { return _instanceId; } }
 
         /// <summary>
         /// Method that will set the Audit properties for every added or modified Entity marked with the 

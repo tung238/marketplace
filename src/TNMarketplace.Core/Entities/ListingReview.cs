@@ -12,8 +12,8 @@ namespace TNMarketplace.Core.Entities
         public double Rating { get; set; }
         public Nullable<int> ListingID { get; set; }
         public Nullable<int> OrderID { get; set; }
-        public int UserFrom { get; set; }
-        public int UserTo { get; set; }
+        public string UserFrom { get; set; }
+        public string UserTo { get; set; }
         public bool Active { get; set; }
         public bool Enabled { get; set; }
         public bool Spam { get; set; }

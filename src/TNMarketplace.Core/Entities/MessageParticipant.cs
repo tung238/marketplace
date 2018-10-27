@@ -8,7 +8,7 @@ namespace TNMarketplace.Core.Entities
     {
         public int ID { get; set; }
         public int MessageThreadID { get; set; }
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         public virtual ApplicationUser AspNetUser { get; set; }
         public virtual MessageThread MessageThread { get; set; }
     }

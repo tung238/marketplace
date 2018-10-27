@@ -145,5 +145,68 @@ namespace TNMarketplace.Service
            
         }
 
+
+        public Setting Settings
+        {
+            get
+            {
+                return GetCachedItem(CacheKeys.Settings) as Setting;
+            }
+        }
+
+        public List<SettingDictionary> SettingDictionary
+        {
+            get
+            {
+                return GetCachedItem(CacheKeys.SettingDictionary) as List<SettingDictionary>;
+            }
+        }
+
+        public List<Category> Categories
+        {
+            get
+            {
+                return GetCachedItem(CacheKeys.Categories) as List<Category>;
+            }
+        }
+
+        public List<ListingType> ListingTypes
+        {
+            get
+            {
+                return GetCachedItem(CacheKeys.ListingTypes) as List<ListingType>;
+            }
+        }
+
+        public List<ContentPage> ContentPages
+        {
+            get
+            {
+                return GetCachedItem(CacheKeys.ContentPages) as List<ContentPage>;
+            }
+        }
+
+        public SettingDictionary GetSettingDictionary(string settingKey)
+        {
+            var setting = SettingDictionary.Where(x => x.Name == settingKey).FirstOrDefault();
+
+            if (setting == null)
+                return new SettingDictionary()
+                {
+                    Name = settingKey.ToString(),
+                    Value = string.Empty
+                };
+
+            return setting;
+        }
+
+        public Statistics Statistics
+        {
+            get
+            {
+                return GetCachedItem(CacheKeys.Statistics) as Statistics;
+            }
+        }
+
     }
 }

@@ -7,7 +7,7 @@ using TNMarketplace.Core.Infrastructure;
 
 namespace TNMarketplace.Core.Entities
 {
-    public class ApplicationUserLogin: IdentityUserLogin<int>, IObjectState
+    public class ApplicationUserLogin: IdentityUserLogin<string>
     {
         [NotMapped]
         public ObjectState ObjectState { get; set; }

@@ -7,7 +7,7 @@ using TNMarketplace.Core.Infrastructure;
 
 namespace TNMarketplace.Core.Entities
 {
-    public class ApplicationUserRole: IdentityUserRole<int>, IObjectState
+    public class ApplicationUserRole: IdentityUserRole<string>
     {
         [NotMapped]
         public ObjectState ObjectState { get; set; }

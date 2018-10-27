@@ -14,7 +14,7 @@ namespace TNMarketplace.Core.Entities
         public int ID { get; set; }
         public int MessageThreadID { get; set; }
         public string Body { get; set; }
-        public int UserFrom { get; set; }
+        public string UserFrom { get; set; }
         public System.DateTime Created { get; set; }
         public System.DateTime LastUpdated { get; set; }
         public virtual ApplicationUser AspNetUser { get; set; }

@@ -20,8 +20,8 @@ namespace TNMarketplace.Core.Entities.Mapping
                 .HasMaxLength(500);
 
             builder.Property(t => t.UserID)
-                .IsRequired();
-                //.HasMaxLength(128);
+                .IsRequired()
+                .HasMaxLength(128);
 
             builder.Property(t => t.Currency)
                 .IsFixedLength()

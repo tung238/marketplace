@@ -18,8 +18,8 @@ namespace TNMarketplace.Repository.EfCore
         private IDataContextAsync _dataContext;
         private bool _disposed;
         //private ObjectContext _objectContext;
-        private DbTransaction _transaction;
-        private Dictionary<string, dynamic> _repositories;
+        //private DbTransaction _transaction;
+        //private Dictionary<string, dynamic> _repositories;
 
         #endregion Private Fields
 
@@ -28,7 +28,7 @@ namespace TNMarketplace.Repository.EfCore
         public UnitOfWork(IDataContextAsync dataContext)
         {
             _dataContext = dataContext;
-            _repositories = new Dictionary<string, dynamic>();
+            //_repositories = new Dictionary<string, dynamic>();
         }
 
         public void Dispose()

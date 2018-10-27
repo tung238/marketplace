@@ -22,14 +22,14 @@ namespace TNMarketplace.Web.Controllers.api
         private readonly IOptions<IdentityOptions> _identityOptions;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IEmailSender _emailSender;
+        private readonly EmailService _emailSender;
         private readonly ILogger _logger;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             IOptions<IdentityOptions> identityOptions,
             SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender,
+            EmailService emailSender,
             ILoggerFactory loggerFactory)
         {
             _userManager = userManager;

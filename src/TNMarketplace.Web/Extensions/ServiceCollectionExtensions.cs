@@ -245,7 +245,7 @@ namespace TNMarketplace.Web.Extensions
         {
             // New instance every time, only configuration class needs so its ok
             services.AddSingleton<IStringLocalizerFactory, EFStringLocalizerFactory>();
-            services.AddTransient<IEmailSender, AuthMessageSender>();
+            services.AddTransient<EmailService, AuthMessageSender>();
             services.AddTransient<IApplicationDataService, ApplicationDataService>();
             services.AddScoped<IUnitOfWork, HttpUnitOfWork>();
             services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();

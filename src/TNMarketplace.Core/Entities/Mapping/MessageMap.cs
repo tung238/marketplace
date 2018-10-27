@@ -20,8 +20,8 @@ namespace TNMarketplace.Core.Entities.Mapping
                     .IsRequired();
 
                 builder.Property(t => t.UserFrom)
-                    .IsRequired();
-                    //.HasMaxLength(128);
+                    .IsRequired()
+                    .HasMaxLength(128);
 
                 // Table & Column Mappings
                 builder.ToTable("Message");
@@ -35,10 +35,10 @@ namespace TNMarketplace.Core.Entities.Mapping
                 // Relationships
                 builder.HasOne(t => t.AspNetUser)
                     .WithMany(t => t.Messages).IsRequired()
-                    .HasForeignKey(d => d.UserFrom).OnDelete(DeleteBehavior.Cascade);
+                    .HasForeignKey(d => d.UserFrom).OnDelete(DeleteBehavior.Restrict);
                 builder.HasOne(t => t.MessageThread)
                     .WithMany(t => t.Messages).IsRequired()
-                    .HasForeignKey(d => d.MessageThreadID);
+                    .HasForeignKey(d => d.MessageThreadID).OnDelete(DeleteBehavior.Cascade);
 
             }
         }

@@ -16,8 +16,8 @@ namespace TNMarketplace.Core.Entities.Mapping
 
                 // Properties
                 builder.Property(t => t.UserID)
-                    .IsRequired();
-                    //.HasMaxLength(128);
+                    .IsRequired()
+                    .HasMaxLength(128);
 
                 // Table & Column Mappings
                 builder.ToTable("MessageReadState");

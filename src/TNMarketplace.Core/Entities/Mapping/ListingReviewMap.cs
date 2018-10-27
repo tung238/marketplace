@@ -47,11 +47,11 @@ namespace TNMarketplace.Core.Entities.Mapping
             // Relationships
             builder.HasOne(t => t.AspNetUserFrom)
                 .WithMany(t => t.ListingReviewsUserFrom).IsRequired()
-                .HasForeignKey(d => d.UserFrom);
+                .HasForeignKey(d => d.UserFrom).OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(t => t.AspNetUserTo)
                 .WithMany(t => t.ListingReviewsUserTo).IsRequired()
-                .HasForeignKey(d => d.UserTo);
+                .HasForeignKey(d => d.UserTo).OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(t => t.Listing)
                 .WithMany(t => t.ListingReviews)
@@ -59,7 +59,7 @@ namespace TNMarketplace.Core.Entities.Mapping
 
             builder.HasOne(t => t.Order)
                 .WithMany(t => t.ListingReviews)
-                .HasForeignKey(d => d.OrderID).OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(d => d.OrderID).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

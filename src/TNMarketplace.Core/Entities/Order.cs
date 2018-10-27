@@ -23,8 +23,8 @@ namespace TNMarketplace.Core.Entities
         public Nullable<double> ApplicationFee { get; set; }
         public string Description { get; set; }
         public string Message { get; set; }
-        public int UserProvider { get; set; }
-        public int UserReceiver { get; set; }
+        public string UserProvider { get; set; }
+        public string UserReceiver { get; set; }
         public string PaymentPlugin { get; set; }
         public System.DateTime Created { get; set; }
         public System.DateTime Modified { get; set; }

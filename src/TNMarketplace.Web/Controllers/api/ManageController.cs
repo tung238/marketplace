@@ -24,7 +24,7 @@ namespace TNMarketplace.Web.Controllers.api
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IEmailSender _emailSender;
+        private readonly EmailService _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
@@ -33,7 +33,7 @@ namespace TNMarketplace.Web.Controllers.api
         ApplicationDbContext context,
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
-        IEmailSender emailSender,
+        EmailService emailSender,
         ILoggerFactory loggerFactory,
         UrlEncoder urlEncoder)
         {
