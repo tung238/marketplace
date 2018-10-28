@@ -10,7 +10,7 @@ using TNMarketplace.Repository.EfCore;
 namespace TNMarketplace.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181027035423_InitialCreate")]
+    [Migration("20181028022547_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -557,11 +557,6 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnName("Created");
 
-                    b.Property<string>("Currency")
-                        .HasColumnName("Currency")
-                        .IsFixedLength(true)
-                        .HasMaxLength(3);
-
                     b.Property<string>("Description")
                         .HasColumnName("Description");
 
@@ -598,6 +593,9 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<double?>("Price")
                         .HasColumnName("Price");
 
+                    b.Property<int>("RegionId")
+                        .HasColumnName("RegionId");
+
                     b.Property<bool>("ShowEmail")
                         .HasColumnName("ShowEmail");
 
@@ -619,6 +617,8 @@ namespace TNMarketplace.Web.Migrations
                     b.HasIndex("CategoryID");
 
                     b.HasIndex("ListingTypeID");
+
+                    b.HasIndex("RegionId");
 
                     b.HasIndex("UserID");
 
@@ -1076,6 +1076,40 @@ namespace TNMarketplace.Web.Migrations
                     b.ToTable("Pictures");
                 });
 
+            modelBuilder.Entity("TNMarketplace.Core.Entities.Region", b =>
+                {
+                    b.Property<int>("ID")
+                        .HasColumnName("ID");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnName("Code")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnName("Name")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("NameWithType")
+                        .IsRequired()
+                        .HasColumnName("NameWithType")
+                        .HasMaxLength(400);
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnName("Slug")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Type")
+                        .HasColumnName("Type")
+                        .HasMaxLength(200);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Regions");
+                });
+
             modelBuilder.Entity("TNMarketplace.Core.Entities.Resource", b =>
                 {
                     b.Property<int>("Id")
@@ -1112,12 +1146,6 @@ namespace TNMarketplace.Web.Migrations
 
                     b.Property<DateTime>("Created")
                         .HasColumnName("Created");
-
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .HasColumnName("Currency")
-                        .IsFixedLength(true)
-                        .HasMaxLength(3);
 
                     b.Property<string>("DateFormat")
                         .IsRequired()
@@ -1351,6 +1379,11 @@ namespace TNMarketplace.Web.Migrations
                     b.HasOne("TNMarketplace.Core.Entities.ListingType", "ListingType")
                         .WithMany("Listings")
                         .HasForeignKey("ListingTypeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TNMarketplace.Core.Entities.Region", "Region")
+                        .WithMany("Listings")
+                        .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TNMarketplace.Core.Entities.ApplicationUser", "AspNetUser")

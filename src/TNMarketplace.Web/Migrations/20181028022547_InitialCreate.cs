@@ -216,6 +216,22 @@ namespace TNMarketplace.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Regions",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(maxLength: 200, nullable: false),
+                    Slug = table.Column<string>(maxLength: 200, nullable: false),
+                    Type = table.Column<string>(maxLength: 200, nullable: true),
+                    NameWithType = table.Column<string>(maxLength: 400, nullable: false),
+                    Code = table.Column<string>(maxLength: 10, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Regions", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Settings",
                 columns: table => new
                 {
@@ -226,7 +242,6 @@ namespace TNMarketplace.Web.Migrations
                     SearchPlaceHolder = table.Column<string>(maxLength: 255, nullable: false),
                     EmailContact = table.Column<string>(maxLength: 255, nullable: false),
                     Version = table.Column<string>(maxLength: 10, nullable: false),
-                    Currency = table.Column<string>(fixedLength: true, maxLength: 3, nullable: false),
                     TransactionFeePercent = table.Column<double>(nullable: false),
                     TransactionMinimumSize = table.Column<double>(nullable: false),
                     TransactionMinimumFee = table.Column<double>(nullable: false),
@@ -450,58 +465,6 @@ namespace TNMarketplace.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Listings",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Title = table.Column<string>(maxLength: 500, nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    CategoryID = table.Column<int>(nullable: false),
-                    ListingTypeID = table.Column<int>(nullable: false),
-                    UserID = table.Column<string>(maxLength: 128, nullable: false),
-                    Price = table.Column<double>(nullable: true),
-                    Currency = table.Column<string>(fixedLength: true, maxLength: 3, nullable: true),
-                    ContactName = table.Column<string>(maxLength: 200, nullable: false),
-                    ContactEmail = table.Column<string>(maxLength: 200, nullable: false),
-                    ContactPhone = table.Column<string>(maxLength: 50, nullable: true),
-                    ShowPhone = table.Column<bool>(nullable: false),
-                    Active = table.Column<bool>(nullable: false),
-                    Enabled = table.Column<bool>(nullable: false),
-                    ShowEmail = table.Column<bool>(nullable: false),
-                    Premium = table.Column<bool>(nullable: false),
-                    Expiration = table.Column<DateTime>(nullable: false),
-                    IP = table.Column<string>(maxLength: 50, nullable: false),
-                    Location = table.Column<string>(maxLength: 250, nullable: true),
-                    Latitude = table.Column<double>(nullable: true),
-                    Longitude = table.Column<double>(nullable: true),
-                    Created = table.Column<DateTime>(nullable: false),
-                    LastUpdated = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Listings", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Listings_Categories_CategoryID",
-                        column: x => x.CategoryID,
-                        principalTable: "Categories",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Listings_ListingTypes_ListingTypeID",
-                        column: x => x.ListingTypeID,
-                        principalTable: "ListingTypes",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Listings_AspNetUsers_UserID",
-                        column: x => x.UserID,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "MetaCategories",
                 columns: table => new
                 {
@@ -552,6 +515,64 @@ namespace TNMarketplace.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Listings",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Title = table.Column<string>(maxLength: 500, nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    CategoryID = table.Column<int>(nullable: false),
+                    ListingTypeID = table.Column<int>(nullable: false),
+                    UserID = table.Column<string>(maxLength: 128, nullable: false),
+                    RegionId = table.Column<int>(nullable: false),
+                    Price = table.Column<double>(nullable: true),
+                    ContactName = table.Column<string>(maxLength: 200, nullable: false),
+                    ContactEmail = table.Column<string>(maxLength: 200, nullable: false),
+                    ContactPhone = table.Column<string>(maxLength: 50, nullable: true),
+                    ShowPhone = table.Column<bool>(nullable: false),
+                    Active = table.Column<bool>(nullable: false),
+                    Enabled = table.Column<bool>(nullable: false),
+                    ShowEmail = table.Column<bool>(nullable: false),
+                    Premium = table.Column<bool>(nullable: false),
+                    Expiration = table.Column<DateTime>(nullable: false),
+                    IP = table.Column<string>(maxLength: 50, nullable: false),
+                    Location = table.Column<string>(maxLength: 250, nullable: true),
+                    Latitude = table.Column<double>(nullable: true),
+                    Longitude = table.Column<double>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Listings", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Listings_Categories_CategoryID",
+                        column: x => x.CategoryID,
+                        principalTable: "Categories",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Listings_ListingTypes_ListingTypeID",
+                        column: x => x.ListingTypeID,
+                        principalTable: "ListingTypes",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Listings_Regions_RegionId",
+                        column: x => x.RegionId,
+                        principalTable: "Regions",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Listings_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SettingDictionary",
                 columns: table => new
                 {
@@ -572,6 +593,40 @@ namespace TNMarketplace.Web.Migrations
                         principalTable: "Settings",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OpenIddictTokens",
+                columns: table => new
+                {
+                    ApplicationId = table.Column<string>(nullable: true),
+                    AuthorizationId = table.Column<string>(nullable: true),
+                    ConcurrencyToken = table.Column<string>(nullable: true),
+                    CreationDate = table.Column<DateTimeOffset>(nullable: true),
+                    ExpirationDate = table.Column<DateTimeOffset>(nullable: true),
+                    Id = table.Column<string>(nullable: false),
+                    Payload = table.Column<string>(nullable: true),
+                    Properties = table.Column<string>(nullable: true),
+                    ReferenceId = table.Column<string>(nullable: true),
+                    Status = table.Column<string>(nullable: true),
+                    Subject = table.Column<string>(nullable: false),
+                    Type = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OpenIddictTokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OpenIddictTokens_OpenIddictApplications_ApplicationId",
+                        column: x => x.ApplicationId,
+                        principalTable: "OpenIddictApplications",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OpenIddictTokens_OpenIddictAuthorizations_AuthorizationId",
+                        column: x => x.AuthorizationId,
+                        principalTable: "OpenIddictAuthorizations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -716,40 +771,6 @@ namespace TNMarketplace.Web.Migrations
                         name: "FK_Orders_AspNetUsers_UserReceiver",
                         column: x => x.UserReceiver,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OpenIddictTokens",
-                columns: table => new
-                {
-                    ApplicationId = table.Column<string>(nullable: true),
-                    AuthorizationId = table.Column<string>(nullable: true),
-                    ConcurrencyToken = table.Column<string>(nullable: true),
-                    CreationDate = table.Column<DateTimeOffset>(nullable: true),
-                    ExpirationDate = table.Column<DateTimeOffset>(nullable: true),
-                    Id = table.Column<string>(nullable: false),
-                    Payload = table.Column<string>(nullable: true),
-                    Properties = table.Column<string>(nullable: true),
-                    ReferenceId = table.Column<string>(nullable: true),
-                    Status = table.Column<string>(nullable: true),
-                    Subject = table.Column<string>(nullable: false),
-                    Type = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OpenIddictTokens", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_OpenIddictTokens_OpenIddictApplications_ApplicationId",
-                        column: x => x.ApplicationId,
-                        principalTable: "OpenIddictApplications",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_OpenIddictTokens_OpenIddictAuthorizations_AuthorizationId",
-                        column: x => x.AuthorizationId,
-                        principalTable: "OpenIddictAuthorizations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -996,6 +1017,11 @@ namespace TNMarketplace.Web.Migrations
                 column: "ListingTypeID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Listings_RegionId",
+                table: "Listings",
+                column: "RegionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Listings_UserID",
                 table: "Listings",
                 column: "UserID");
@@ -1213,6 +1239,9 @@ namespace TNMarketplace.Web.Migrations
 
             migrationBuilder.DropTable(
                 name: "ListingTypes");
+
+            migrationBuilder.DropTable(
+                name: "Regions");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

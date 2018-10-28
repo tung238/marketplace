@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TNMarketplace.Core.Entities
 {
-    public class Culture
+    public class Culture: Entity
     {
         [Key]
         public int Id { get; set; }

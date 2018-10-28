@@ -22,6 +22,10 @@ using TNMarketplace.Service.EFLocalizer;
 using TNMarketplace.Repository.UnitOfWork;
 using TNMarketplace.Service;
 using TNMarketplace.Repository;
+using TNMarketplace.Repository.Repositories;
+using TNMarketplace.Repository.DataContext;
+using TNMarketplace.Web.Utilities;
+using TNMarketplace.Repository.EfCore.StoredProcedures;
 
 namespace TNMarketplace.Web.Extensions
 {
@@ -66,7 +70,7 @@ namespace TNMarketplace.Web.Extensions
                 // options.Password.RequiredLength = 4;
                 // options.Password.RequireNonAlphanumeric = false;
             })
-            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddEntityFrameworkStores<TNMarketplace.Repository.EfCore.ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
             return services;
@@ -87,7 +91,7 @@ namespace TNMarketplace.Web.Extensions
             services.AddOpenIddict(options =>
             {
                 // Register the Entity Framework stores.
-                options.AddEntityFrameworkCoreStores<ApplicationDbContext>();
+                options.AddEntityFrameworkCoreStores<TNMarketplace.Repository.EfCore.ApplicationDbContext>();
 
                 // Register the ASP.NET Core MVC binder used by OpenIddict.
                 // Note: if you don't call this method, you won't be able to
@@ -194,7 +198,7 @@ namespace TNMarketplace.Web.Extensions
         public static IServiceCollection AddCustomDbContext(this IServiceCollection services)
         {
             // Add framework services.
-            services.AddDbContextPool<ApplicationDbContext>(options =>
+            services.AddDbContextPool<TNMarketplace.Repository.EfCore.ApplicationDbContext>(options =>
             {
                 string useSqLite = Startup.Configuration["Data:useSqLite"];
                 string useInMemory = Startup.Configuration["Data:useInMemory"];
@@ -249,9 +253,59 @@ namespace TNMarketplace.Web.Extensions
             services.AddTransient<IApplicationDataService, ApplicationDataService>();
             services.AddScoped<IUnitOfWork, HttpUnitOfWork>();
             services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
-            services.AddTransient<ApplicationDbContext>();
+            services.AddTransient<TNMarketplace.Repository.EfCore.ApplicationDbContext>();
             services.AddTransient<UserResolverService>();
             services.AddScoped<ApiExceptionFilter>();
+            services.AddTransient<IUnitOfWorkAsync, UnitOfWork>();
+            services.AddTransient<IDataContextAsync, TNMarketplace.Repository.EfCore.ApplicationDbContext>();
+            //services.AddTransient<IRepositoryAsync<ApplicationUserPhoto>, Repository.EfCore.Repository<ApplicationUserPhoto>>();
+            //services.AddTransient<IRepositoryAsync<Category>, Repository.EfCore.Repository<Category>>();
+            //services.AddTransient<IRepositoryAsync<CategoryListingType>, Repository.EfCore.Repository<CategoryListingType>>();
+            //services.AddTransient<IRepositoryAsync<CategoryStat>, Repository.EfCore.Repository<CategoryStat>>();
+            //services.AddTransient<IRepositoryAsync<ContactUs>, Repository.EfCore.Repository<ContactUs>>();
+            //services.AddTransient<IRepositoryAsync<ContentPage>, Repository.EfCore.Repository<ContentPage>>();
+            //services.AddTransient<IRepositoryAsync<Culture>, Repository.EfCore.Repository<Culture>>();
+            //services.AddTransient<IRepositoryAsync<EmailTemplate>, Repository.EfCore.Repository<EmailTemplate>>();
+            //services.AddTransient<IRepositoryAsync<Listing>, Repository.EfCore.Repository<Listing>>();
+            //services.AddTransient<IRepositoryAsync<ListingMeta>, Repository.EfCore.Repository<ListingMeta>>();
+            //services.AddTransient<IRepositoryAsync<ListingPicture>, Repository.EfCore.Repository<ListingPicture>>();
+            //services.AddTransient<IRepositoryAsync<ListingReview>, Repository.EfCore.Repository<ListingReview>>();
+            //services.AddTransient<IRepositoryAsync<ListingStat>, Repository.EfCore.Repository<ListingStat>>();
+            //services.AddTransient<IRepositoryAsync<ListingType>, Repository.EfCore.Repository<ListingType>>();
+            //services.AddTransient<IRepositoryAsync<Setting>, Repository.EfCore.Repository<Setting>>();
+            services.AddTransient(typeof(IRepositoryAsync<>), typeof(Repository.EfCore.Repository<>));
+
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<ICategoryListingTypeService, CategoryListingTypeService>();
+            services.AddTransient<ICategoryStatService, CategoryStatService>();
+            services.AddTransient<IContentPageService, ContentPageService>();
+            services.AddTransient<ICustomFieldCategoryService, CustomFieldCategoryService>();
+            services.AddTransient<ICustomFieldListingService, CustomFieldListingService>();
+            services.AddTransient<ICustomFieldService, CustomFieldService>();
+            services.AddTransient<DataCacheService, DataCacheService>();
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IEmailTemplateService, EmailTemplateService>();
+            services.AddTransient<IListingPictureService, ListingPictureService>();
+            services.AddTransient<IListingReviewService, ListingReviewService>();
+            services.AddTransient<IListingService, ListingService>();
+            services.AddTransient<IListingStatService, ListingStatService>();
+            services.AddTransient<IListingTypeService, ListingTypeService>();
+            services.AddTransient<IPictureService, PictureService>();
+            services.AddTransient<IRegionService, RegionService>();
+            services.AddTransient<ISettingDictionaryService, SettingDictionaryService>();
+            services.AddTransient<ISettingService, SettingService>();
+            services.AddTransient<IStoredProcedures, TNMarketplace.Repository.EfCore.StoredProcedures.ApplicationDbContext>();
+            services.AddTransient<SqlDbService, SqlDbService>();
+            services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IMessageService, MessageService>();
+            services.AddTransient<IMessageThreadService, MessageThreadService>();
+            services.AddTransient<IMessageParticipantService, MessageParticipantService>();
+
+            services.AddTransient<IMessageReadStateService, MessageReadStateService>();
+            services.AddTransient<ImageHelper, ImageHelper>();
+
+
+
             return services;
         }
 

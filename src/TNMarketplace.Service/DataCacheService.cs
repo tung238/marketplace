@@ -7,19 +7,20 @@ using TNMarketplace.Repository.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace TNMarketplace.Service
 {
     public class DataCacheService
     {
-        private IServiceProvider ServiceProvider { get; set; }
+        private readonly IServiceProvider _serviceProvider;
         public MemoryCache MainCache { get; private set; }
 
         private object _lock = new object();
 
         public DataCacheService(IServiceProvider serviceProvider)
         {
-
+            _serviceProvider = serviceProvider;
 
             MainCache = new MemoryCache(new MemoryCacheOptions
             {
@@ -59,41 +60,42 @@ namespace TNMarketplace.Service
                     switch (CacheKeyName)
                     {
                         case CacheKeys.Settings:
-                            var setting = ServiceProvider.GetService<ISettingService>().Queryable().FirstOrDefault();
+                            var setting = _serviceProvider.GetService<ISettingService>().Queryable().FirstOrDefault();
                             UpdateCache(CacheKeys.Settings, setting);
                             break;
                         case CacheKeys.SettingDictionary:
-                            var settingDictionary = ServiceProvider.GetService<ISettingDictionaryService>().Queryable().ToList();
+                            var settingDictionary = _serviceProvider.GetService<ISettingDictionaryService>().Queryable().ToList();
                             UpdateCache(CacheKeys.SettingDictionary, settingDictionary);
                             break;
                         case CacheKeys.Categories:
-                            var categories = ServiceProvider.GetService < ICategoryService>().Queryable().Where(x => x.Enabled).OrderBy(x => x.Ordering).ToList();
+                            var categories = _serviceProvider.GetService < ICategoryService>().Queryable().Where(x => x.Enabled).OrderBy(x => x.Ordering).ToList();
                             UpdateCache(CacheKeys.Categories, categories);
                             break;
                         case CacheKeys.ListingTypes:
-                            var ListingTypes = ServiceProvider.GetService < IListingTypeService>().Query().Include(x => x.CategoryListingTypes).Select().ToList();
+                            var ListingTypes = _serviceProvider.GetService < IListingTypeService>().Query().Include(x => x.Include(y=> y.CategoryListingTypes)).Select().ToList();
                             UpdateCache(CacheKeys.ListingTypes, ListingTypes);
                             break;
                         case CacheKeys.ContentPages:
-                            var contentPages = ServiceProvider.GetService < IContentPageService>().Queryable().Where(x => x.Published).OrderBy(x => x.Ordering).ToList();
+                            var contentPages = _serviceProvider.GetService < IContentPageService>().Queryable().Where(x => x.Published).OrderBy(x => x.Ordering).ToList();
                             UpdateCache(CacheKeys.ContentPages, contentPages);
                             break;
                         case CacheKeys.EmailTemplates:
-                            var emailTemplates = ServiceProvider.GetService < IEmailTemplateService>().Queryable().ToList();
+                            var emailTemplates = _serviceProvider.GetService < IEmailTemplateService>().Queryable().ToList();
                             UpdateCache(CacheKeys.EmailTemplates, emailTemplates);
                             break;
                         case CacheKeys.Statistics:
                             SaveCategoryStats();
 
                             var statistics = new Statistics();
-                            statistics.CategoryStats = ServiceProvider.GetService < ICategoryStatService>().Query().Include(x => x.Category).Select().ToList();
+                            statistics.CategoryStats = _serviceProvider.GetService < ICategoryStatService>().Query()
+                                .Include(x => x.Include(y => y.Category)).Select().ToList();
 
-                            statistics.ListingCount = ServiceProvider.GetService < IListingService>().Queryable().Count();
+                            statistics.ListingCount = _serviceProvider.GetService < IListingService>().Queryable().Count();
                             //statistics.UserCount = AspNetUserService.Queryable().Count();
-                            statistics.OrderCount = ServiceProvider.GetService < IOrderService>().Queryable().Count();
+                            statistics.OrderCount = _serviceProvider.GetService < IOrderService>().Queryable().Count();
                             statistics.TransactionCount = 0;
 
-                            statistics.ItemsCountDictionary = ServiceProvider.GetService < IListingService>().GetItemsCount(DateTime.Now.AddDays(-10));
+                            statistics.ItemsCountDictionary = _serviceProvider.GetService < IListingService>().GetItemsCount(DateTime.Now.AddDays(-10));
 
                             UpdateCache(CacheKeys.Statistics, statistics);
                             break;
@@ -109,13 +111,13 @@ namespace TNMarketplace.Service
         // Update categories stats
         private void SaveCategoryStats()
         {
-            var unitOfWorkAsync = ServiceProvider.GetService<IUnitOfWorkAsync>();
+            var unitOfWorkAsync = _serviceProvider.GetService<IUnitOfWorkAsync>();
 
-            var categoryCountDctionary = ServiceProvider.GetService<IListingService>().GetCategoryCount();
+            var categoryCountDctionary = _serviceProvider.GetService<IListingService>().GetCategoryCount();
 
             foreach (var item in categoryCountDctionary)
             {
-                var categoryStatService = ServiceProvider.GetService<ICategoryStatService>();
+                var categoryStatService = _serviceProvider.GetService<ICategoryStatService>();
                 var categoryStatQuery = categoryStatService.Query(x => x.CategoryID == item.Key.ID).Select();
 
                 var categoryStat = categoryStatQuery.FirstOrDefault();

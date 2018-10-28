@@ -40,12 +40,7 @@ namespace TNMarketplace.Core.Entities.Mapping
                 builder.Property(t => t.Version)
                     .IsRequired()
                     .HasMaxLength(10);
-
-                builder.Property(t => t.Currency)
-                    .IsRequired()
-                    .IsFixedLength()
-                    .HasMaxLength(3);
-
+                
                 builder.Property(t => t.SmtpHost)
                     .HasMaxLength(100);
 
@@ -91,7 +86,6 @@ namespace TNMarketplace.Core.Entities.Mapping
                 builder.Property(t => t.SearchPlaceHolder).HasColumnName("SearchPlaceHolder");
                 builder.Property(t => t.EmailContact).HasColumnName("EmailContact");
                 builder.Property(t => t.Version).HasColumnName("Version");
-                builder.Property(t => t.Currency).HasColumnName("Currency");
                 builder.Property(t => t.TransactionFeePercent).HasColumnName("TransactionFeePercent");
                 builder.Property(t => t.TransactionMinimumSize).HasColumnName("TransactionMinimumSize");
                 builder.Property(t => t.TransactionMinimumFee).HasColumnName("TransactionMinimumFee");

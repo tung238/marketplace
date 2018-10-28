@@ -23,10 +23,6 @@ namespace TNMarketplace.Core.Entities.Mapping
                 .IsRequired()
                 .HasMaxLength(128);
 
-            builder.Property(t => t.Currency)
-                .IsFixedLength()
-                .HasMaxLength(3);
-
             builder.Property(t => t.ContactName)
                 .IsRequired()
                 .HasMaxLength(200);
@@ -54,7 +50,6 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.Property(t => t.ListingTypeID).HasColumnName("ListingTypeID");
             builder.Property(t => t.UserID).HasColumnName("UserID");
             builder.Property(t => t.Price).HasColumnName("Price");
-            builder.Property(t => t.Currency).HasColumnName("Currency");
             builder.Property(t => t.ContactName).HasColumnName("ContactName");
             builder.Property(t => t.ContactEmail).HasColumnName("ContactEmail");
             builder.Property(t => t.ContactPhone).HasColumnName("ContactPhone");
@@ -70,6 +65,7 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.Property(t => t.Longitude).HasColumnName("Longitude");
             builder.Property(t => t.Created).HasColumnName("Created");
             builder.Property(t => t.LastUpdated).HasColumnName("LastUpdated");
+            builder.Property(t => t.RegionId).HasColumnName("RegionId");
 
             // Relationships
             builder.HasOne(t => t.AspNetUser)
@@ -81,7 +77,9 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.HasOne(t => t.ListingType)
                 .WithMany(t => t.Listings).IsRequired()
                 .HasForeignKey(d => d.ListingTypeID).OnDelete(DeleteBehavior.Cascade);
-
+            builder.HasOne(t => t.Region)
+                .WithMany(t => t.Listings).IsRequired()
+                .HasForeignKey(d => d.RegionId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

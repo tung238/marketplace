@@ -22,33 +22,35 @@ namespace TNMarketplace.Repository.EfCore
         //private readonly Guid _instanceId;
 
         public string CurrentUserId { get; internal set; }
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        public DbSet<ApplicationUserPhoto> ApplicationUserPhotos { get; set; }
-        public DbSet<ApplicationRole> ApplicationRoles { get; set; }
-        public DbSet<Culture> Cultures { get; set; }
-        public DbSet<Resource> Resources { get; set; }
+        public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public virtual DbSet<ApplicationUserPhoto> ApplicationUserPhotos { get; set; }
+        public virtual DbSet<ApplicationRole> ApplicationRoles { get; set; }
+        public virtual DbSet<Culture> Cultures { get; set; }
+        public virtual DbSet<Resource> Resources { get; set; }
 
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<CategoryListingType> CategoryListingTypes { get; set; }
-        public DbSet<CategoryStat> CategoryStats { get; set; }
-        public DbSet<ContentPage> ContentPages { get; set; }
-        public DbSet<EmailTemplate> EmailTemplates { get; set; }
-        public DbSet<ListingMeta> ListingMetas { get; set; }
-        public DbSet<ListingPicture> ListingPictures { get; set; }
-        public DbSet<ListingReview> ListingReviews { get; set; }
-        public DbSet<Listing> Listings { get; set; }
-        public DbSet<ListingStat> ListingStats { get; set; }
-        public DbSet<ListingType> ListingTypes { get; set; }
-        public DbSet<Message> Messages { get; set; }
-        public DbSet<MessageParticipant> MessageParticipants { get; set; }
-        public DbSet<MessageReadState> MessageReadStates { get; set; }
-        public DbSet<MessageThread> MessageThreads { get; set; }
-        public DbSet<MetaCategory> MetaCategories { get; set; }
-        public DbSet<MetaField> MetaFields { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Picture> Pictures { get; set; }
-        public DbSet<SettingDictionary> SettingDictionaries { get; set; }
-        public DbSet<Setting> Settings { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<CategoryListingType> CategoryListingTypes { get; set; }
+        public virtual DbSet<CategoryStat> CategoryStats { get; set; }
+        public virtual DbSet<ContentPage> ContentPages { get; set; }
+        public virtual DbSet<EmailTemplate> EmailTemplates { get; set; }
+        public virtual DbSet<ListingMeta> ListingMetas { get; set; }
+        public virtual DbSet<ListingPicture> ListingPictures { get; set; }
+        public virtual DbSet<ListingReview> ListingReviews { get; set; }
+        public virtual DbSet<Listing> Listings { get; set; }
+        public virtual DbSet<ListingStat> ListingStats { get; set; }
+        public virtual DbSet<ListingType> ListingTypes { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
+        public virtual DbSet<MessageParticipant> MessageParticipants { get; set; }
+        public virtual DbSet<MessageReadState> MessageReadStates { get; set; }
+        public virtual DbSet<MessageThread> MessageThreads { get; set; }
+        public virtual DbSet<MetaCategory> MetaCategories { get; set; }
+        public virtual DbSet<MetaField> MetaFields { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Picture> Pictures { get; set; }
+        public virtual DbSet<SettingDictionary> SettingDictionaries { get; set; }
+        public virtual DbSet<Setting> Settings { get; set; }
+
+        public virtual DbSet<Region> Regions { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, UserResolverService userService) : base(options)
         {
@@ -83,6 +85,7 @@ namespace TNMarketplace.Repository.EfCore
             modelBuilder.ApplyConfiguration(new PictureMap());
             modelBuilder.ApplyConfiguration(new SettingDictionaryMap());
             modelBuilder.ApplyConfiguration(new SettingMap());
+            modelBuilder.ApplyConfiguration(new RegionMap());
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes()
             .Where(e => typeof(IAuditable).IsAssignableFrom(e.ClrType)))

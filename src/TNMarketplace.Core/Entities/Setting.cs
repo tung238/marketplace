@@ -18,7 +18,7 @@ namespace TNMarketplace.Core.Entities
         public string SearchPlaceHolder { get; set; }
         public string EmailContact { get; set; }
         public string Version { get; set; }
-        public string Currency { get; set; }
+        //public string Currency { get; set; }
         public double TransactionFeePercent { get; set; }
         public double TransactionMinimumSize { get; set; }
         public double TransactionMinimumFee { get; set; }
