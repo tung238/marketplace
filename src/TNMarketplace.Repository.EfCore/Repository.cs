@@ -1,5 +1,6 @@
 ﻿using LinqKit;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -162,7 +163,7 @@ namespace TNMarketplace.Repository.EfCore
         internal IQueryable<TEntity> Select(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            List<Expression<Func<TEntity, object>>> includes = null,
+            List<Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>> includes = null,
             int? page = null,
             int? pageSize = null)
         {
@@ -170,27 +171,32 @@ namespace TNMarketplace.Repository.EfCore
 
             if (includes != null)
             {
-                query = includes.Aggregate(query, (current, include) => current.Include(include));
+                foreach (var include in includes)
+                {
+                    include(query);
+                }
             }
-            if (orderBy != null)
-            {
-                query = orderBy(query);
-            }
+
             if (filter != null)
             {
                 query = query.AsExpandable().Where(filter);
+            }
+            if (orderBy != null)
+            {
+                query = orderBy.Invoke(query);
             }
             if (page != null && pageSize != null)
             {
                 query = query.Skip((page.Value - 1) * pageSize.Value).Take(pageSize.Value);
             }
+           
             return query;
         }
 
         internal async Task<IEnumerable<TEntity>> SelectAsync(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            List<Expression<Func<TEntity, object>>> includes = null,
+            List<Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>> includes = null,
             int? page = null,
             int? pageSize = null)
         {

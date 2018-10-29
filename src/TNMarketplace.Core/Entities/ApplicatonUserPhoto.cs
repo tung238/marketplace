@@ -11,6 +11,6 @@ namespace TNMarketplace.Core.Entities
         public string ContentType { get; set; }
         public byte[] Content { get; set; }
         public string ApplicationUserId { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

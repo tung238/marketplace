@@ -11,6 +11,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using System.Collections.Generic;
+using AutoMapper;
 
 namespace TNMarketplace.Web
 {
@@ -39,9 +40,8 @@ namespace TNMarketplace.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
             services.AddPreRenderDebugging(HostingEnvironment);
-
+            services.AddAutoMapper();
             services.AddOptions();
 
             services.AddResponseCompression();

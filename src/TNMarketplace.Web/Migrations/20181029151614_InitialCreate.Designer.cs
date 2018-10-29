@@ -10,7 +10,7 @@ using TNMarketplace.Repository.EfCore;
 namespace TNMarketplace.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181028022547_InitialCreate")]
+    [Migration("20181029151614_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

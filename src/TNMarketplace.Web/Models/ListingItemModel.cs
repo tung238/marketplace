@@ -8,9 +8,9 @@ namespace TNMarketplace.Web.Models
 {
     public class ListingItemModel
     {
-        public List<Listing> ListingsOther { get; set; }
+        public List<SimpleListing> ListingsOther { get; set; }
 
-        public Listing ListingCurrent { get; set; }
+        public SimpleListing ListingCurrent { get; set; }
 
         public string UrlPicture { get; set; }
 
@@ -18,7 +18,7 @@ namespace TNMarketplace.Web.Models
 
         public List<DateTime> DatesBooked { get; set; }
 
-        public ApplicationUser User { get; set; }
+        public SimpleUser User { get; set; }
 
         public List<ListingReview> ListingReviews { get; set; }
     }

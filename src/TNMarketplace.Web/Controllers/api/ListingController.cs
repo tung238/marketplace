@@ -4,11 +4,13 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -16,6 +18,7 @@ using SixLabors.ImageSharp.Processing;
 using TNMarketplace.Core;
 using TNMarketplace.Core.Entities;
 using TNMarketplace.Core.Infrastructure;
+using TNMarketplace.Repository.Repositories;
 using TNMarketplace.Repository.UnitOfWork;
 using TNMarketplace.Service;
 using TNMarketplace.Web.Extensions;
@@ -61,32 +64,9 @@ namespace TNMarketplace.Web.Controllers.api
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHostingEnvironment _environment;
         private readonly ImageHelper _imageHelper;
+        private readonly IMapper _mapper;
 
         private readonly IUnitOfWorkAsync _unitOfWorkAsync;
-
-        //public ApplicationSignInManager SignInManager
-        //{
-        //    get
-        //    {
-        //        return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-        //    }
-        //    private set
-        //    {
-        //        _signInManager = value;
-        //    }
-        //}
-
-        //public ApplicationUserManager UserManager
-        //{
-        //    get
-        //    {
-        //        return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-        //    }
-        //    private set
-        //    {
-        //        _userManager = value;
-        //    }
-        //}
 
         #endregion
 
@@ -114,7 +94,9 @@ namespace TNMarketplace.Web.Controllers.api
            DataCacheService dataCacheService,
            IHostingEnvironment environment,
            ImageHelper imageHelper,
-           SqlDbService sqlDbService)
+           IMapper mapper,
+
+        SqlDbService sqlDbService)
         {
             _settingService = settingService;
             _settingDictionaryService = settingDictionaryService;
@@ -139,7 +121,9 @@ namespace TNMarketplace.Web.Controllers.api
             _userManager = userManager;
             _environment = environment;
             _imageHelper = imageHelper;
-            _unitOfWorkAsync = unitOfWorkAsync;
+            _mapper = mapper;
+
+        _unitOfWorkAsync = unitOfWorkAsync;
         }
         #endregion
 
@@ -149,7 +133,8 @@ namespace TNMarketplace.Web.Controllers.api
         public async Task<IActionResult> ListingPartial(int categoryID)
         {
             // Custom fields
-            var customFieldCategoryQuery = await _customFieldCategoryService.Query(x => x.CategoryID == categoryID).Include(x => x.MetaField.ListingMetas).SelectAsync();
+            var customFieldCategoryQuery = await _customFieldCategoryService.Query(x => x.CategoryID == categoryID)
+                .Include(x => x.Include(y => y.MetaField).ThenInclude(z => z.ListingMetas)).SelectAsync();
             var customFieldCategories = customFieldCategoryQuery.ToList();
             var customFieldModel = new CustomFieldListingModel()
             {
@@ -174,11 +159,11 @@ namespace TNMarketplace.Web.Controllers.api
             if (model.CategoryID != 0)
             {
                 items = await _listingService.Query(x => x.CategoryID == model.CategoryID)
-                    .Include(x => x.ListingPictures)
-                    .Include(x => x.Category)
-                    .Include(x => x.ListingType)
-                    .Include(x => x.AspNetUser)
-                    .Include(x => x.ListingReviews)
+                    .Include(x => x.Include(y => y.ListingPictures))
+                    .Include(x => x.Include(y => y.Category))
+                    .Include(x => x.Include(y => y.ListingType))
+                    .Include(x => x.Include(y => y.AspNetUser))
+                    .Include(x => x.Include(y => y.ListingReviews))
                     .SelectAsync();
 
                 // Set listing types
@@ -215,10 +200,10 @@ namespace TNMarketplace.Web.Controllers.api
                         x => x.Title.ToLower().Contains(model.SearchText) ||
                         x.Description.ToLower().Contains(model.SearchText) ||
                         x.Location.ToLower().Contains(model.SearchText))
-                        .Include(x => x.ListingPictures)
-                        .Include(x => x.Category)
-                        .Include(x => x.AspNetUser)
-                        .Include(x => x.ListingReviews)
+                        .Include(x => x.Include(y => y.ListingPictures))
+                        .Include(x => x.Include(y => y.Category))
+                        .Include(x => x.Include(y => y.AspNetUser))
+                        .Include(x => x.Include(y => y.ListingReviews))
                         .SelectAsync();
             }
 
@@ -226,10 +211,10 @@ namespace TNMarketplace.Web.Controllers.api
             if (items == null)
             {
                 items = await _listingService.Query().OrderBy(x => x.OrderByDescending(y => y.Created))
-                    .Include(x => x.ListingPictures)
-                    .Include(x => x.Category)
-                    .Include(x => x.AspNetUser)
-                    .Include(x => x.ListingReviews)
+                    .Include(x => x.Include(y => y.ListingPictures))
+                    .Include(x => x.Include(y => y.Category))
+                    .Include(x => x.Include(y => y.AspNetUser))
+                    .Include(x => x.Include(y => y.ListingReviews))
                     .SelectAsync();
             }
 
@@ -259,7 +244,7 @@ namespace TNMarketplace.Web.Controllers.api
             {
                 itemsModelList.Add(new ListingItemModel()
                 {
-                    ListingCurrent = item,
+                    ListingCurrent = _mapper.Map<SimpleListing>(item),
                     UrlPicture = item.ListingPictures.Count == 0 ? _imageHelper.GetListingImagePath(0) : _imageHelper.GetListingImagePath(item.ListingPictures.OrderBy(x => x.Ordering).FirstOrDefault().PictureID)
                 });
             }
@@ -389,7 +374,8 @@ namespace TNMarketplace.Web.Controllers.api
             model.ListingItem = listing;
 
             // Custom fields
-            var customFieldCategoryQuery = await _customFieldCategoryService.Query(x => x.CategoryID == listing.CategoryID).Include(x => x.MetaField.ListingMetas).SelectAsync();
+            var customFieldCategoryQuery = await _customFieldCategoryService.Query(x => x.CategoryID == listing.CategoryID)
+                .Include(x => x.Include(y => y.MetaField).ThenInclude(z => z.ListingMetas)).SelectAsync();
             var customFieldCategories = customFieldCategoryQuery.ToList();
             var customFieldModel = new CustomFieldListingModel()
             {
@@ -414,13 +400,16 @@ namespace TNMarketplace.Web.Controllers.api
         [AllowAnonymous]
         public async Task<IActionResult> Listing(int id)
         {
-            var itemQuery = await _listingService.Query(x => x.ID == id)
-                .Include(x => x.Category)
-                .Include(x => x.ListingMetas)
-                .Include(x => x.ListingMetas.Select(y => y.MetaField))
-                .Include(x => x.ListingStats)
-                .Include(x => x.ListingType)
-                .SelectAsync();
+            //var itemQuery = await _listingService.Query(x => x.ID == id)
+            //    .Include(x => x.Include(y => y.Category))
+            //    .Include(x => x.Include(y => y.Region))
+            //    .Include(x => x.Include(y => y.ListingMetas))
+            //    .Include(x => x.Include(y => y.ListingMetas).ThenInclude(z => z.MetaField))
+            //    .Include(x => x.Include(y => y.ListingStats))
+            //    .Include(x => x.Include(y => y.ListingType))
+            //    .SelectAsync();
+            var itemQuery = _listingService.Queryable().AsNoTracking().Where(t => t.ID == id)
+                .Include(x => x.Category).Include(x => x.Region).Include(x => x.ListingMetas).ThenInclude(z => z.MetaField).Include(x => x.ListingStats).Include(x => x.ListingType);
 
             var item = itemQuery.FirstOrDefault();
 
@@ -456,40 +445,40 @@ namespace TNMarketplace.Web.Controllers.api
 
             var reviews = await _listingReviewService
                 .Query(x => x.UserTo == item.UserID)
-                .Include(x => x.AspNetUserFrom)
+                .Include(x => x.Include(y => y.AspNetUserFrom))
                 .SelectAsync();
 
             var user = await _userManager.FindByIdAsync(item.UserID);
 
             var itemModel = new ListingItemModel()
             {
-                ListingCurrent = item,
+                ListingCurrent = _mapper.Map<SimpleListing>(item),
                 Pictures = picturesModel,
                 DatesBooked = datesBooked,
-                User = user,
+                User = _mapper.Map<SimpleUser>(user),
                 ListingReviews = reviews.ToList()
             };
 
             // Update stat count
-            var itemStat = item.ListingStats.FirstOrDefault();
-            if (itemStat == null)
-            {
-                _ListingStatservice.Insert(new ListingStat()
-                {
-                    ListingID = id,
-                    CountView = 1,
-                    Created = DateTime.Now,
-                    ObjectState = ObjectState.Added
-                });
-            }
-            else
-            {
-                itemStat.CountView++;
-                itemStat.ObjectState = ObjectState.Modified;
-                _ListingStatservice.Update(itemStat);
-            }
+            //var itemStat = item.ListingStats.FirstOrDefault();
+            //if (itemStat == null)
+            //{
+            //    _ListingStatservice.Insert(new ListingStat()
+            //    {
+            //        ListingID = id,
+            //        CountView = 1,
+            //        Created = DateTime.Now,
+            //        ObjectState = ObjectState.Added
+            //    });
+            //}
+            //else
+            //{
+            //    itemStat.CountView++;
+            //    itemStat.ObjectState = ObjectState.Modified;
+            //    _ListingStatservice.Update(itemStat);
+            //}
 
-            await _unitOfWorkAsync.SaveChangesAsync();
+            //await _unitOfWorkAsync.SaveChangesAsync();
 
             return Ok(itemModel);
         }
@@ -549,7 +538,6 @@ namespace TNMarketplace.Web.Controllers.api
                 listing.Expiration = DateTime.MaxValue.AddDays(-1);
                 listing.UserID = userIdCurrent;
                 listing.Enabled = true;
-                listing.Currency = _dataCacheService.Settings.Currency;
 
                 updateCount = true;
                 _listingService.Insert(listing);
@@ -594,7 +582,8 @@ namespace TNMarketplace.Web.Controllers.api
             }
 
             // Get custom fields
-            var customFieldCategoryQuery = await _customFieldCategoryService.Query(x => x.CategoryID == listing.CategoryID).Include(x => x.MetaField.ListingMetas).SelectAsync();
+            var customFieldCategoryQuery = await _customFieldCategoryService.Query(x => x.CategoryID == listing.CategoryID)
+                .Include(x => x.Include(y => y.MetaField).ThenInclude(z => z.ListingMetas)).SelectAsync();
             var customFieldCategories = customFieldCategoryQuery.ToList();
 
             foreach (var metaCategory in customFieldCategories)
@@ -736,10 +725,10 @@ namespace TNMarketplace.Web.Controllers.api
                 return NotFound();
 
             var items = await _listingService.Query(x => x.UserID == id)
-                .Include(x => x.ListingPictures)
-                .Include(x => x.ListingType)
-                .Include(x => x.AspNetUser)
-                .Include(x => x.ListingReviews)
+                .Include(x => x.Include(y => y.ListingPictures))
+                .Include(x => x.Include(y => y.ListingType))
+                .Include(x => x.Include(y => y.AspNetUser))
+                .Include(x => x.Include(y => y.ListingReviews))
                 .SelectAsync();
 
             var itemsModel = new List<ListingItemModel>();
@@ -747,7 +736,7 @@ namespace TNMarketplace.Web.Controllers.api
             {
                 itemsModel.Add(new ListingItemModel()
                 {
-                    ListingCurrent = item,
+                    ListingCurrent =_mapper.Map<SimpleListing>(item),
                     UrlPicture = item.ListingPictures.Count == 0 ? _imageHelper.GetListingImagePath(0) : _imageHelper.GetListingImagePath(item.ListingPictures.OrderBy(x => x.Ordering).FirstOrDefault().PictureID)
                 });
             }
@@ -755,7 +744,7 @@ namespace TNMarketplace.Web.Controllers.api
             // include reviews
             var reviews = await _listingReviewService
                 .Query(x => x.UserTo == id)
-                .Include(x => x.AspNetUserFrom)
+                .Include(x => x.Include(y => y.AspNetUserFrom))
                 .SelectAsync();
 
             var model = new ProfileModel()

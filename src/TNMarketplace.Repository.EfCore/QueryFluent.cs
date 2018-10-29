@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -13,7 +14,8 @@ namespace TNMarketplace.Repository.EfCore
     {
         #region Private Fields
         private readonly Expression<Func<TEntity, bool>> _expression;
-        private readonly List<Expression<Func<TEntity, object>>> _includes;
+        private readonly List<Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>> _includes;
+
         private readonly Repository<TEntity> _repository;
         private Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> _orderBy;
         #endregion Private Fields
@@ -22,7 +24,7 @@ namespace TNMarketplace.Repository.EfCore
         public QueryFluent(Repository<TEntity> repository)
         {
             _repository = repository;
-            _includes = new List<Expression<Func<TEntity, object>>>();
+            _includes = new List<Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>>();
         }
 
         public QueryFluent(Repository<TEntity> repository, IQueryObject<TEntity> queryObject) : this(repository) { _expression = queryObject.Query(); }
@@ -36,7 +38,7 @@ namespace TNMarketplace.Repository.EfCore
             return this;
         }
 
-        public IQueryFluent<TEntity> Include(Expression<Func<TEntity, object>> expression)
+        public IQueryFluent<TEntity> Include(Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> expression)
         {
             _includes.Add(expression);
             return this;
@@ -55,5 +57,6 @@ namespace TNMarketplace.Repository.EfCore
         public async Task<IEnumerable<TEntity>> SelectAsync() { return await _repository.SelectAsync(_expression, _orderBy, _includes); }
 
         public IQueryable<TEntity> SqlQuery(string query, params object[] parameters) { return _repository.SelectQuery(query, parameters).AsQueryable(); }
+
     }
 }
