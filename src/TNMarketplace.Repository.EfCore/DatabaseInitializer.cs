@@ -585,6 +585,7 @@ namespace TNMarketplace.Repository.EfCore
             {
                 Name = "Căn hộ / Chung cư",
                 Description = "Căn hộ / Chung cư",
+                Slug = "can-ho-chung-cu",
                 Parent = 0,
                 Enabled = true,
                 Ordering = 0,
@@ -595,6 +596,7 @@ namespace TNMarketplace.Repository.EfCore
             {
                 Name = "Nhà ở",
                 Description = "Nhà ở",
+                Slug = "nha-o",
                 Parent = 0,
                 Enabled = true,
                 Ordering = 1,
@@ -605,6 +607,7 @@ namespace TNMarketplace.Repository.EfCore
             {
                 Name = "Đất",
                 Description = "Đất",
+                Slug = "dat",
                 Parent = 0,
                 Enabled = true,
                 Ordering = 2,
@@ -614,6 +617,7 @@ namespace TNMarketplace.Repository.EfCore
             {
                 Name = "Văn phòng / Mặt bằng kinh doanh",
                 Description = "Văn phòng / Mặt bằng kinh doanh",
+                Slug = "van-phong-mat-bang-kinh-doanh",
                 Parent = 0,
                 Enabled = true,
                 Ordering = 3,

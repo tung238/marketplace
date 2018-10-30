@@ -60,6 +60,7 @@ namespace TNMarketplace.Web.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 255, nullable: false),
+                    Slug = table.Column<string>(maxLength: 255, nullable: false),
                     Description = table.Column<string>(nullable: true),
                     Parent = table.Column<int>(nullable: false),
                     Enabled = table.Column<bool>(nullable: false),

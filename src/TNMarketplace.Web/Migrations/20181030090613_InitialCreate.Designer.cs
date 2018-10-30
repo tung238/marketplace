@@ -10,7 +10,7 @@ using TNMarketplace.Repository.EfCore;
 namespace TNMarketplace.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181029151614_InitialCreate")]
+    [Migration("20181030090613_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -378,6 +378,11 @@ namespace TNMarketplace.Web.Migrations
 
                     b.Property<int>("Parent")
                         .HasColumnName("Parent");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnName("Slug")
+                        .HasMaxLength(255);
 
                     b.HasKey("ID");
 

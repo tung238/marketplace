@@ -18,11 +18,15 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.Property(t => t.Name)
                 .IsRequired()
                 .HasMaxLength(255);
+            builder.Property(t => t.Slug)
+                .IsRequired()
+                .HasMaxLength(255);
 
             // Table & Column Mappings
             builder.ToTable("Categories");
             builder.Property(t => t.ID).HasColumnName("ID");
             builder.Property(t => t.Name).HasColumnName("Name");
+            builder.Property(t => t.Slug).HasColumnName("Slug");
             builder.Property(t => t.Description).HasColumnName("Description");
             builder.Property(t => t.Parent).HasColumnName("Parent");
             builder.Property(t => t.Enabled).HasColumnName("Enabled");

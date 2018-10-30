@@ -6,6 +6,7 @@ import { ListingsComponent } from './listings/listings.component';
 import { RouterModule } from '../../../node_modules/@angular/router';
 import { NgZorroAntdModule } from '../../../node_modules/ng-zorro-antd';
 import { SharedModule } from '../shared/shared.module';
+import { ListingService } from '@app/api';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { SharedModule } from '../shared/shared.module';
       { path: '', component: ListingsComponent, pathMatch: 'full', data: { state: 'create' } }
   ])
   ],
-  declarations: [ListingListComponent, ListingGridComponent, ListingsComponent]
+  declarations: [ListingListComponent, ListingGridComponent, ListingsComponent],
+  providers:[ListingService]
 })
 export class ListingsModule { }

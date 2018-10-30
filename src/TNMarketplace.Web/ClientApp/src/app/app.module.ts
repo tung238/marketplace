@@ -3,7 +3,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, UrlSegment } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { OAuthModule } from 'angular-oauth2-oidc';
+import { OAuthModule, OAuthService } from 'angular-oauth2-oidc';
 import { PrebootModule } from 'preboot';
 
 import { environment } from '../environments/environment';
@@ -23,6 +23,7 @@ import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { Configuration, ApiModule } from './api';
 
 registerLocaleData(en);
 export function appServiceFactory(appService: AppService): Function {
@@ -63,13 +64,15 @@ export function appServiceFactory(appService: AppService): Function {
     ], { initialNavigation: 'enabled' }),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     FormsModule,
+    ApiModule,
     HttpClientModule,
     NgZorroAntdModule
   ],
   providers: [
     AppService,
     { provide: APP_INITIALIZER, useFactory: appServiceFactory, deps: [AppService], multi: true },
-    { provide: NZ_I18N, useValue: en_US }
+    { provide: NZ_I18N, useValue: en_US },
+    { provide: Configuration, useFactory: (authService: OAuthService) => new Configuration({ basePath: environment.apiLocation, accessToken: authService.getAccessToken(), apiKeys: {"Authorization": "Bearer"} }), deps: [OAuthService], multi: false }
   ],
   exports: [],
   bootstrap: [AppComponent]

@@ -62,27 +62,32 @@ namespace TNMarketplace.Service
                         case CacheKeys.Settings:
                             var setting = _serviceProvider.GetService<ISettingService>().Queryable().FirstOrDefault();
                             UpdateCache(CacheKeys.Settings, setting);
-                            break;
+                            return setting;
+                            
                         case CacheKeys.SettingDictionary:
                             var settingDictionary = _serviceProvider.GetService<ISettingDictionaryService>().Queryable().ToList();
                             UpdateCache(CacheKeys.SettingDictionary, settingDictionary);
-                            break;
+                            return settingDictionary;
                         case CacheKeys.Categories:
                             var categories = _serviceProvider.GetService < ICategoryService>().Queryable().Where(x => x.Enabled).OrderBy(x => x.Ordering).ToList();
                             UpdateCache(CacheKeys.Categories, categories);
-                            break;
+                            return categories;
                         case CacheKeys.ListingTypes:
                             var ListingTypes = _serviceProvider.GetService < IListingTypeService>().Query().Include(x => x.Include(y=> y.CategoryListingTypes)).Select().ToList();
                             UpdateCache(CacheKeys.ListingTypes, ListingTypes);
-                            break;
+                            return ListingTypes;
                         case CacheKeys.ContentPages:
                             var contentPages = _serviceProvider.GetService < IContentPageService>().Queryable().Where(x => x.Published).OrderBy(x => x.Ordering).ToList();
                             UpdateCache(CacheKeys.ContentPages, contentPages);
-                            break;
+                            return contentPages;
                         case CacheKeys.EmailTemplates:
                             var emailTemplates = _serviceProvider.GetService < IEmailTemplateService>().Queryable().ToList();
                             UpdateCache(CacheKeys.EmailTemplates, emailTemplates);
-                            break;
+                            return emailTemplates;
+                        case CacheKeys.Regions:
+                            var regions = _serviceProvider.GetService<IRegionService>().Queryable().ToList();
+                            UpdateCache(CacheKeys.Regions, regions);
+                            return regions;
                         case CacheKeys.Statistics:
                             SaveCategoryStats();
 
@@ -98,7 +103,7 @@ namespace TNMarketplace.Service
                             statistics.ItemsCountDictionary = _serviceProvider.GetService < IListingService>().GetItemsCount(DateTime.Now.AddDays(-10));
 
                             UpdateCache(CacheKeys.Statistics, statistics);
-                            break;
+                            return statistics;
                         default:
                             break;
                     }
@@ -185,6 +190,14 @@ namespace TNMarketplace.Service
             get
             {
                 return GetCachedItem(CacheKeys.ContentPages) as List<ContentPage>;
+            }
+        }
+
+        public List<Region> Regions
+        {
+            get
+            {
+                return GetCachedItem(CacheKeys.Regions) as List<Region>;
             }
         }
 

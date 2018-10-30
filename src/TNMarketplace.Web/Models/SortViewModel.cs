@@ -14,13 +14,13 @@ namespace TNMarketplace.Web.Models
             PageNumber = 1;
         }
 
-        public int SortBy { get; set; }
+        public int? SortBy { get; set; }
 
-        public int SortCriteriaId { get; set; }
+        public int? SortCriteriaId { get; set; }
 
-        public int PageNumber { get; set; }
+        public int? PageNumber { get; set; }
 
-        public int PageSize { get; set; }
+        public int? PageSize { get; set; }
 
         public Enum_SortView SortView { get; set; }
     }

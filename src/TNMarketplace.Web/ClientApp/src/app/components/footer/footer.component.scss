@@ -185,6 +185,7 @@ transition:0.5s all;
   margin: 40px 0 20px 0;
 }
 .w3-footer-logo a {
+  text-align: center;
   font-family: 'Ubuntu Condensed', sans-serif;
   font-size: 40px;
   color: #ff4c4c;
@@ -202,7 +203,7 @@ display:block;
   position: absolute;
   top: 50%;
   left: 0;
-  width: 42%;
+  width: 40%;
   height: 1px;
   background: #545556;
 }
@@ -211,7 +212,7 @@ display:block;
   position: absolute;
   top: 50%;
   right: 0;
-  width: 42%;
+  width: 40%;
   height: 1px;
   background: #545556;
 }

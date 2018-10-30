@@ -122,3 +122,34 @@ h3.agileits-sear-head {
 padding: 15px 0;
 border-bottom: 1px solid #e5e3db; 
 }
+
+
+/* SWITCH CONTROLS */
+.view-controls-list{
+    width: 20%;
+    text-align: left;
+    margin-bottom: 15px;
+    float: left;
+}
+.view-controls-grid{
+	width: 20%;
+    text-align: left;
+    margin-bottom: 15px;
+    float: left;
+}
+div#viewcontrols label {
+    font-size: 14px;
+    color: #9A9A9A;
+    font-weight: 400;
+}
+#viewcontrols a{
+	padding:5px;
+	color:black;
+	cursor:pointer;
+}
+#viewcontrols a:hover{
+	color:#0099e5;
+}
+#viewcontrols .active{
+	color:#0099e5;
+}

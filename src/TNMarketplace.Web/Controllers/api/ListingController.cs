@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -144,83 +145,57 @@ namespace TNMarketplace.Web.Controllers.api
             return Ok(customFieldModel);
         }
         [HttpGet("Search")]
-        public async Task<IActionResult> Search(SearchListingModel model)
+        [AllowAnonymous]
+        public async Task<IActionResult> Search([FromQuery] SearchListingRequest model)
         {
-            await GetSearchResult(model);
-
-            return Ok(model);
+            return Ok(await GetSearchResult(model));
         }
 
-        private async Task GetSearchResult(SearchListingModel model)
+        private async Task<SearchListingResponse> GetSearchResult(SearchListingRequest model)
         {
-            IEnumerable<Listing> items = null;
+            IQueryable<Listing> items = _listingService.Queryable();
+            SearchListingResponse response = new SearchListingResponse();
+            Region region = GetRegionFromModel(model);
+            Category category = GetCategoryFromModel(model);
 
-            // Category
-            if (model.CategoryID != 0)
+            if (region != null )
             {
-                items = await _listingService.Query(x => x.CategoryID == model.CategoryID)
-                    .Include(x => x.Include(y => y.ListingPictures))
-                    .Include(x => x.Include(y => y.Category))
-                    .Include(x => x.Include(y => y.ListingType))
-                    .Include(x => x.Include(y => y.AspNetUser))
-                    .Include(x => x.Include(y => y.ListingReviews))
-                    .SelectAsync();
-
-                // Set listing types
-                model.ListingTypes = _dataCacheService.ListingTypes.Where(x => x.CategoryListingTypes.Any(y => y.CategoryID == model.CategoryID)).ToList();
+                items = items.Where(x => x.RegionId == region.ID);
+            }
+            if (category != null)
+            {
+                items = items.Where(x => x.CategoryID == category.ID);
+                response.ListingTypes = _mapper.Map<List<SimpleListingType>>(_dataCacheService.ListingTypes.Where(x => x.CategoryListingTypes.Any(y => y.CategoryID == category.ID)));
             }
             else
             {
-                model.ListingTypes = _dataCacheService.ListingTypes;
+                response.ListingTypes = _mapper.Map<List<SimpleListingType>>(_dataCacheService.ListingTypes);
             }
 
-            // Set default Listing Type if it's not set or listing type is not set
-            if (model.ListingTypes.Count > 0 &&
-                (model.ListingTypeID == null || !model.ListingTypes.Any(x => model.ListingTypeID.Contains(x.ID))))
-            {
-                model.ListingTypeID = new List<int>();
-                model.ListingTypeID.Add(model.ListingTypes.FirstOrDefault().ID);
-            }
+            items = items
+                .Include(y => y.ListingPictures)
+                .Include(y => y.Category)
+                .Include(y => y.ListingType)
+                .Include(y => y.AspNetUser)
+                .Include(y => y.ListingReviews);
 
             // Search Text
             if (!string.IsNullOrEmpty(model.SearchText))
             {
                 model.SearchText = model.SearchText.ToLower();
 
-                // Search by title, description, location
-                if (items != null)
-                {
-                    items = items.Where(x =>
-                        x.Title.ToLower().Contains(model.SearchText) ||
-                        x.Description.ToLower().Contains(model.SearchText) ||
-                        x.Location.ToLower().Contains(model.SearchText));
-                }
-                else
-                    items = await _listingService.Query(
-                        x => x.Title.ToLower().Contains(model.SearchText) ||
-                        x.Description.ToLower().Contains(model.SearchText) ||
-                        x.Location.ToLower().Contains(model.SearchText))
-                        .Include(x => x.Include(y => y.ListingPictures))
-                        .Include(x => x.Include(y => y.Category))
-                        .Include(x => x.Include(y => y.AspNetUser))
-                        .Include(x => x.Include(y => y.ListingReviews))
-                        .SelectAsync();
-            }
-
-            // Latest
-            if (items == null)
-            {
-                items = await _listingService.Query().OrderBy(x => x.OrderByDescending(y => y.Created))
-                    .Include(x => x.Include(y => y.ListingPictures))
-                    .Include(x => x.Include(y => y.Category))
-                    .Include(x => x.Include(y => y.AspNetUser))
-                    .Include(x => x.Include(y => y.ListingReviews))
-                    .SelectAsync();
+                items = items.Where(x =>
+                    x.Title.ToLower().Contains(model.SearchText) ||
+                    x.Description.ToLower().Contains(model.SearchText) ||
+                    x.Location.ToLower().Contains(model.SearchText));
+                
             }
 
             // Filter items by Listing Type
-            items = items.Where(x => model.ListingTypeID.Contains(x.ListingTypeID));
-
+            if (model.ListingTypeID != null && model.ListingTypeID.Count > 0)
+            {
+                items = items.Where(x => model.ListingTypeID.Contains(x.ListingTypeID));
+            }
             // Location
             if (!string.IsNullOrEmpty(model.Location))
             {
@@ -229,18 +204,21 @@ namespace TNMarketplace.Web.Controllers.api
 
             // Picture
             if (model.PhotoOnly)
+            {
                 items = items.Where(x => x.ListingPictures.Count > 0);
-
+            }
             /// Price
             if (model.PriceFrom.HasValue)
+            {
                 items = items.Where(x => x.Price >= model.PriceFrom.Value);
-
+            }
             if (model.PriceTo.HasValue)
+            {
                 items = items.Where(x => x.Price <= model.PriceTo.Value);
-
+            }
             // Show active and enabled only
             var itemsModelList = new List<ListingItemModel>();
-            foreach (var item in items.Where(x => x.Active && x.Enabled).OrderByDescending(x => x.Created))
+            foreach (var item in (await items.ToListAsync()).Where(x => x.Active && x.Enabled).OrderByDescending(x => x.Created))
             {
                 itemsModelList.Add(new ListingItemModel()
                 {
@@ -248,14 +226,48 @@ namespace TNMarketplace.Web.Controllers.api
                     UrlPicture = item.ListingPictures.Count == 0 ? _imageHelper.GetListingImagePath(0) : _imageHelper.GetListingImagePath(item.ListingPictures.OrderBy(x => x.Ordering).FirstOrDefault().PictureID)
                 });
             }
-            var breadCrumb = GetParents(model.CategoryID).Reverse().ToList();
+            var breadCrumb = GetParents(category?.ID ?? -1).Reverse().ToList();
 
-            model.BreadCrumb = breadCrumb;
-            model.Categories = _dataCacheService.Categories;
+            response.BreadCrumb = _mapper.Map<List<SimpleCategory>>(breadCrumb);
+            response.Categories = _mapper.Map<List<SimpleCategory>>(_dataCacheService.Categories);
 
-            model.Listings = itemsModelList;
-            model.ListingsPageList = itemsModelList.ToPagedList(model.PageNumber, model.PageSize);
-            //model.Grid = new ListingModelGrid(model.ListingsPageList.AsQueryable());
+            response.Listings = itemsModelList;
+            response.ListingsPageList = itemsModelList.ToPagedList(model.PageNumber ?? 0, model.PageSize ?? 20);
+            return response;
+        }
+
+        private Category GetCategoryFromModel(SearchListingRequest request)
+        {
+            var segments = request.UrlSegments;
+            segments.Reverse();
+            foreach (var s in segments)
+            {
+                var c = _dataCacheService.Categories.FirstOrDefault(cat => s.Contains(cat.Slug, StringComparison.OrdinalIgnoreCase));
+                if (c != null)
+                {
+                    return c;
+                }
+            }
+            return null;
+        }
+
+        private Region GetRegionFromModel(SearchListingRequest request)
+        {
+            var segments = request.UrlSegments;
+            segments.Reverse();
+            foreach(var s in segments)
+            {
+                if (String.IsNullOrEmpty(s))
+                {
+                    continue;
+                }
+                var r = _dataCacheService.Regions.FirstOrDefault(re => s.Contains(re.Slug, StringComparison.OrdinalIgnoreCase));
+                if (r!= null)
+                {
+                    return r;
+                }
+            }
+            return null;
         }
 
         private IEnumerable<Category> GetParents(int categoryId)

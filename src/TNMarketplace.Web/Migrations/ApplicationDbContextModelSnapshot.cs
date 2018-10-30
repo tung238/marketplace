@@ -377,6 +377,11 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<int>("Parent")
                         .HasColumnName("Parent");
 
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnName("Slug")
+                        .HasMaxLength(255);
+
                     b.HasKey("ID");
 
                     b.ToTable("Categories");

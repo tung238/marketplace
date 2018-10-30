@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListingItemComponent } from './listing-item/listing-item.component';
 import { RouterModule } from '../../../node_modules/@angular/router';
+import { ListingService } from '../api';
 
 @NgModule({
   imports: [
@@ -10,6 +11,9 @@ import { RouterModule } from '../../../node_modules/@angular/router';
       { path: '', component: ListingItemComponent, pathMatch: 'full', data: { state: 'create' } }
   ])
   ],
-  declarations: [ListingItemComponent]
+  declarations: [ListingItemComponent],
+  providers:[
+    ListingService
+  ]
 })
 export class ListingItemModule { }
