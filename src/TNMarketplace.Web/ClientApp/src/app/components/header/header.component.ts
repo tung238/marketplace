@@ -46,4 +46,9 @@ export class HeaderComponent implements OnInit {
         });
     }
 
+    public annouceSideMenuStateChange(){
+        this.isCollapsed = !this.isCollapsed;
+        this.appService.annouceSideMenuState(this.isCollapsed);
+    }
+
 }

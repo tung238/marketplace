@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
     timeOut: 5000,
     lastOnBottom: true
   };
+  isCollapsed = true;
   constructor(
     private router: Router,
     private title: Title,
@@ -36,6 +37,9 @@ export class AppComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       this.configureOidc();
     }
+    appService.sideMenuSubject$.subscribe(v=>{
+      this.isCollapsed = v;
+    })
 
   }
 

@@ -1,0 +1,105 @@
+li {
+    background: #F9F9F9;
+    margin-bottom: 30px;
+    padding: 20px;
+    list-style-type: none;
+	    transition:0.5s all;
+	-webkit-transition:0.5s all;
+	-moz-transition:0.5s all;
+	-o-transition:0.5s all;
+	-ms-transition:0.5s all;
+	box-shadow: 0 0 0.6em #ccc;
+    -webkit-box-shadow: 0 0 0.6em #ccc;
+    -o-box-shadow: 0 0 0.6em #ccc;
+    -moz-box-shadow: 0 0 0.6em #ccc;
+    -ms-box-shadow: 0 0 0.6em #ccc;
+}
+li:hover {
+	background:#fff;
+    transition:0.5s all;
+	-webkit-transition:0.5s all;
+	-moz-transition:0.5s all;
+	-o-transition:0.5s all;
+	-ms-transition:0.5s all;
+}
+li img{
+	float: left;
+    margin-right: 0;
+    padding-bottom: 0;
+    border: 1px solid #D1E0EE;
+    padding: 0;
+    width: 20%;
+    background-color: #fff;
+}
+li.alt{ background:gray; }
+li p {
+    overflow: hidden;
+    word-wrap: break-word;
+    color: #C1C1C1;
+    font-size: 13px;
+    margin-top: 15px;
+}
+li .title{
+	overflow: hidden;
+    word-wrap: break-word;
+    font-size: 20px;
+    text-decoration: none;
+    color: #000000;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+li .adprice{
+	display:block;
+	font-size:22px;
+	display: block;
+    font-size: 22px;
+    color: #ACD3F7;
+    margin: 5px 0 0 0;
+}
+span.adprice {
+    display: block;
+    font-size: 22px;
+    color: rgba(1, 161, 133, 0.57);
+    margin: 5px 0 0 0;
+}
+li .list-left {
+    width: 60%;
+    margin-left: 3%;
+    float: left;
+}
+li .list-right{
+    width: 15%;
+    float: right;
+    text-align: right;
+}
+li .date{
+	float: right;
+    font-size: 14px;
+    display: block;
+    width: 100%;
+    margin: 15px 0 5px 0;
+    color: #404040;
+    font-weight: 400;
+}
+li .cityname{
+	display:block;
+	color: #404040;
+}
+span.cityname{
+	display:block;
+	color: #404040;
+}
+li .adprice {
+    display: block;
+    font-size: 22px;
+    color: rgb(245, 2, 0);
+    margin: 10px 0 0 0;
+}
+li .list-right.title {
+    overflow: hidden;
+    word-wrap: break-word;
+    font-size: 17px;
+    text-decoration: none;
+    color: #0099e5;
+    font-weight: 700;
+}

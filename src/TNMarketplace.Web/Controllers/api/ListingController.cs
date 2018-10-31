@@ -175,6 +175,7 @@ namespace TNMarketplace.Web.Controllers.api
             items = items
                 .Include(y => y.ListingPictures)
                 .Include(y => y.Category)
+                .Include(y=>y.Region)
                 .Include(y => y.ListingType)
                 .Include(y => y.AspNetUser)
                 .Include(y => y.ListingReviews);

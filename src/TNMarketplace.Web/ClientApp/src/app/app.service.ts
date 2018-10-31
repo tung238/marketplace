@@ -1,11 +1,17 @@
 import { TransferState, makeStateKey } from '@angular/platform-browser';
 import { Injectable, Inject } from '@angular/core';
 import { DataService } from './core/services/data.service';
+import { Subject } from 'rxjs';
 
 const APP_DATA_KEY = makeStateKey<string>('appData');
 
 @Injectable()
 export class AppService {
+    private sideMenuSubject = new Subject<boolean>();
+   
+    // Observable string streams
+    sideMenuSubject$ = this.sideMenuSubject.asObservable();
+  
     constructor(
         @Inject('BASE_URL') private baseUrl: string,
         private transferState: TransferState,
@@ -27,5 +33,8 @@ export class AppService {
         return new Promise((resolve, reject) => {
             resolve(transferredAppData);
         });
+    }
+    annouceSideMenuState(state: boolean){
+        this.sideMenuSubject.next(state);
     }
 }

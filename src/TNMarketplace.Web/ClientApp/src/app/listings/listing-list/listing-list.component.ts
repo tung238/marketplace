@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ListingListComponent implements OnInit {
 
-  @Input() listings: [];
+  @Input() listings = [];
   
   constructor() { }
 

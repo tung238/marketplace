@@ -1,3 +1,15 @@
-<p>
-  product-grid-row works!
-</p>
+<a [routerLink]="generateRouteLink()">
+  <li>
+    <img src="{{listingItem.urlPicture}}" title="" alt="">
+    <section class="list-left">
+      <h5 class="title">{{listingItem.listingCurrent.title}}</h5>
+        <span class="adprice">${{price}}"</span>
+        <p class="catpath">Mobile Phones » Brand</p>
+    </section>
+    <section class="list-right">
+      <span class="date">{{listingItem.listingCurrent.created}}</span>
+      <span class="cityname">{{listingItem.listingCurrent.region.name}}</span>
+    </section>
+    <div class="clearfix"></div>
+  </li>
+</a>

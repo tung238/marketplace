@@ -137,19 +137,25 @@ border-bottom: 1px solid #e5e3db;
     margin-bottom: 15px;
     float: left;
 }
-div#viewcontrols label {
+.view-controls-list label {
     font-size: 14px;
     color: #9A9A9A;
     font-weight: 400;
 }
-#viewcontrols a{
+.view-controls-list a{
 	padding:5px;
 	color:black;
 	cursor:pointer;
 }
-#viewcontrols a:hover{
+.view-controls-list a:hover{
 	color:#0099e5;
 }
-#viewcontrols .active{
+.view-controls-list .active{
 	color:#0099e5;
+}
+
+.nz-tab{
+    border: 1px solid #CCCCCC !important;
+    padding: 15px;
+    position: relative;
 }

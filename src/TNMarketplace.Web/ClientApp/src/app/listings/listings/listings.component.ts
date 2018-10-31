@@ -9,30 +9,49 @@ import { Router, UrlSegment, Params } from '@angular/router';
 })
 export class ListingsComponent implements OnInit {
 
-  allListingViewMode: number;
-  listingWithPictureViewMode: number;
+  listingViewMode: number;
+  allListings = [];
+  listingsWithPicture = [];
   constructor(private listingService: ListingService,
     private router: Router
     ){
    }
 
   ngOnInit() {
-    this.allListingViewMode = 1;
-    this.listingWithPictureViewMode = 1;
+    this.listingViewMode = 1;
     var urlSegments = this.router.routerState.snapshot.root.children[0].url;
     var params = this.router.routerState.snapshot.root.children[0].queryParams;
+    if (params["vm"] == "grid"){
+      this.listingViewMode = 2;
+    }
+    var photoOnly = params["po"];
     if (urlSegments != null && urlSegments.length > 0){
-      this.getListings(urlSegments, params);
+      this.getListings(urlSegments, params, photoOnly);
       return;
     }
     this.router.navigate(["/"]);
   }
 
-  getListings(paths: UrlSegment[], params: Params){
-    let res = this.listingService.apiListingSearchGet(undefined, paths.map(c=> c.path), params["s"], params["l"], params["photoOnly"], 
-    params["pf"], params["pt"]).subscribe(response =>{
-      console.log(response);
+  getListings(paths: UrlSegment[], params: Params, photoOnly?: boolean){
+
+    let res = this.listingService.apiListingSearchGet(undefined, paths.map(c=> c.path), params["s"], params["l"], photoOnly, 
+    params["pf"], params["pt"]).subscribe((r) =>{
+      if (params["po"]== true){
+        this.listingsWithPicture = r.listingsPageList;
+      }else{
+        this.allListings = r.listingsPageList;
+      }
+      console.log(r);
     })
+  }
+
+  selectTab(photoOnly: boolean){
+    var urlSegments = this.router.routerState.snapshot.root.children[0].url;
+    var params = this.router.routerState.snapshot.root.children[0].queryParams;
+    if (urlSegments != null && urlSegments.length > 0){
+      this.getListings(urlSegments, params, photoOnly);
+      return;
+    }
   }
 
 }

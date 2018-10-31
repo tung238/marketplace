@@ -540,26 +540,28 @@
   </div>
   <div nz-col nzXs="24" nzSm="24" nzMd="18" class="agileinfo-ads-display">
     <nz-tabset>
-      <nz-tab nzTitle="Tất cả tin rao">
-        <div class="view-controls-list" id="viewcontrols">
+      <nz-tab nzTitle="Tất cả tin rao" (nzSelect)="selectTab(false)">
+        <div class="view-controls-list">
           <label>Xem theo :</label>
-          <a class="gridview" [class.active]="allListingViewMode==1" (click)="allListingViewMode = 1"><i class="fa fa-th"></i></a>
-          <a class="listview" [class.active]="allListingViewMode==2" (click)="allListingViewMode = 2"><i class="fa fa-th-list"></i></a>
+          <a class="gridview" [class.active]="listingViewMode==1" (click)="listingViewMode = 1"><i class="fa fa-th"></i></a>
+          <a class="listview" [class.active]="listingViewMode==2" (click)="listingViewMode = 2"><i class="fa fa-th-list"></i></a>
         </div>
         <div class="clearfix"></div>
-        <appc-listing-grid  *ngIf="allListingViewMode==1"></appc-listing-grid>
-        <appc-listing-list  *ngIf="allListingViewMode==2"></appc-listing-list>
+        <appc-listing-grid [listings]="allListings"  *ngIf="listingViewMode==1"></appc-listing-grid>
+        <appc-listing-list [listings]="allListings"  *ngIf="listingViewMode==2"></appc-listing-list>
+        <div class="clearfix"></div>
         <nz-pagination [nzPageIndex]="1" [nzTotal]="5"></nz-pagination>
       </nz-tab>
-      <nz-tab nzTitle="Tin rao có hình">
-        <div class="view-controls-list" id="viewcontrols">
+      <nz-tab nzTitle="Tin rao có hình" (nzSelect)="selectTab(true)">
+        <div class="view-controls-list">
           <label>Xem theo :</label>
-          <a class="gridview" [class.active]="listingWithPictureViewMode==1" (click)="listingWithPictureViewMode = 1"><i class="fa fa-th"></i></a>
-          <a class="listview" [class.active]="listingWithPictureViewMode==2" (click)="listingWithPictureViewMode = 2"><i class="fa fa-th-list"></i></a>
+          <a class="gridview" [class.active]="listingViewMode==1" (click)="listingViewMode = 1"><i class="fa fa-th"></i></a>
+          <a class="listview" [class.active]="listingViewMode==2" (click)="listingViewMode = 2"><i class="fa fa-th-list"></i></a>
         </div>
         <div class="clearfix"></div>
-        <appc-listing-grid  *ngIf="listingWithPictureViewMode==1"></appc-listing-grid>
-        <appc-listing-list  *ngIf="listingWithPictureViewMode==2"></appc-listing-list>
+        <appc-listing-grid [listings]="listingsWithPicture"  *ngIf="listingViewMode==1"></appc-listing-grid>
+        <appc-listing-list [listings]="listingsWithPicture"  *ngIf="listingViewMode==2"></appc-listing-list>
+        <div class="clearfix"></div>
         <nz-pagination [nzPageIndex]="1" [nzTotal]="5"></nz-pagination>
       </nz-tab>
     </nz-tabset>
