@@ -36,7 +36,7 @@ export class ListingsComponent implements OnInit {
 
     let res = this.listingService.apiListingSearchGet(undefined, paths.map(c=> c.path), params["s"], params["l"], photoOnly, 
     params["pf"], params["pt"]).subscribe((r) =>{
-      if (params["po"]== true){
+      if (photoOnly){
         this.listingsWithPicture = r.listingsPageList;
       }else{
         this.allListings = r.listingsPageList;
