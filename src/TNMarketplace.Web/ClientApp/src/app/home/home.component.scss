@@ -7,6 +7,12 @@
     overflow: hidden;
   }
 
+.image-responsive {
+    display:block;
+    max-width:100%;
+    height:auto;
+}
+
 .w3-categories {
     padding: 60px 0;
 }
@@ -26,6 +32,7 @@
     margin: 0 1%;
 }
 .focus-grid {
+    width: 90%;
     margin-top: 30px;
 }
   
@@ -353,8 +360,8 @@ i.real-estate {
     float: left;
 }
 .portfolio-description {
-    width: 50%;
-    float: left;
+    width: 48%;
+    float: right;
     padding: 40px 15px 0;
 }
 .portfolio-description h4 a {
@@ -461,3 +468,2379 @@ a:hover, a:focus {
 	cursor: pointer;
 	position: relative;
 }
+
+
+
+
+
+@media screen and (max-width: 479px) {
+    .nav-tabs-responsive {
+      > li {
+        display: none;
+        width: 23%;
+        > a {
+          width: 100%;
+          text-align: center;
+          vertical-align: top;
+        }
+        &.active {
+          width: 54%;
+          &:first-child {
+            margin-left: 23%;
+          }
+        }
+        &.active,
+        &.prev,
+        &.next {
+          display: block;
+        }
+        &.prev,
+        &.next {
+          -webkit-transform: scale(0.9);
+          transform: scale(0.9);
+        }
+        &.next > a,
+        &.prev > a {
+          -webkit-transition: none;
+          transition: none;
+          .text {
+            display: none;
+          }
+        }
+        &.prev > a:after {
+          content: "\e079";
+        }
+        &.next > a:after {
+          content: "\e080";
+        }
+        &.dropdown {
+          > a > .caret {
+            display: none;
+          }
+          > a:after {
+            content: "\e114";
+          }
+          &.active > a {
+            &:after {
+              display: none;
+            }
+            > .caret {
+              display: inline-block;
+            }
+          }
+  
+          .dropdown-menu {
+            &.pull-xs-left {
+              left: 0;
+              right: auto;
+            }
+            &.pull-xs-center {
+              right: auto;
+              left: 50%;
+             
+            }
+            &.pull-xs-right {
+              left: auto;
+              right: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  /*-- responsive media queries --*/
+  
+  @media (max-width: 1440px){
+      .agileits_search input[type="text"] {
+          width: 64%;
+      }
+      #agileinfo_search {
+          width: 27%;
+      }
+      a.w3layouts-explore-all {
+          width: 24%;
+      }
+  }
+  @media (max-width: 1366px){
+      .main-banner {
+          min-height: 380px;
+      }
+      .agile-its-header {
+          padding: 8px 0;
+      }
+      .agileinfo_signin {
+          width: 33%;
+      }
+      .portfolio-description {
+          padding: 30px 15px 0;
+      }
+      .portfolio-description > a span {
+          width: 60%;
+      }
+      .w3ls-slide-text h3 {
+          font-size: 40px;
+      }
+      a.w3layouts-explore-all {
+          width: 25%;
+      }
+      .slider {
+          min-height: 475px;
+          padding-top: 205px;
+      }
+  }
+  @media (max-width: 1280px){
+      .main-banner {
+          min-height: 350px;
+          padding: 90px 0 0 0;
+      }
+      .region-block {
+          padding: 30px 0px;
+      }
+      .portfolio-description h4 a {
+          font-size: 19px;
+      }
+      .portfolio-description {
+          padding: 25px 13px 0;
+      }
+      .portfolio-description > a span {
+          width: 62%;
+          padding: 6px 12px;
+      }
+      a.w3layouts-explore-all {
+          width: 26%;
+      }
+      .slider {
+          min-height: 400px;
+          padding-top: 172px;
+      }
+      .w3ls-slide-text h3 {
+          font-size: 35px;
+      }
+      a.w3layouts-explore {
+          width: 20%;
+      }
+  }
+  @media (max-width: 1080px){
+      .w3-categories h3,.w3l-popular-ads h3,.w3layouts-partners h3 {
+          font-size: 38px;
+      }
+      .logo a {
+          font-size: 47px;
+      }
+      .agileits_search {
+          width: 68%;
+          margin-top:5px;
+      }
+      #agileinfo_search {
+          width: 27%;
+      }
+      .w3ls-portfolio-left {
+          width: 50%;
+      }
+      .agileits_search input[type="text"] {
+          width: 62%;
+      }
+      .w3layouts-partners ul {
+          width: 90%;
+          margin: 10px auto 0;
+      }
+      .w3ls-slide-text h3 {
+          font-size: 33px;
+      }
+      a.w3layouts-explore-all {
+          width: 29%;
+      }
+      .slider {
+          min-height: 372px;
+          padding-top: 160px;
+      }
+      .trending-ads {
+          padding: 50px 0px 70px 0px;
+      }
+      a.w3layouts-explore-all {
+          padding: 8px 40px;
+          font-size: 18px;
+      }
+      .wthree-help {
+          margin: 33px auto 55px;
+      }
+      .agileinfo_signin {
+          width: 42%;
+          padding: 50px 40px;
+      }
+      .category-info {
+          width: 40%;
+      }
+      .banner h1 {
+          font-size: 40px;
+      }
+      .banner p {
+          margin: 8px 0 30px 0;
+          font-size: 16px;
+      }
+      .main-banner {
+          min-height: 280px;
+          padding: 60px 0 0 0;
+      }
+      .focus-image i {
+          font-size: 35px;
+          width: 85px;
+          height: 85px;
+          line-height: 85px;
+      }
+      .focus-grid {
+          padding: 0 10px;
+      }
+      .focus-layout {
+          margin: 3px;
+          padding: 20px 0px 20px 0;
+      }
+      .agileits-footer-bottom {
+          padding: 20px 0 25px;
+      }
+      .wthree-footer-grid p {
+          font-size: 12.5px;
+          line-height: 25px;
+          margin-top: 10px;
+      }
+      .w3-agileits-footer-top {
+          padding: 50px 0;
+      }
+      .agile-info-mobile-app {
+          padding-top: 70px;
+      }
+      .w3-app-left img {
+          width: 85%;
+      }	
+      .w3-app-right {
+          margin-top: 40px;
+          padding-left: 0;
+      }
+      .wthree-footer-grid ul li a {
+          font-size: 12.5px;
+      }
+      .w3-app-right p {
+          font-size: 14px;
+          line-height: 27px;
+      }
+      .col-md-3.biseller-column{
+          padding: 0 10px;
+      }
+      span.price {
+          top: 2px;
+      }
+      .work-section-head p {
+          font-size: 20px;
+          padding: 15px 0 0px 0;
+      }
+      .agile-trend-ads h2 {
+          font-size: 38px;
+      }
+      h4.footer-head {
+          font-size: 26px;
+      }
+      #container .list li .title {
+          font-size: 18px;
+      }
+      #container .list li .adprice {
+          font-size: 20px;
+          margin: 8px 0 0 0;
+      }
+      #container .list li .date {
+          font-size: 13px;
+      }
+      #container .list li .cityname {
+          font-size: 12.5px;
+      }
+      #container .list li p {
+          font-size: 12px;
+          margin-top: 10px;
+      }
+      .item-price:before {
+          left: -58.4%;
+          border-right-width: 68px;
+      }
+      .icon-box {
+          height: 68px;
+      }
+      .agileits-get-us ul li {
+          font-size: 15px;
+      }
+      h5.title {
+          font-size: 18px;
+          height: 57px;
+      }
+      span.adprice {
+          font-size: 20px;
+      }
+      .ads-list select {
+          width: 85%;
+      }
+      #custom-search-input {
+          width: 95%;
+      }
+      .btn-group.bootstrap-select.show-tick button {
+          width: 100%;
+      }
+      .btn-group>.btn:first-child {
+          width: 78%;
+      }
+      .search-hotel input[type="text"] {
+          width: 76%;
+      }
+      .w3-featured-ad-right h4 {
+          font-size: 15px;
+      }
+      h2.w3-head {
+          font-size: 33px;
+          margin: 33px 0;
+      }
+      .product-view h2 {
+          font-size: 25px;
+      }
+      .work-section-grid h4 {
+          font-size: 23px;
+      }
+      .post-ad-form form label {
+          width: 20%;
+          margin-right: 3%;
+      }
+      .sign-in-form {
+          width: 45%;
+      }
+      .sign-up {
+          width: 50%;
+      }
+      
+  }
+  @media (max-width: 1050px){
+      .logo a {
+          margin-left: 10px;
+      }
+      a.w3layouts-explore-all {
+          width: 30%;
+      }
+      a.w3layouts-explore {
+          width: 20%;
+      }
+  }
+  @media (max-width: 1024px){
+      .logo a {
+          font-size: 45px;
+          margin-left: 20px;
+      }
+      .map-w3layouts iframe {
+          height: 370px;
+      }
+      .slider {
+          min-height: 352px;
+          padding-top: 150px;
+      }
+      .w3ls-slide-text h3 {
+          font-size: 30px;
+          margin-bottom: 40px;
+      }
+      a.w3layouts-explore-all {
+          width: 35%;
+          font-size: 18px;
+      }
+      a.w3layouts-explore {
+          width: 20%;
+          font-size: 18px;
+      }
+  }
+  @media (max-width: 991px){
+      .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+          width: 200px;
+      }
+      .w3layouts-partners {
+          padding: 60px 0;
+      }
+      .wthree-help textarea {
+          margin: 30px 0 0 0;
+      }
+      .wthree-help {
+          width: 85%;
+      }
+      h3.icon-subheading {
+          font-size: 26px;
+      }
+      .wthree-help h3 {
+          font-size: 35px;
+      }
+      h3.agileits-icons-title {
+          font-size: 30px;
+      }
+      .agileinfo_signin {
+          width: 44%;
+          padding: 45px 30px;
+      }
+      .w3layouts-partners ul {
+          width: 100%;
+      }
+      .agileits-get-us ul li {
+          font-size: 20px;
+          display: block;
+          width: 60%;
+          margin: 20px auto;
+      }
+      .agileits-get-us {
+          width: 83%;
+          margin: 0 auto 50px;
+      }
+      .wthree-mobile-app {
+          width: 90%;
+          margin: 55px auto 0;
+      }
+      .agileits_search {
+          width: 72%;
+      }
+      a.post-w3layouts-ad {
+          font-size: 14px;
+          padding: 10px 15px;
+      }
+      .agileits_search input[type="text"] {
+          width: 58%;
+          padding: 9px;
+      }
+      #agileinfo_search {
+          width: 30%;
+          padding: 8.5px 2px;
+      }
+      .agileits_search .btn-default {
+          height: 40px;
+      }
+      .logo a {
+          font-size: 44px;
+          margin-left: 0px;
+      }
+      .w3ls-header-right ul li.dropdown {
+          padding: 0 9px;
+      }
+      .w3ls-portfolio-left {
+          float: left;
+      }
+      .w3-app-right p {
+          letter-spacing: 0px;
+      }
+      .logo a {
+          font-size: 45px;
+          margin-left: 12px;
+      }
+      .main-banner {
+          min-height: 260px;
+          padding: 55px 0 0 0;
+      }
+      .banner h1 {
+          font-size: 35px;
+      }
+      .banner p {
+          margin: 6px 0 30px 0;
+          font-size: 15px;
+      }
+      .banner a {
+          font-size: 16px;
+          padding: 8px 20px;
+      }
+      .btn-primary {
+      }
+      .focus-grid {
+        //   width: 30%;
+          float: left;
+          margin: 1.5% 1.5%;
+      }
+      .w3-categories h3 {
+          margin-bottom: 35px;
+      }
+      .w3l-popular-ads h3, .w3layouts-partners h3 {
+          margin-bottom: 45px;
+      }
+      .col-md-3.biseller-column{
+          width:33.333%;
+          float:left;
+      }
+      .col-md-3.biseller-column:nth-child(4){
+          display:none;
+      }
+      .agile-trend-ads h2 {
+          font-size: 35px;
+          margin-bottom: 40px;
+      }
+      .trending-ads {
+          padding: 40px 0 60px 0px;
+      }
+      .col-md-3.wthree-footer-grid {
+          width: 50%;
+          float: left;
+      }
+      ul.location li:nth-child(2) {
+          width: 88%;
+      }
+      .wthree-footer-grid ul li {
+          margin: 10px 0;
+      }
+      h4.footer-head {
+          font-size: 25px;
+          margin-top: 35px;
+      }
+      ul.location li{
+          margin:0;
+      }
+      .w3-agileits-footer-top {
+          padding: 30px 0 50px 0;
+      }
+      .w3-footer-logo a:before {
+          width: 38%;
+      }
+      .w3-footer-logo a:after {
+          width: 38%;
+      }
+      .w3-app-left {
+          width: 40%;
+          float: left;
+      }
+      .w3-app-left img {
+          width: 90%;
+      }
+      .w3-app-right {
+          width: 60%;
+          float: left;
+          margin-top: 10px;
+      }
+      .w3-app-right h3 {
+          font-size: 24px;
+      }
+      .w3-app-right p {
+          font-size: 13px;
+          line-height: 25px;
+          margin: 10px 0 20px 0;
+      }
+      .app-button img {
+          width: 80%;
+      }
+      .agile-info-mobile-app {
+          padding-top: 60px;
+      }
+      .w3-footer-social-icons {
+          margin: 35px 0 15px 0;
+      }
+      .sub-categories ul li a {
+          font-size: 14px;
+      }
+      .category-img {
+          width: 35%;
+      }
+      .category-info {
+          width: 50%;
+      }
+      .category-info h4 {
+          font-size: 20px;
+      }
+      .w3l-featured-ad {
+          width: 32.3333%;
+          float: left;
+          margin: 0 0.5%;
+      }
+      .btn-group.bootstrap-select.show-tick button {
+          
+      }
+      .agileinfo-ads-display.col-md-9 {
+          padding: 0;
+          margin-top: 30px;
+      }
+      .item-price {
+          margin-left: 0;
+          padding: 0 15px;
+          margin-top: 15%;
+      }
+      .item-price:before {
+          left: 33.5%;
+          border-right-width: 90px;
+          top: -205px;
+          transform: rotate(90deg);
+      }
+      .interested,.tips {
+          margin-left: 0;
+          margin-right: 0;
+      }
+      .post-ad-form {
+          padding: 35px 20px;
+      }
+      .post-ad-form form label {
+          width: 22%;
+      }
+      p.post-terms {
+          margin-left: 25%;
+          font-size: 14px;
+          letter-spacing: 0px;
+      }
+      .app-bottom-grid {
+          padding: 30px 20px;
+          width: 44%;
+          margin: 4% 3%;
+          float: left;
+      }
+      .app-bottom-grids {
+          padding: 50px 0;
+      }
+      .mpl {
+          width: 100%;
+      }
+      .app-left h2 {
+          margin: 0px 0 0px 0;
+          font-size: 32px;
+      }
+      .col-md-7.agile-app-image {
+          width: 80%;
+          float: left;
+          margin: 8% 0 0 10%;
+      }
+      .app-devices {
+          width: 50%;
+          margin: 20px 0 0 0;
+      }
+      .app-left p {
+          margin: 5px 0 0px 0;
+          font-size: 15px;
+      }
+      .sign-up {
+          width: 55%;
+      }
+      .feed-back-form input[type="text"],.feed-back-form textarea {
+          width: 70%;
+      }
+      form#filldetails {
+          width: 85%;
+      }
+      .state.col-md-3 {
+          width: 25%;
+          float: left;
+      }
+      .sun-regions.col-md-9 {
+          width: 75%;
+          float: left;
+      }
+      .popular-category {
+          width: 33.333%;
+      }
+      .popular-regions ul li {
+          width: 33.333%;
+      }
+      .popular-category:nth-child(3){
+          margin-bottom:28px;
+      }
+      .tags p {
+          font-size: 1em;
+      }
+      .happy-clients-grid {
+          width: 100%;
+          margin: 4% 0% 0 0;
+      }
+      .client {
+          width: 13%;
+          margin-right: 3%;
+          margin-top: 0%;
+      }
+      .happy-clients-grid {
+          padding: 2em 2em;
+      }
+      .client-info {
+          width: 84%;
+      }
+      .work-section-head p {
+          font-size: 18px;
+          padding: 10px 0 0px 0;
+      }
+      .work-section-grid {
+          margin-top: 6em;
+          position: relative;
+          width: 25%;
+          float: left;
+      }
+      .work-section-grid h4 {
+          font-size: 20px;
+      }
+      .work-section-grid p {
+          margin-bottom: 75px;
+      }
+      .upload {
+          width: 85%;
+      }
+      .w3ls-slide-text h3 {
+          font-size: 28px;
+          margin-bottom: 35px;
+          letter-spacing: 5px;
+      }
+      a.w3layouts-explore-all,a.w3layouts-explore {
+          font-size: 16px;
+      }
+      .slider {
+          min-height: 340px;
+          padding-top: 146px;
+      }
+  }
+  @media (max-width: 900px){
+      .agileinfo_signin {
+          width: 46%;
+      }
+      .main-banner,.banner {
+          min-height: 240px;
+          padding: 50px 0 0 0;
+      }
+      .sign-in-form {
+          width: 50%;
+      }
+      .sign-up {
+          width: 60%;
+      }	
+      a.w3layouts-explore {
+          padding: 7px 40px;
+          font-size: 19px;
+      }
+      .slider {
+          min-height: 309px;
+          padding-top: 130px;
+      }
+  }
+  @media (max-width: 800px){
+      .portfolio-description h4 a {
+          font-size: 18px;
+      }
+      .portfolio-description > a span {
+          width: 60%;
+          padding: 5px 10px;
+          margin: 1.5em 0 0;
+      }
+      .w3-footer-social-icons {
+          margin: 35px 0 20px 0;
+      }
+      .agileits_search {
+          margin-top: 4px;
+      }
+      .w3-categories h3, .w3l-popular-ads h3, .w3layouts-partners h3 {
+          font-size: 36px;
+      }
+      .w3l-popular-ads {
+          padding: 0 0 40px 0;
+      }
+      .agileinfo_signin {
+          width: 56%;
+      }
+      .map-w3layouts iframe {
+          height: 350px;
+      }
+      .logo a {
+          font-size: 43px;
+          margin-left: 22px;
+      }
+      .w3-app-right h3 {
+          font-size: 22px;
+          line-height: 32px;
+      }
+      .sign-in-form {
+          width: 60%;
+      }
+      .sign-up {
+          width: 70%;
+      }
+      .tags p {
+          font-size: 0.95em;
+      }
+      .nbs-flexisel-nav-right {
+          right: -25px;
+      }
+      .nbs-flexisel-nav-left {
+          left: -25px;
+      }
+      .slider {
+          min-height: 275px;
+          padding-top: 115px;
+      }
+      a.w3layouts-explore-all {
+          width: 40%;
+          font-size: 15px;
+      }
+      a.w3layouts-explore {
+          width: 26%;
+          font-size: 16px;
+      }
+  }
+  @media (max-width: 768px){
+      .portfolio-description h4 a {
+          font-size: 17px;
+      }
+      .logo a {
+          margin-left: 35px;
+      }
+      a.w3layouts-explore {
+          font-size: 18px;
+      }
+      .portfolio-description {
+          padding: 20px 13px 0;
+      }
+      .agileits-get-us ul li {
+          font-size: 18px;
+      }
+      .wthree-help h3 {
+          font-size: 32px;
+      }
+      .wthree-help textarea {
+          margin: 20px 0 0 0;
+      }
+      .sign-in-wrapper {
+          padding: 60px 0;
+      }
+      .product-desc {
+          margin-top: 0;
+      }
+      .w3ls-slide-text h3 {
+          font-size: 26px;
+          margin-bottom: 30px;
+          letter-spacing: 4px;
+      }
+      .slider {
+          min-height: 265px;
+          padding-top: 110px;
+      }
+  }
+  @media (max-width: 736px){
+      .agileits_search {
+          width: 100%;
+      }
+      .logo {
+          float: none;
+          text-align: center;
+      }
+      .logo a {
+          margin-left: 0;
+      }
+      a.post-w3layouts-ad {
+          padding: 10px 20px;
+      }
+      .menu-wrap {
+          width: 270px;
+      }
+      .portfolio-description {
+          padding: 8px 10px 0;
+      }
+      .w3l-popular-ads h3, .w3layouts-partners h3 {
+          margin-bottom: 30px;
+      }
+      .agile-its-header {
+          padding: 10px 0 12px;
+      }
+      .wthree-mobile-app {
+          width: 100%;
+          margin: 50px auto 0px;
+      }
+      .app {
+          padding: 45px 0px;
+      }
+      .w3layouts-partners h3:after, .w3layouts-partners h3:before {
+          width: 150px;
+          margin: 0 2%;
+      }
+      .select-box {
+          padding: 30px 15px;
+      }
+      .slider {
+          min-height: 255px;
+          padding-top: 105px;
+      }
+      a.w3layouts-explore {
+          font-size: 16px;
+          width: 27%;
+      }
+  }
+  @media (max-width: 667px){
+      .portfolio-description h4 a {
+          font-size: 15px;
+      }
+      .w3-app-left img {
+          width: 95%;
+      }
+      .w3-app-right p {
+          font-size: 11.5px;
+      }
+      .w3layouts-partners h3:after, .w3layouts-partners h3:before, .agile-trend-ads h2:before, .agile-trend-ads h2:after, .w3l-popular-ads h3:before, .w3l-popular-ads h3:after, .w3-categories h3:before, .w3-categories h3:after {
+          width: 120px;
+          margin: 0 3%;
+      }
+      .agileits-dwld-app h6 {
+          font-size: 20px;
+      }
+      .w3-footer-logo a:before, .w3-footer-logo a:after {
+          width: 35%;
+      }
+      .post-ad-form form label {
+          width: 26%;
+      }
+      .agileinfo_signin {
+          width: 61%;
+          padding: 35px 25px;
+      }
+      .wthree-help h3 {
+          font-size: 30px;
+      }
+      .wthree-mobile-app form input.text {
+          width: 68%;
+      }
+      .w3ls-slide-text h3 {
+          font-size: 23px;
+          margin-bottom: 25px;
+          letter-spacing: 3px;
+      }
+      .slider {
+          min-height: 230px;
+          padding-top: 93px;
+      }
+      a.w3layouts-explore-all {
+          width: 50%;
+          font-size: 15px;
+      }
+  }
+  @media (max-width: 640px){
+      .main-banner,.banner {
+          min-height: 210px;
+          padding: 40px 0 0 0;
+      }
+      .logo a {
+          font-size: 47px;
+      }
+      a.account {
+          margin-top: 19px;
+          font-size: 14px;
+          padding: 5px 19px;
+      }
+      span.active.uls-trigger,.btn-primary {
+          font-size: 13px;
+          margin-top: 0px;
+      }
+      .header {
+          padding: 5px 0;
+      }
+      .banner h1 {
+          font-size: 33px;
+      }
+      .banner p {
+          margin: 5px 0 30px 0;
+          font-size: 14px;
+      }
+      .banner a {
+          font-size: 16px;
+          padding: 7px 18px;
+      }
+      .focus-layout h4 {
+          font-size: 17px;
+          height: 35px;
+      }
+      .categories {
+          padding: 30px 0;
+      }
+      .w3-ad-info h5 {
+          font-size: 16px;
+      }
+      .w3-ad-info span {
+          font-size:13px;
+      }
+      .agileits-footer-bottom {
+          padding: 20px 0 25px;
+      }
+      .col-md-3.wthree-footer-grid:nth-child(2){
+          margin-bottom:20px;
+      }
+      .app-button {
+          float: left;
+          width: 45%;
+      }
+      .app-button img {
+          width: 90%;
+      }
+      .w3-app-right {
+          margin-top: 0px;
+      }
+      .w3-app-left img {
+          width: 95%;
+          margin-top: 10%;
+      }
+      .w3-app-right p {
+          font-size: 12.5px;
+          line-height: 22px;
+          margin: 6px 0 20px 0;
+      }
+      .w3-footer-logo a {
+          font-size: 35px;
+      }
+      h2.w3-head {
+          font-size: 30px;
+      }
+      .post-ad-form form label {
+          font-size: 13px;
+      }
+      .post-ad-form form label {
+          width: 23%;
+      }	
+      p.post-terms {
+          margin-left: 26%;
+          line-height: 1.7;
+      }
+      .post-ad-form input[type="submit"] {
+          padding: 8px 40px;
+          font-size: 19px;
+      }
+      .work-section-head p {
+          font-size: 15px;
+          padding: 0px 0 0px 0;
+      }
+      .work-section-grid h4 {
+          font-size: 17px;
+          margin-bottom: 10px;
+      }
+      .work-section-grid p {
+          margin-bottom: 60px;
+      }
+      .ads-list {
+          width: 100%;
+          float: left;
+      }
+      .ads-list:nth-child(2){
+          margin:20px 0;
+      }
+      .ads-list select {
+          width: 48.5%;
+      }
+      .btn-group.bootstrap-select.show-tick button {
+          width: 100%;
+      }	
+      #custom-search-input {
+          width: 48.5%;
+      }
+      .sitemap-region-grid {
+          width: 50%;
+      }
+      .feed-back h3 {
+          font-size: 22px;
+      }
+      .feed-back-form span {
+          font-size: 16px;
+      }
+      .feed-back-form span {
+          font-size: 14px;
+      }
+      form .field input[type="text"], form .field textarea {
+          padding: 13px 0;
+          padding-left: 22%;
+      }
+      form .field label {
+          padding: 12px 0;
+      }
+      .contact section {
+          margin: 30px auto 45px;
+      }
+      form .field label {
+          font-size: 14px;
+      }
+      form.submit input[type="submit"] {
+          padding: 8px 40px;
+          font-size: 18px;
+      }
+      .upload h3.tlt {	
+          margin-top: 11px;
+          font-size: 20px;
+      }
+      .tags p {
+          font-size: 0.9em;
+      }
+      .sign-in-form {
+          width: 75%;
+      }
+      .sign-up {
+          width: 80%;
+      }
+      span.price {
+          font-size: 14px;
+          padding: 7px 12px;
+          position: absolute;
+          letter-spacing: 1px;
+      }
+      .col-md-3.biseller-column {
+          padding: 0 8px;
+      }
+      .panel-body p {
+          font-size: 13px;
+          line-height: 27px;
+      }
+      .panel-title {
+          font-size: 18px;
+      }
+      .w3ls-portfolio-left {
+          float: none;
+          width: 70%;
+          margin: 0 auto;
+      }
+      .portfolio-description h4 a {
+          font-size: 21px;
+      }
+      .portfolio-description {
+          padding: 20px 20px 0;
+      }
+      .w3layouts-partners h3:after, .w3layouts-partners h3:before,.agile-trend-ads h2:before, .agile-trend-ads h2:after,.w3l-popular-ads h3:before, .w3l-popular-ads h3:after,
+      .w3-categories h3:before, .w3-categories h3:after	{
+          width: 110px;
+          margin: 0 3%;
+      }
+      .w3ls-header-right {
+          width: 57%;
+      }
+      .w3ls-header-right ul li.dropdown {
+          padding: 0 5px;
+      }
+      .w3layouts-partners ul li {
+          width: 24%;
+          margin: 20px 3%;
+      }
+      .w3-categories h3, .w3l-popular-ads h3, .w3layouts-partners h3 {
+          font-size: 34px;
+      }
+      .agileinfo_signin {
+          width: 64%;
+          padding: 40px 25px;
+      }
+      .w3ls-header-right ul li a {
+          font-size: 13px;
+      }
+      .w3ls-slide-text h3 {
+      }
+      .slider {
+          min-height: 220px;
+          padding-top: 88px;
+      }
+      a.w3layouts-explore {
+          font-size: 15px;
+          width: 32%;
+      }
+      a.w3layouts-explore-all {
+          
+      }
+      .wthree-mobile-app form input.text {
+          font-size: 16px;
+          width: 68%;
+      }
+      .wthree-mobile-app form input[type="submit"] {
+          padding: 13px 22px;
+      }
+      /*--typo--*/
+      .table td, .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+          padding: 8px !important;
+      }
+      .btn-group-lg>.btn, .btn-lg {
+          padding: 10px 8px;
+      }
+      .but_list h1 {
+          font-size: 1.6em;
+      }
+      .but_list h2 {
+          font-size: 1.5em;
+      }
+      .but_list h2 {
+          font-size: 1.4em;
+      }
+      /*--typo--*/
+  }
+  @media (max-width: 600px){
+      .w3ls-header-right {
+          width: 59%;
+      }
+      .agileinfo_signin {
+          width: 69%;
+          padding: 30px 25px;
+      }
+      .agileinfo_signin h3 {
+          font-size: 28px;
+      }
+      .modal-lg {
+          width: 550px;
+      }
+      .wthree-mobile-app form input.text {
+          width: 67%;
+      }
+      .agileits-get-us ul li {
+          width: 75%;
+      }
+      .app-bottom-grid p {
+          font-size: 14px;
+      }
+      .col-md-7.agile-app-image {
+          width: 90%;
+          margin: 8% 0 0 5%;
+      }
+      .wthree-help {
+          width: 95%;
+      }
+      .slider {
+          min-height: 205px;
+          padding-top: 83px;
+      }
+      .w3ls-slide-text h3 {
+          font-size: 23px;
+          margin-bottom: 20px;
+          letter-spacing: 2px;
+          padding: 7px 0 7px 0px;
+      }
+      a.w3layouts-explore-all,a.w3layouts-explore {
+          font-size: 14px;
+      }
+  }
+  @media (max-width: 568px){
+      .w3ls-header-right {
+          width: 63%;
+      }	
+      .logo a {
+          font-size: 45px;
+      }
+      .w3-app-right {
+          width: 100%;
+          padding:30px 0;
+      }
+      .w3ls-portfolio-left {
+          width: 75%;
+      }
+      .w3-app-left img {
+          width: 45%;
+          margin-top: 0;
+      }
+      .w3-app-left {
+          width: 100%;
+          float: none;
+          text-align: center;
+      }
+      .modal-lg {
+          width: 500px;
+      }
+      .w3layouts-partners h3:after, .w3layouts-partners h3:before, .agile-trend-ads h2:before, .agile-trend-ads h2:after, .w3l-popular-ads h3:before, .w3l-popular-ads h3:after, .w3-categories h3:before, .w3-categories h3:after {
+          width: 95px;
+      }
+      .wthree-help h3 {
+          font-size: 28px;
+      }
+      .wthree-mobile-app form input.text {
+          width: 65%;
+      }
+      .view-controls-list {
+          width: 25%;
+      }
+  }
+  @media (max-width: 480px){
+      .w3ls-header {
+          padding: 8px 5px 10px 10px;
+      }
+      .w3ls-header-right ul li.dropdown {
+          padding: 0 3px;
+      }
+      .w3ls-header-right ul li a i.fa {
+          margin-right: 0px;
+      }
+      i.fa.fa-language, i.fa.fa-globe {
+          margin-right: 4px!important;
+      }
+      .w3ls-header-right {
+          width: 65%;
+      }
+      .main-banner,.banner {
+          min-height: 180px;
+          padding: 30px 0 0 0;
+      }
+      .focus-image i {
+          font-size: 35px;
+          width: 75px;
+          height: 75px;
+          line-height: 75px;
+      }
+      .banner h1 {
+          font-size: 26px;
+      }
+      .banner p {
+          margin: 5px 0 25px 0;
+          font-size: 13px;
+      }
+      .banner a {
+          font-size: 15px;
+          padding: 6px 16px;
+      }
+      .col-md-3.biseller-column {
+          width:50%;
+      }
+      .col-md-3.biseller-column:nth-child(3){
+          display:none;
+      }
+      .col-md-3.wthree-footer-grid {
+          width: 100%;
+      }
+      h4.footer-head {
+          margin-bottom: 10px;
+      }
+      ul.location li:nth-child(2) {
+          width: 91%;
+          margin-top: 2px;
+      }
+      .w3-footer-logo a:before, .w3-footer-logo a:after {
+          width: 31%;
+      }
+      .agileits_search form {
+          float: none;
+          width: 100%;
+          margin-bottom:15px;
+      }
+      a.post-w3layouts-ad {
+          padding: 10px 20px;
+          float: none;
+          text-align: center;
+          width: 50%;
+          display: block;
+          margin-left: 25%;
+      }
+      .w3ls-slide-text h3 {
+          font-size: 20px;
+          letter-spacing: 2px;
+      }
+      .w3layouts-partners h3:after, .w3layouts-partners h3:before, .agile-trend-ads h2:before, .agile-trend-ads h2:after, .w3l-popular-ads h3:before, .w3l-popular-ads h3:after, .w3-categories h3:before, .w3-categories h3:after {
+          width: 70px;
+      }
+      .w3-categories h3, .w3l-popular-ads h3, .w3layouts-partners h3, .agile-trend-ads h2 {
+          font-size: 32px;
+      }
+      .col-md-3.wthree-footer-grid:nth-child(2) {
+          margin-bottom: 0px;
+      }
+      .focus-grid {
+        //   width: 45%;
+          margin: 2.5% 2.5%;
+      }
+      .w3ls-portfolio-left {
+          width: 90%;
+      }
+      .w3layouts-partners ul li {
+          width: 36%;
+          margin: 20px 6%;
+      }
+      .focus-layout {
+          padding: 16px 0px 16px 0;
+      }
+      .trending-ads {
+          padding: 30px 0 50px 0px;
+      }
+      .w3-agileits-footer-top {
+          padding: 10px 0 30px 0;
+      }
+      .logo a {
+          font-size: 45px;
+      }
+      .logo {
+          float: none;
+          width: 100%;
+          text-align: center;
+      }
+      .header-right {
+          width: 100%;
+          text-align: center;
+          margin: 0 auto;
+      }
+      .header {
+          padding: 0px 0 5px;
+      }
+      span.active.uls-trigger, .btn-primary {
+          margin-top: 0px;	
+      }
+      a.account {
+          margin-top: 10px;
+          font-size: 15px;
+          padding: 0;
+          background: transparent;
+          color: #6D6D6D;
+      }
+      a.account:hover {
+          background: transparent;
+          color: #6D6D6D;		
+      }
+      .w3-app-right {
+          margin-top: 20px;
+          width: 100%;
+          padding: 20px 0 40px 0;
+          padding-left: 15px;
+      }
+      .app-button {
+          width: 35%;
+      }
+      .mobile-app {
+          padding: 30px 0;
+      }
+      .agile-info-mobile-app {
+          padding-top: 35px;
+      }
+      .w3-app-left img {
+          width: 100%;
+          margin-top: 10%;
+          border-bottom: 1px solid #788B9E;
+      }
+      .w3-app-left {
+          width: 60%;
+          margin-left: 20%;
+      }
+      .copyrights p, .diff p {
+          font-size: 13px;
+      }
+      .graphs {
+          padding: 30px 0 50px;
+      }
+      .sign-in-form {
+          width: 90%;
+      }
+      .sign-in-form input[type="submit"] {
+          font-size: 16px;
+          padding: 8px 0;
+          width: 38%;
+      }
+      .new_people a {
+          padding: 10px 25px;
+          font-size: 15px;
+      }
+      .sign-up h2 {
+          margin: 0 0 0.5em;
+      }
+      .sign-up {
+          width: 90%;
+      }
+      .sign-up2 {	
+          width: 65%;
+      }
+      .sign-up1 {
+          width: 35%;
+      }
+      .modal-lg {
+          width: 420px;
+          padding: 15px 27px;
+      }
+      .modal-title {
+          font-size: 26px;
+      }
+      .modal-header {
+          padding: 10px 0 15px 0;
+      }
+      .sign-in-wrapper {
+          padding: 50px 0;
+      }
+      .agileinfo_signin input[type="text"], .agileinfo_signin input[type="tel"], .agileinfo_signin input[type="email"], .agileinfo_signin input[type="password"] {
+          font-size: 13px;
+      }
+      .agileinfo_signin {
+          width: 80%;
+      }
+      .wthree-help textarea {
+          font-size: 15px;
+          height: 140px;
+      }
+      .wthree-mobile-app form input.text {
+          width: 100%;
+      }
+      .wthree-mobile-app form input[type="submit"] {
+          margin-top: 10px;
+          margin-left:25%;
+          width:50%;
+      }
+      .app-bottom-grid p {
+          font-size: 13px;
+      }	
+      .agileits-get-us ul li {
+          width: 90%;
+      }
+      .map-w3layouts h3 {
+          margin: 0 0 20px 0;
+      }
+      .map-w3layouts iframe {
+          height: 300px;
+      }
+      .btn-group>.btn:first-child {
+          width: 100%;
+      }
+      h3.agileits-icons-title {
+          font-size: 25px;
+      }
+      h3.icon-subheading {
+          font-size: 20px;
+      }
+      .icons .bs-glyphicons li {
+          width: 45%;
+          margin: 2%;
+      }
+      button.close {
+          top: -10px;
+          right: -20px;
+      }
+      h2.w3-head {
+          font-size: 28px;
+          margin: 25px 0;
+      }
+      .state h3 {
+          font-size: 19px;
+      }
+      .sun-regions ul li {
+          width: 32%;
+          margin: 0 0 5px 0;
+      }
+      .sun-regions ul li a {
+          font-size: 13px;
+      }
+      .region-block {
+          padding: 25px 0px;
+      }
+      .post-ad-form form label {
+          width: 100%;
+          display: block;
+          text-align: left;
+          font-size: 14px;
+          margin: 0 0 5px 0;
+      }
+      .post-ad-form input[type="text"],.post-ad-form textarea {
+          padding: 9px 9px 9px 9px;
+          width: 100%;
+          margin-bottom: 20px;
+      }
+      p.post-terms {
+          margin-left: 0%;
+      }
+      .post-ad-form form select {
+          width: 100%;
+          margin-bottom: 20px;
+      }
+      .photos-upload-view {
+          width: 100%;
+      }
+      .post-ad-form input[type="submit"] {
+          padding: 6px 30px;
+          font-size: 18px;
+      }
+      .sub-categories ul li {
+          margin: 10px 0;
+          width:100%;
+      }
+      .w3l-featured-ad {
+          width: 46%;
+          float: left;
+          margin: 2% 2%;
+      }
+      .w3l-featured-ad:nth-child(3){
+          display:none;
+      }
+      .ads-list select,#custom-search-input {
+          width: 69.5%;
+      }
+      .search-hotel input[type="text"] {
+          width: 86%;
+      }
+      #container .list li {
+          padding: 10px;
+      }
+      #container .grid li {
+          width: 46%;
+      }
+      .view-controls-list,.view-controls-grid {
+          width: 30%;
+      }
+      #container .list li .list-right {
+          width: 100%;
+      }
+      #container .list li .list-left {
+          width: 72%;
+          margin-left: 3%;
+      }
+      #container .list li img {
+          width: 25%;
+      }
+      h5.title {
+          height: 40px;
+      }
+      .product-view h2 {
+          font-size: 22px;
+      }
+      .item-price:before {
+          left: 31.5%;
+          border-right-width: 60px;
+          top: -190px;
+      }
+      .work-section-grid {
+          width: 50%;
+          MARGIN-TOP:5EM;
+      }
+      span.arrow2 {
+          DISPLAY: NONE;
+      }
+      .work-section-grid h4 {
+          margin-top: 15px;
+          font-size: 18px;
+      }
+      .happy-clients-head h3 {
+          font-size: 30px;
+      }
+      .happy-clients-head p {
+          font-size: 15px;
+          margin-top: 10px;
+      }
+      .happy-clients-grids {
+          margin-top: 2.5em;
+      }
+      .happy-clients {
+          padding: 40px 0;
+      }
+      .happy-clients-grid p {
+          font-size: 12.5px;
+      }
+      .sitemap-regions h4 {
+          font-size: 22px;
+      }
+      p.m_13 {
+          font-size: 13px;
+          line-height: 26px;
+      }
+      .feed-back-form input[type="text"], .feed-back-form textarea {
+          width: 90%;
+      }
+      form#filldetails {
+          width: 90%;
+      }
+      .upload {
+          width: 90%;
+      }
+      form.submit input[type="submit"] {
+          padding: 7px 35px;
+          font-size: 17px;
+      }
+      .popular-regions ul li {
+          width: 50%;
+      }	
+      .popular-category {
+          width: 50%;
+      }
+      .tags p {
+          font-size: 0.85em;
+      }
+      .privacy p {
+          font-size: 13px;
+      }
+      .app-bottom-grid {
+          padding: 20px 10px;
+          width: 46%;
+          margin: 2% 2%;
+      }
+      .mpl {
+          width: 100%;
+          margin-left:0;
+      }
+      .app-left h2 {
+          font-size: 27px;
+          line-height: 30px;
+      }
+      .app-devices a img {
+          border-bottom: none;
+      }
+      .app-devices h5 {
+          margin-bottom: 0;
+      }
+      .app-left p {
+          margin: 10px 0 0px 0;
+          font-size: 14px;
+      }
+      .app-bottom-grid h3 {
+          font-size: 26px;
+          margin: 15px 0 0px 0;
+      }
+      .col-md-7.agile-app-image {
+          width: 100%;
+          margin: 12% auto 0;
+          padding: 0;
+      }
+      .app {
+          padding: 40px 0px;
+      }
+      a.w3layouts-explore-all, a.w3layouts-explore {
+          padding: 6px 0;
+      }
+      /*--typo--*/
+      h3.head-top {
+          font-size: 1.8em;
+      }
+      .btn{
+          margin-bottom:0em;
+      }
+      .modal-dialog {
+          width: 390px;
+      }
+      .grid_3 {
+          background-color: #fff;
+          padding: 1em;
+      }
+      div#home {
+          padding: 0em 0 0;
+      }
+      .grid_3 p {
+          margin-bottom: 0em;
+      }
+      .label {
+          font-weight: 400;
+          line-height: 2.2em;
+      }
+      .but_list h1, .but_list h2, .but_list h3 {
+          margin-bottom: 0em;
+      }
+       .but_list h4, .but_list h5, .but_list h6 {
+          margin-bottom: 1em;
+      }
+      .pagination {
+          margin: 10px 0;
+      }
+      span.w3layouts-agileinfo {
+          width: 26%;
+      }
+      .product-details p {
+          width: 71%;
+      }
+  }
+  @media (max-width: 414px){
+      .w3ls-header-right {
+          width: 100%;
+          text-align: center;
+          margin-top:10px;
+      }
+      .w3ls-header {
+          padding: 10px 0px 13px 0px;
+      }
+      .w3ls-header-right ul li a i.fa {
+          margin-right: 3px;
+      }
+      i.fa.fa-language, i.fa.fa-globe {
+          margin-right: 6px!important;
+      }
+      .w3ls-header-left {
+          float: none;
+          width: 100%;
+          text-align: center;
+      }
+      .agileits_search form {
+          width: 100%;
+      }
+      .agileits_search input[type="text"] {
+          width: 57%;
+      }
+      .header-right {
+          width: 100%;
+      }
+      .header-right {
+          width: 95%;
+      }
+      .header {
+          padding: 3px 0 5px;
+      }
+      .main-banner, .banner {
+          padding: 15px 0 0 0;
+      }
+      .portfolio-description h4 a {
+          font-size: 17px;
+          line-height: 20px;
+      }
+      .focus-layout {
+          padding: 16px 5px 16px 5px;
+      }
+      .app-button {
+          width: 45%;
+      }
+      ul.location li:nth-child(2) {
+          width: 89%;
+      }
+      .copyrights p {
+          font-size: 13px;
+          line-height: 25px;
+      }
+      .w3layouts-partners h3:after, .w3layouts-partners h3:before, .agile-trend-ads h2:before, .agile-trend-ads h2:after, .w3l-popular-ads h3:before, .w3l-popular-ads h3:after, .w3-categories h3:before, .w3-categories h3:after {
+          width: 50px;
+      }
+      .agileits-get-us {
+          width: 95%;
+      }
+      .agileits-get-us ul li {
+          width: 90%;
+          font-size: 16px;
+      }
+      .agileinfo_signin h6 {
+          font-size: 14px;
+          margin-top: 25px;
+      }
+      .agileinfo_signin input[type="submit"] {
+          margin: 1em 0 0;
+      }
+      .w3-footer-logo a:before, .w3-footer-logo a:after {
+          width: 28%;
+      }
+      .portfolio-description > a span {
+          margin: 1em 0 0;
+      }
+      .w3-app-left {
+          width: 70%;
+          margin-left: 15%;
+      }
+      .uls-wide {
+          min-width: 380px;
+      }
+      .modal-lg {
+          width: 380px;
+          padding: 15px 27px;
+      }
+      span.checkicon-box {
+          width: 56%;
+      }
+      .signin-rit p {
+          margin-top: 4px;
+      }
+      .sign-up1 {
+          width: 100%;
+      }
+      .sign-up2 {
+          width: 100%;
+      }
+      .sign-up2 input[type="text"],.sign-up2 input[type="password"],.sign-up2 input[type="password"] {
+          margin: 0 0 0 0;
+      }
+      .sign-up1 h4 {
+          margin: 1.6em 0 0.5em;
+      }
+      .sub_home_left {
+          width: 35%;
+      }
+      .sign-up input[type="submit"] {
+          font-size: 1.2em;
+      }
+      .category-info h4 {
+          font-size: 19px;
+      }
+      .category-info {
+          width: 59%;
+      }
+      .category-img {
+          width: 41%;
+      }
+      .category {
+          padding: 20px 15px;
+      }
+      .ads-list select, #custom-search-input {
+          width: 84.5%;
+      }
+      .w3l-featured-ad {
+          width: 75%;
+          margin: 2% 12.5%;
+      }
+      .w3-featured-ad-left {
+          width: 36%;
+      }
+      .view-controls-list, .view-controls-grid {
+          width: 33%;
+      }
+      .happy-clients-grid {
+          padding: 1.5em 1em;
+      }
+      .client {
+          width: 20%;
+      margin-right: 5%;
+      }
+      .client-info {
+          width: 75%;
+      }
+      #drop a {
+          padding: 9px 20px;
+          font-size: 15px;
+          letter-spacing: 1px;
+      }
+      .state.col-md-3 {
+          width: 100%;
+          margin-bottom: 5%;
+      }
+      .sun-regions ul li {
+          width: 49%;
+      }
+      .item-price:before {
+          left: 27.5%;
+          border-right-width: 49px;
+          top: -185px;
+      }
+      .search-hotel input[type="text"] {
+          width: 84%;
+      }
+      .panel-title {
+          font-size: 17px;
+      }
+      .panel-heading {
+          padding: 15px 10px;
+      }
+      .app-devices {
+          width: 70%;
+      }
+      .app-bottom-grid {
+          padding: 20px 20px 25px;
+          width: 100%;
+          margin: 2% 0%;
+      }
+      span.w3layouts-agileinfo {
+          width: 25%;
+      }
+      .product-details p {
+          width: 73%;
+      }
+  }
+  @media (max-width: 384px){
+      .agileits_search input[type="text"], #agileinfo_search {
+          font-size: 12px;
+      }
+      #agileinfo_search {
+          width: 29%;
+          padding: 8px 2px;
+      }
+      .agileits_search .btn-default {
+          height: 37px;
+      }
+      a.post-w3layouts-ad {
+          padding: 9px 20px;
+          width: 44%;
+          margin-left: 28%;
+      }
+      a.w3layouts-explore-all {
+      }
+      a.w3layouts-explore-all {
+          width: 60%;
+      }
+      .w3ls-slide-text h3 {
+          font-size: 20px;
+          letter-spacing: 0px;
+      }
+      .w3ls-slide-text h3 {
+      }
+      .portfolio-description p {
+          font-size: 12.5px;
+      }
+      .portfolio-description {
+          padding: 10px 10px 0;
+      }
+      .w3-categories h3, .w3l-popular-ads h3, .w3layouts-partners h3, .agile-trend-ads h2 {
+          font-size: 30px;
+      }
+      .w3layouts-partners {
+          padding: 50px 0;
+      }
+      .w3-categories h3 {
+          margin-bottom: 20px;
+      }
+      .agileinfo-dwld-app h6 {
+          margin-top: 30px;
+          letter-spacing: 1px;
+      }
+      .wthree-help textarea {
+          width: 90%;
+      }
+      .forgot a,.agileinfo_signin label.checkbox  {
+          font-size: 13px;
+      }
+      .agileinfo_signin {
+          width: 85%;
+          padding: 25px 20px;
+      }
+      .agileits-get-us ul li i.fa {
+          font-size: 25px;
+          margin-bottom: 15px;
+      }
+      .agileits-get-us ul li {
+          font-size: 15px;
+          padding: 17px 0px;
+      }
+      .view-controls-list, .view-controls-grid {
+          width: 100%;
+      }
+      .sort {
+          width: 100%;
+          margin-bottom: 10px;
+      }
+      span.total strong {
+          font-size: 16px;
+      }
+      .modal-lg {
+          width: 350px;
+          padding: 10px 27px;
+      }
+      .focus-layout h4 {
+          font-size: 16px;
+      }
+      .wthree-help h3 {
+          font-size: 26px;
+      }
+  }
+  @media (max-width: 375px){
+      a.account {
+          font-size: 14px;
+      }
+      .header-right {
+          width: 100%;
+      }
+      .btn-primary {
+      }
+      .w3l-featured-ad {
+          width: 80%;
+          margin: 2% 10%;
+      }
+      .ads-list select, #custom-search-input {
+          width: 95.5%;
+      }
+      .breadcrumb {
+          padding: 8px 10px;
+      }
+      .breadcrumb>li {
+          font-size: 12px;
+      }
+      .breadcrumb>li+li:before {
+          padding: 0 3px;
+      }
+      .sitemap-region-grid {
+          width: 100%;
+      }
+      span.total {
+          font-size: 12px;
+          padding: 8px 15px;
+          margin: 3% 3%;
+          width: 94%;
+      }
+      .product-view h2 {
+          font-size: 19px;
+      }
+      .item-price:before {
+          left: 24.5%;
+          border-right-width: 44px;
+          top: -182px;
+      }
+      .faq-list_h {
+          margin: 0 0 10px;
+          padding: 0 0 0 25px;
+      }
+      .popular-regions ul li {
+          width: 100%;
+      }
+      .popular-category {
+          width: 100%;
+      }
+      .app-left h2 {
+          font-size: 23px;
+          line-height: 28px;
+      }
+      .app-devices h5 {
+          font-size: 20px;
+      }
+      .app-devices {
+          width: 85%;
+      }
+      .view-controls-list, .view-controls-grid {
+          width: 100%;
+      }
+      .pagination-sm>li>a, .pagination-sm>li>span {
+          padding: 5px 8px;
+          font-size: 11px;
+      }
+      .product-view p {
+          word-spacing: 1px;
+      }
+      .uls-wide {
+          min-width: 340px;
+      }
+      .modal-lg {
+          width: 340px;
+      }
+      .modal-title {
+          font-size: 24px;
+      }
+      .signin {
+          padding: 2em 1.5em;
+      }
+      .sitemap-region ul {
+          margin-left: 0;
+      }
+      .agileits_search input[type="text"] {
+          width: 56%;
+      }
+      .wthree-mobile-app form input[type="submit"] {
+          padding: 13px 0px;
+      }
+      .wthree-mobile-app form input[type="submit"] {
+          margin-left: 20%;
+          width: 60%;
+      }
+      .wthree-mobile-app {
+          margin: 35px auto 0px;
+      }
+      form#filldetails {
+          width: 100%;
+      }
+      .icon-box {
+          height: 50px;
+          width: 100%;
+          margin: 0.5em 0 0.5em 0;
+      }
+      .focus-layout {
+          padding: 16px 0px 16px 0px;
+      }
+      .slider {
+          min-height: 187px;
+          padding-top: 75px;
+      }
+  }
+  @media (max-width: 320px){
+      .main-banner, .banner {
+          min-height: 175px;
+      }
+      .logo a {
+          font-size: 43px;
+      }
+      .agileits_search .btn-default {
+          width: 35px;
+      }
+      #agileinfo_search {
+          width: 31%;
+      }
+      a.post-w3layouts-ad {
+          width: 50%;
+          margin-left: 25%;
+      }
+      a.account {
+          font-size: 14px;
+          text-align: right;
+          float: none;
+          display: block;
+      }
+      a.w3layouts-explore-all {
+          padding: 8px 20px;
+          font-size: 15px;
+          letter-spacing: 0px;
+      }
+      .w3ls-slide-text h3 {
+      }
+      a.w3layouts-explore {
+      }
+      a.w3layouts-explore {
+          width: 45%;
+      }
+      a.w3layouts-explore-all {
+          width: 80%;
+      }
+      .w3ls-slide-text h3 {
+          font-size: 19px;
+      }
+      .w3-categories h3, .w3l-popular-ads h3, .w3layouts-partners h3, .agile-trend-ads h2 {
+          font-size: 28px;
+      }
+      .w3layouts-partners h3:after, .w3layouts-partners h3:before, .agile-trend-ads h2:before, .agile-trend-ads h2:after, .w3l-popular-ads h3:before, .w3l-popular-ads h3:after, .w3-categories h3:before, .w3-categories h3:after {
+          width: 25px;
+      }
+      .focus-grid {
+        //   width: 80%;
+          margin: 5% 10%;
+      }
+      .w3ls-portfolio-left {
+          width: 100%;
+      }
+      .portfolio-description > a span {
+          margin: 0.5em 0 0;
+          width: 68%;
+          padding: 4px 10px;
+          font-size: 13px;
+      }
+      .w3layouts-partners ul li {
+          width: 43%;
+          margin: 20px 3%;
+      }
+      .w3l-popular-ads h3, .w3layouts-partners h3 {
+          margin-bottom: 20px;
+      }
+      .w3-app-left {
+          width: 90%;
+          margin-left: 5%;
+      }
+      .w3-app-right {
+          padding-left: 5px;
+      }
+      .wthree-help form input[type="submit"] {
+          width: 50%;
+      }
+      .wthree-help h3 {
+          font-size: 24px;
+      }
+      span.w3layouts-agileinfo {
+          width: 28%;
+      }
+      .product-details p {
+          width: 69%;
+      }
+      span.active.uls-trigger, .btn-primary {
+          text-align: right;
+          float: none;
+          display: block;
+          margin-right:0;
+          width: 100%;
+      }
+      .selectregion {
+          float: none;
+      }
+      .select-box {
+          padding: 25px 15px;
+          margin: 35px 0;
+      }
+      .btn-group.bootstrap-select.show-tick button {
+          width: 93%;
+      }
+      .ads-list select, #custom-search-input {
+          width: 99.5%;
+      }
+      .banner h1 {
+          font-size: 22px;
+      }
+      .banner p {
+          font-size: 12.5px;
+      }
+      .search-hotel input[type="text"] {
+          width: 80%;
+      }
+      .w3l-featured-ad {
+          width: 100%;
+          margin: 2% 0%;
+      }
+      ul.location li:nth-child(2) {
+          width: 85%;
+      }
+      .pagination-sm>li>a, .pagination-sm>li>span {
+          padding: 5px 7px;
+          font-size: 10px;
+      }
+      .app-button {
+          width: 50%;
+      }
+      .app-button img {
+          width: 99%;
+      }
+      .app-left {
+          width: 75%;
+          margin-left: 12.5%;	
+      }
+      footer.diff {
+          padding: 0 15px;
+      }
+      .post-ad-form {
+          padding: 25px 15px;
+      }
+      span.total {
+          font-size: 11px;
+          padding: 8px 10px;
+      }
+      h2.w3-head {
+          font-size: 27px;
+          margin: 22px 0;
+      }
+      .nav-tabs>li>a {
+          font-size: 16px;
+          padding: 10px 10px;
+      }
+      .interested h4 {
+          font-size: 17px;
+      }
+      .interested {
+          padding: 40px 0px;
+      }
+      .item-price:before {
+          left: 20.5%;
+          border-right-width: 37px;
+          top: -179px;
+      }
+      .single-page {
+          padding: 30px 0;
+      }
+      .product-desc {
+          margin-top: 20px;
+      }
+      .breadcrumb>li+li:before {
+          padding: 0 0px;
+      }
+      .breadcrumb>li {
+          font-size: 11.5px;
+      }
+      .ads-grid {
+          margin: 20px 0 30px 0;
+      }
+      .mpl {
+          width: 100%;
+          margin-left: 0;
+      }
+      .feed-back-form span {
+          font-size: 13px;
+      }
+      form#filldetails {
+          width: 100%;
+      }
+      #drop a {
+          padding: 8px 10px;
+          font-size: 14px;
+          letter-spacing: 0px;
+      }
+      .upload h3.tlt {
+          margin-top: 5px;
+          font-size: 20px;
+      }
+      form.submit input[type="submit"] {
+          padding: 6px 30px;
+          font-size: 16px;
+      }
+      .contact section {
+          margin: 30px auto 30px;
+      }
+      span.checkicon-box {
+          width: 70%;
+      }
+      .modal-lg {
+          width: 300px;	
+      }
+      .modal-content {
+          padding: 0px;
+      }
+      .modal-title {
+          font-size: 22px;
+      }
+      .modal-body {
+          padding: 20px 15px 5px;
+      }
+      .uls-wide {
+          min-width: 300px;
+      }
+      .panel-body p {
+          padding: 0;
+          margin-left: 5px;
+      }
+      input[type=file] {
+          width: 100%;
+      }
+      .category {
+          padding: 20px 0px;
+      }
+      .w3-footer-logo a:before, .w3-footer-logo a:after {
+          width: 24%;
+      }
+      .agileinfo_signin {
+          width: 90%;
+          padding: 25px 15px;
+      }
+      .agileinfo_signin h6 {
+          letter-spacing: 1px;
+      }
+      .modal-dialog {
+          width: 300px;
+      }
+  }
+  

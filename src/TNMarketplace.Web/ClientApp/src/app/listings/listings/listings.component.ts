@@ -1,55 +1,93 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ListingService } from '../../api';
-import { Router, UrlSegment, Params } from '@angular/router';
+import { Router, UrlSegment, Params, NavigationEnd } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { ListingItemModel } from '@app/api/model/listingItemModel';
 
 @Component({
   selector: 'appc-listings',
   templateUrl: './listings.component.html',
   styleUrls: ['./listings.component.scss']
 })
-export class ListingsComponent implements OnInit {
-
+export class ListingsComponent implements OnInit, OnDestroy {
+  // selectedTabIndex = 0;
   listingViewMode: number;
-  allListings = [];
-  listingsWithPicture = [];
+  isPhotoOnly: boolean = false;
+  allListingsModel: ListingItemModel;
+  pictureListingsModel: ListingItemModel;
+  // nzPageIndex: number = 1;
+  pageSize = 1;
+  mySubscription: Subscription;
   constructor(private listingService: ListingService,
     private router: Router
-    ){
-   }
+  ) {
+  }
+
+  ngOnDestroy() {
+    if (this.mySubscription)
+      this.mySubscription.unsubscribe();
+  }
 
   ngOnInit() {
     this.listingViewMode = 1;
+    this.prepareGetListings();
+    this.mySubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.prepareGetListings();
+      }
+    });
+  }
+
+  nzPageIndexChange(event){
+    console.log(event);
+    if (event == 0){return;}
+    this.router.navigate([], { 
+      queryParams: {p: `${event}`} 
+    });
+    
+    // this.prepareGetListings();
+  }
+
+  nzPageSizeChange(event){
+    if (event == 0) { return;}
+    this.pageSize = event;
+    this.prepareGetListings();
+  }
+
+  prepareGetListings() {
+    // Trick the Router into believing it's last link wasn't previously loaded
     var urlSegments = this.router.routerState.snapshot.root.children[0].url;
     var params = this.router.routerState.snapshot.root.children[0].queryParams;
-    if (params["vm"] == "grid"){
+    if (params["vm"] == "grid") {
       this.listingViewMode = 2;
     }
-    var photoOnly = params["po"];
-    if (urlSegments != null && urlSegments.length > 0){
-      this.getListings(urlSegments, params, photoOnly);
+    // this.selectedTabIndex = 0;
+    if (urlSegments != null && urlSegments.length > 0) {
+      this.getListings(urlSegments, params);
       return;
     }
     this.router.navigate(["/"]);
   }
 
-  getListings(paths: UrlSegment[], params: Params, photoOnly?: boolean){
-
-    let res = this.listingService.apiListingSearchGet(undefined, paths.map(c=> c.path), params["s"], params["l"], photoOnly, 
-    params["pf"], params["pt"]).subscribe((r) =>{
-      if (photoOnly){
-        this.listingsWithPicture = r.listingsPageList;
-      }else{
-        this.allListings = r.listingsPageList;
-      }
-      console.log(r);
-    })
+  getListings(paths: UrlSegment[], params: Params) {
+    let pageNumber =  params["p"] != undefined &&  params["p"] > 0 ?  params["p"]: 1;
+    let res = this.listingService.apiListingSearchGet(undefined, paths.map(c => c.path), params["s"], params["l"], this.isPhotoOnly,
+      params["pf"], params["pt"], undefined, undefined, pageNumber, this.pageSize).subscribe((r) => {
+        if (this.isPhotoOnly) {
+          this.pictureListingsModel = r;
+        } else {
+          this.allListingsModel = r;
+        }
+        console.log(r);
+      })
   }
 
-  selectTab(photoOnly: boolean){
+  selectTab(photoOnly: boolean) {
     var urlSegments = this.router.routerState.snapshot.root.children[0].url;
     var params = this.router.routerState.snapshot.root.children[0].queryParams;
-    if (urlSegments != null && urlSegments.length > 0){
-      this.getListings(urlSegments, params, photoOnly);
+    this.isPhotoOnly = photoOnly;
+    if (urlSegments != null && urlSegments.length > 0) {
+      this.getListings(urlSegments, params);
       return;
     }
   }

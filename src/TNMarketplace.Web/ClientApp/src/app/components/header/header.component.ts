@@ -37,6 +37,7 @@ export class HeaderComponent implements OnInit {
 
     public toggleNav() {
         this.isCollapsed = !this.isCollapsed;
+        this.appService.annouceSideMenuState(this.isCollapsed);
     }
 
     public logout() {
@@ -45,10 +46,4 @@ export class HeaderComponent implements OnInit {
             this.router.navigate(['/dang-nhap']);
         });
     }
-
-    public annouceSideMenuStateChange(){
-        this.isCollapsed = !this.isCollapsed;
-        this.appService.annouceSideMenuState(this.isCollapsed);
-    }
-
 }

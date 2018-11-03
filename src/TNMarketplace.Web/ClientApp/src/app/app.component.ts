@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Title, Meta } from '@angular/platform-browser';
 
-import { Params, ActivatedRoute, Router } from '@angular/router';
+import { Params, ActivatedRoute, Router, NavigationStart } from '@angular/router';
 import { OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
 import { authConfig } from './auth.config';
 
@@ -37,10 +37,16 @@ export class AppComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       this.configureOidc();
     }
-    appService.sideMenuSubject$.subscribe(v=>{
-      this.isCollapsed = v;
-    })
+    // appService.sideMenuSubject$.subscribe(v=>{
+    //   this.isCollapsed = v;
+    // })
+    this.router.events.subscribe((event:NavigationStart) => {
+      this.isCollapsed = true;
+    });
+  }
 
+  public toggleNav() {
+    this.isCollapsed = !this.isCollapsed;
   }
 
   public ngOnInit() {

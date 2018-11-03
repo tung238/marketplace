@@ -232,8 +232,9 @@ namespace TNMarketplace.Web.Controllers.api
             response.BreadCrumb = _mapper.Map<List<SimpleCategory>>(breadCrumb);
             response.Categories = _mapper.Map<List<SimpleCategory>>(_dataCacheService.Categories);
 
-            response.Listings = itemsModelList;
-            response.ListingsPageList = itemsModelList.ToPagedList(model.PageNumber ?? 0, model.PageSize ?? 20);
+            //response.Listings = itemsModelList;
+            response.ListingsPageList = itemsModelList.ToPagedList(model.PageNumber ?? 0, model.PageSize ?? 1);
+            response.PagedListMetaData = response.ListingsPageList.GetMetaData();
             return response;
         }
 

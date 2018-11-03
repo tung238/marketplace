@@ -76,10 +76,10 @@ ul.location li {
   display: inline-block;
   margin: 0;
 }
-span.glyphicon.glyphicon-map-marker {
+.fa-map-marker {
   margin-top: 3px;
 }
-span.glyphicon.glyphicon-map-marker, span.glyphicon.glyphicon-earphone, .glyphicon.glyphicon-envelope {
+.fa-map-marker, .fa-phone, .fa-envelope {
   color: #fff;
   font-size: 12px;
   background-color: rgba(0, 153, 229, 0.73);

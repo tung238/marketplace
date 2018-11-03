@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ListingService } from '../../api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ListingItemModel } from '@app/api/model/listingItemModel';
 
 @Component({
   selector: 'appc-listing-item',
@@ -10,8 +11,9 @@ import { Location } from '@angular/common';
 })
 export class ListingItemComponent implements OnInit {
 
-  listingId: number;
-  
+  listingItem: ListingItemModel = {};
+  array = [ 1, 2, 3 ];
+
   constructor(private listingService: ListingService, 
     private router: Router) {
 
@@ -25,15 +27,15 @@ export class ListingItemComponent implements OnInit {
       if (isNaN(id)){
         this.router.navigate(["/not-found"]);
       }
-      this.listingId = id;
-      this.getListingById(this.listingId);
+      this.getListingById(id);
       return;
     }
     this.router.navigate(["/not-found"]);
   }
 
   getListingById(listingId: number){
-    return this.listingService.apiListingListingGet(listingId).subscribe(response =>{
+    this.listingService.apiListingListingGet(listingId).subscribe((response: ListingItemModel) =>{
+      this.listingItem = response;
       console.log(response);
     })
   }

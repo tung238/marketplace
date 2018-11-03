@@ -16,10 +16,10 @@ namespace TNMarketplace.Web.Models
 
         public List<MetaCategory> MetaCategories { get; set; }
 
-        public List<ListingItemModel> Listings { get; set; }
+        //public List<ListingItemModel> Listings { get; set; }
 
         public IPagedList<ListingItemModel> ListingsPageList { get; set; }
-
+        public PagedListMetaData PagedListMetaData { get; set; }
         public List<SimpleCategory> Categories { get; set; }
         public List<SimpleCategory> BreadCrumb { get; set; }
         public List<SimpleListingType> ListingTypes { get; set; }

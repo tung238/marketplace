@@ -3,11 +3,11 @@
     <img src="{{listingItem.urlPicture}}" title="" alt="">
     <section class="list-left">
       <h5 class="title">{{listingItem.listingCurrent.title}}</h5>
-        <span class="adprice">${{price}}"</span>
+        <span class="adprice">{{listingItem.listingCurrent.price | currency:'VND':'symbol':'1.0-2'}}</span>
         <p class="catpath">Mobile Phones » Brand</p>
     </section>
     <section class="list-right">
-      <span class="date">{{listingItem.listingCurrent.created}}</span>
+      <span class="date">{{listingItem.listingCurrent.created | date: 'short'}}</span>
       <span class="cityname">{{listingItem.listingCurrent.region.name}}</span>
     </section>
     <div class="clearfix"></div>

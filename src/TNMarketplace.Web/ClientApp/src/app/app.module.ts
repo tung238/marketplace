@@ -1,5 +1,5 @@
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, LOCALE_ID  } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, UrlSegment } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -24,8 +24,11 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { Configuration, ApiModule } from './api';
+import localeVi from '@angular/common/locales/vi';
 
+registerLocaleData(localeVi);
 registerLocaleData(en);
+
 export function appServiceFactory(appService: AppService): Function {
   return () => appService.getAppData();
 }
@@ -59,9 +62,9 @@ export function appServiceFactory(appService: AppService): Function {
       { path: 'signalr', loadChildren: './+signalr/signalr.module#SignalrModule' },
       { path: 'privacy', component: PrivacyComponent },
       { path: 'not-found', component: NotFoundComponent},
-      { matcher: listings, loadChildren: './listings/listings.module#ListingsModule' },
-      { matcher: listingItem, loadChildren: './listing-item/listing-item.module#ListingItemModule'}
-    ], { initialNavigation: 'enabled' }),
+      { matcher: listings, loadChildren: './listings/listings.module#ListingsModule', runGuardsAndResolvers: 'always' },
+      { matcher: listingItem, loadChildren: './listing-item/listing-item.module#ListingItemModule', runGuardsAndResolvers: 'always'}
+    ], { initialNavigation: 'enabled', onSameUrlNavigation: 'reload' }),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     FormsModule,
     ApiModule,
@@ -70,6 +73,7 @@ export function appServiceFactory(appService: AppService): Function {
   ],
   providers: [
     AppService,
+    { provide: LOCALE_ID, useValue: "vi-VN" },
     { provide: APP_INITIALIZER, useFactory: appServiceFactory, deps: [AppService], multi: true },
     { provide: NZ_I18N, useValue: en_US },
     { provide: Configuration, useFactory: (authService: OAuthService) => new Configuration({ basePath: environment.apiLocation, accessToken: authService.getAccessToken(), apiKeys: {"Authorization": "Bearer"} }), deps: [OAuthService], multi: false }

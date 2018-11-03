@@ -16,6 +16,7 @@ import { FormControlService } from './forms/form-control.service';
 import { SubMenuComponent } from './components/sub-menu/sub-menu.component';
 import { ProductGridRowComponent } from './components/product-grid-row/product-grid-row.component';
 import { ProductListRowComponent } from './components/product-list-row/product-list-row.component';
+import { PhonePipe } from './pipes/phone.pipe';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { ProductListRowComponent } from './components/product-list-row/product-l
     UppercasePipe,
     SubMenuComponent,
     ProductGridRowComponent,
-    ProductListRowComponent
+    ProductListRowComponent,
+    PhonePipe,
   ],
   exports: [
     // Modules
@@ -51,6 +53,7 @@ import { ProductListRowComponent } from './components/product-list-row/product-l
     ProductGridRowComponent,
     ProductListRowComponent,
     UppercasePipe,
+    PhonePipe,
   ],
   providers: [
     FormControlService
