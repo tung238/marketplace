@@ -16,20 +16,20 @@
 <section>
     <div id="agileits-sign-in-page" class="sign-in-wrapper">
         <div class="agileinfo_signin">
-        <h3>Sign In</h3>
-            <form>
-                <input type="email" name="Your Email" placeholder="Your Email" required=""> 
-                <input type="password" name="Password" placeholder="Password" required=""> 
-                <input type="submit" value="Sign In">
+        <h3>Đăng nhập</h3>
+            <form #f="ngForm" (ngSubmit)="login(loginModel)" novalidate>
+                <input type="text" placeholder="Email hoặc tên đăng nhập" name="username" required="" [(ngModel)]="loginModel.username" > 
+                <input type="password" name="Password" placeholder="Mật khẩu" name="password" required="" [(ngModel)]="loginModel.password"> 
+                <input type="submit" value="Đăng nhập">
                 <div class="forgot-grid">
-                    <label class="checkbox"><input type="checkbox" name="checkbox">Remember me</label>
+                    <label class="checkbox"><input type="checkbox" name="rememberMe">Ghi nhớ</label>
                     <div class="forgot">
-                        <a routerLink="forgetpassword">Forgot Password?</a>
+                        <a routerLink="forgetpassword">Quên mật khẩu?</a>
                     </div>
                     <div class="clearfix"> </div>
                 </div></form>
             
-            <h6> Not a Member Yet? <a href="signup.html">Sign Up Now</a> </h6>
+            <h6> Chưa có tài khoản? <a routerLink="/dang-ky">Đăng ký ngay</a> </h6>
             <br/>
             <appc-social-login></appc-social-login>
         </div>

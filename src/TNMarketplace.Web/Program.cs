@@ -11,8 +11,9 @@ namespace TNMarketplace.Web
     {
         public static void Main(string[] args)
         {
-            var host = CreateWebHostBuilder(args).Build();
-
+            var host = CreateWebHostBuilder(args).UseSetting("detailedErrors", "true")
+                .UseIISIntegration()
+                .CaptureStartupErrors(true).Build();
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;

@@ -25,33 +25,42 @@
 <header>
     <div class="w3ls-header">
         <div class="w3ls-header-left">
-            <p><a [routerLink]="['/routePath']" routerLinkActive="router-link-active"  ><i class="fa fa-download" aria-hidden="true"></i>Download Mobile App </a>
+            <p><a [routerLink]="['/routePath']" routerLinkActive="router-link-active"><i class="fa fa-download"
+                        aria-hidden="true"></i>Tải ứng dụng cho smartphone </a>
             </p>
         </div>
         <div class="w3ls-header-right">
             <ul>
-                <li class="dropdown head-dpdn">
-                    <a  routerLinkActive="active" routerLink="dang-nhap" *ngIf="!isLoggedIn"><i class="fa fa-user" aria-hidden="true"></i> Sign In</a>
+                <li class="dropdown head-dpdn" *ngIf="!isLoggedIn">
+                    <a routerLink="/dang-nhap"><i class="fa fa-user" aria-hidden="true"></i> Đăng
+                        nhập</a>
+                </li>
+                <li class="dropdown head-dpdn" *ngIf="isLoggedIn">
+                    <a (click)="logout()" href="javascript:void(null);"> {{'app_nav_logout' |
+                        translate}} </a>
+                </li>
+                <li class="dropdown head-dpdn" *ngIf="!isLoggedIn">
+                    <a routerLink="/dang-ky">{{'app_nav_register' | translate}}</a>
                 </li>
                 <li class="dropdown head-dpdn">
-                    <a routerLink="/help.html"><i class="fa fa-question-circle" aria-hidden="true"></i> Help</a>
+                    <a routerLink="/tro-giup"><i class="fa fa-question-circle" aria-hidden="true"></i> Trợ giúp</a>
                 </li>
                 <li class="dropdown head-dpdn">
-                    <a href="#"><span class="active uls-trigger"><i class="fa fa-language" aria-hidden="true"></i>languages</span></a>
+                    <a href="javascript:void(null);"><span class="active uls-trigger"><i class="fa fa-language" aria-hidden="true"></i>Ngôn ngữ</span></a>
                 </li>
                 <li class="dropdown head-dpdn">
-                    <div class="header-right">			
+                    <div class="header-right">
 
-    </div>
+                    </div>
                 </li>
             </ul>
         </div>
-        
-        <div class="clearfix"> </div> 
+
+        <div class="clearfix"> </div>
     </div>
     <div class="agile-its-header container">
         <div class="logo">
-            <h1><a routerLink="/"><span>Rao</span>diaoc</a></h1>
+            <h1><a routerLink="/"><span>Mời</span> Chào</a></h1>
         </div>
         <div class="agileits_search">
             <form action="#" method="post">
@@ -74,8 +83,8 @@
                     <i class="fa fa-search" aria-hidden="true"> </i>
                 </button>
             </form>
-        <a class="post-w3layouts-ad" routerLink="/post-ad.html">Post Free Ad</a>
-        </div>	
+            <a class="post-w3layouts-ad" routerLink="/post-ad.html">Đăng tin miễn phí</a>
+        </div>
         <div class="clearfix"></div>
     </div>
 </header>

@@ -13,8 +13,8 @@ export class ListingsComponent implements OnInit, OnDestroy {
   // selectedTabIndex = 0;
   listingViewMode: number;
   isPhotoOnly: boolean = false;
-  allListingsModel: ListingItemModel;
-  pictureListingsModel: ListingItemModel;
+  allListingsModel: any;
+  pictureListingsModel: any;
   // nzPageIndex: number = 1;
   pageSize = 1;
   mySubscription: Subscription;

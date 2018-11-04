@@ -11,7 +11,7 @@ import { ControlTextbox } from '../../shared/forms/controls/control-textbox';
     templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
-    public loginModel: ILoginModel;
+    public loginModel: ILoginModel = {username: "", password: ""};
     public controls: any;
 
     constructor(

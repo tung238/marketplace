@@ -11,7 +11,6 @@ using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using System.Collections.Generic;
-using AutoMapper;
 
 namespace TNMarketplace.Web
 {
@@ -90,6 +89,12 @@ namespace TNMarketplace.Web
 
             });
 
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+                options.HttpsPort = 443;
+            });
+
             Mapper.Initialize(cfg =>
             {
                 cfg.AddProfile<AutoMapperProfile>();
@@ -101,15 +106,15 @@ namespace TNMarketplace.Web
 
             // app.AddCustomSecurityHeaders();
 
-            if (env.IsDevelopment())
-            {
+            //if (env.IsDevelopment())
+            //{
                 app.AddDevMiddlewares();
-            }
-            else
-            {
+            //}
+            //else
+            //{
                 app.UseHsts();
                 app.UseResponseCompression();
-            }
+            //}
 
             app.AddCustomLocalization();
 

@@ -8,7 +8,8 @@ import { DataService } from '../../../core/services/data.service';
 
 @Component({
     selector: 'appc-register',
-    templateUrl: './register.component.html'
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
     public controls: Array<ControlBase<any>>;
