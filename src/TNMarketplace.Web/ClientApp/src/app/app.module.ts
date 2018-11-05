@@ -57,11 +57,12 @@ export function appServiceFactory(appService: AppService): Function {
       { path: '', component: HomeComponent, pathMatch: 'full', data: { state: 'home' } },
       { path: 'dang-nhap', loadChildren: './account/+login/login.module#LoginModule' },
       { path: 'dang-ky', loadChildren: './account/+register/register.module#RegisterModule' },
+      { path: 'dang-tin', loadChildren: './listing-add/listing-add.module#ListingAddModule' },
       { path: 'createaccount', loadChildren: './account/+create/create.module#CreateAccountModule' },
       { path: 'thong-tin', loadChildren: './account/+profile/profile.module#ProfileModule' },
       { path: 'signalr', loadChildren: './+signalr/signalr.module#SignalrModule' },
       { path: 'privacy', component: PrivacyComponent },
-      { path: 'not-found', component: NotFoundComponent},
+      { path: 'khong-tim-thay', component: NotFoundComponent},
       { matcher: listings, loadChildren: './listings/listings.module#ListingsModule', runGuardsAndResolvers: 'always' },
       { matcher: listingItem, loadChildren: './listing-item/listing-item.module#ListingItemModule', runGuardsAndResolvers: 'always'}
     ], { initialNavigation: 'enabled', onSameUrlNavigation: 'reload' }),
@@ -69,7 +70,8 @@ export function appServiceFactory(appService: AppService): Function {
     FormsModule,
     ApiModule,
     HttpClientModule,
-    NgZorroAntdModule
+    NgZorroAntdModule,
+    
   ],
   providers: [
     AppService,

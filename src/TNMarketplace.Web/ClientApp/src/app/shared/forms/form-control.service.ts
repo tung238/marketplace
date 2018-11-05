@@ -35,6 +35,6 @@ export class FormControlService {
             group[control.key] = new FormControl(control.value || '', validators);
         });
 
-        return new FormGroup(group);
+        return new FormGroup(group, ValidationService.passwordMatchValidator);
     }
 }

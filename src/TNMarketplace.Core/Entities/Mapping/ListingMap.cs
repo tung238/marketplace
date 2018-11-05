@@ -44,6 +44,7 @@ namespace TNMarketplace.Core.Entities.Mapping
             // Table & Column Mappings
             builder.ToTable("Listings");
             builder.Property(t => t.ID).HasColumnName("ID");
+            builder.Property(t => t.ExternalId).HasColumnName("ExternalId");
             builder.Property(t => t.Title).HasColumnName("Title");
             builder.Property(t => t.Description).HasColumnName("Description");
             builder.Property(t => t.CategoryID).HasColumnName("CategoryID");

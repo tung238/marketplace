@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using TNMarketplace.Core;
 using TNMarketplace.Core.Entities;
 using TNMarketplace.Core.Infrastructure;
+using TNMarketplace.Repository.EfCore.JsonModel;
 
 namespace TNMarketplace.Repository.EfCore
 {
@@ -65,6 +66,7 @@ namespace TNMarketplace.Repository.EfCore
             InstallEmailTemplates();
             InstallListingTypes();
             InstallRegions();
+            InstallAreas();
             InstallCategories();
             InstallCategoryTypes();
             InstallSampleData(await _userManager.FindByEmailAsync("user@user.com"));
@@ -180,23 +182,67 @@ namespace TNMarketplace.Repository.EfCore
                 NamingStrategy = new SnakeCaseNamingStrategy()
             };
             var regions =
-             JsonConvert.DeserializeObject<Dictionary<string, Region>>(
+             JsonConvert.DeserializeObject<Dictionary<string, RegionJsonModel>>(
                dataText, new JsonSerializerSettings
                {
                    ContractResolver = contractResolver,
                    Formatting = Formatting.Indented
                });
-            foreach (var region in regions)
+            foreach (var regionJson in regions)
             {
-                region.Value.ObjectState = ObjectState.Added;
-                region.Value.ID = Convert.ToInt32(region.Key);
+                var region = new Region
+                {
+                    ID = Convert.ToInt32(regionJson.Key),
+                    Name = regionJson.Value.Name,
+                    Type = regionJson.Value.Type,
+                    Slug = regionJson.Value.Slug,
+                    NameWithType = regionJson.Value.NameWithType,
+                    ObjectState = ObjectState.Added
+                };
                 
-                _context.Regions.Add(region.Value);
+                _context.Regions.Add(region);
             }
-            //_context.SaveChanges();
+            _context.SaveChanges();
         }
 
-        private void InstallSettings()
+        private void InstallAreas()
+        {
+            if (_context.Areas.Any())
+            {
+                return;
+            }
+            var dataText = System.IO.File.ReadAllText(@"Migrations/area_list.json");
+            DefaultContractResolver contractResolver = new DefaultContractResolver
+            {
+                NamingStrategy = new SnakeCaseNamingStrategy()
+            };
+            var areas =
+             JsonConvert.DeserializeObject<Dictionary<string, AreaJsonModel>>(
+               dataText, new JsonSerializerSettings
+               {
+                   ContractResolver = contractResolver,
+                   Formatting = Formatting.Indented
+               });
+            foreach (var areaJson in areas)
+            {
+                var area = new Area
+                {
+                    ID = Convert.ToInt32(areaJson.Key),
+                    Name = areaJson.Value.Name,
+                    NameWithType = areaJson.Value.NameWithType,
+                    ObjectState = ObjectState.Added,
+                    Path = areaJson.Value.Path,
+                    PathWithType = areaJson.Value.PathWithType,
+                    RegionId = Convert.ToInt32(areaJson.Value.ParentCode),
+                    Slug = areaJson.Value.Slug,
+                    Type = areaJson.Value.Type
+                };
+                _context.Areas.Add(area);
+            }
+            _context.SaveChanges();
+        }
+
+            private void InstallSettings()
         {
             if (_context.Settings.Any())
             {

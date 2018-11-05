@@ -67,8 +67,10 @@ namespace TNMarketplace.Web.Extensions
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
             {
                 // options for user and password can be set here
-                // options.Password.RequiredLength = 4;
-                // options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireUppercase = false;
             })
             .AddEntityFrameworkStores<TNMarketplace.Repository.EfCore.ApplicationDbContext>()
             .AddDefaultTokenProviders();

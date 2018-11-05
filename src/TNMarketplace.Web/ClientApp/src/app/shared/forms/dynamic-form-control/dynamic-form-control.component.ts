@@ -6,7 +6,8 @@ import { ControlBase } from '../controls/control-base';
 
 @Component({
     selector: 'appc-dynamic-control',
-    templateUrl: './dynamic-form-control.component.html'
+    templateUrl: './dynamic-form-control.component.html',
+    styleUrls: ['./dynamic-form-control.component.scss']
 })
 export class DynamicFormControlComponent {
     @Input() public control: ControlBase<string | boolean>;

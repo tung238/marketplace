@@ -23,39 +23,12 @@ export class RegisterComponent implements OnInit {
     public register(model: IRegisterModel): void {
         this.dataService.post('api/account/register', model)
             .subscribe(() => {
-                this.router.navigate(['../registerconfirmation'], { relativeTo: this.route, queryParams: { emailConfirmed: true } });
+                this.router.navigate(['/dang-nhap'], { relativeTo: this.route, queryParams: { emailConfirmed: true } });
             });
     }
 
     public ngOnInit() {
         const controls: Array<ControlBase<any>> = [
-            new ControlTextbox({
-                key: 'username',
-                label: 'Username',
-                placeholder: 'Username',
-                value: '',
-                type: 'text',
-                required: true,
-                order: 1
-            }),
-            new ControlTextbox({
-                key: 'firstname',
-                label: 'Firstname',
-                placeholder: 'Firstname',
-                value: '',
-                type: 'text',
-                required: true,
-                order: 2
-            }),
-            new ControlTextbox({
-                key: 'lastname',
-                label: 'Lastname',
-                placeholder: 'Lastname',
-                value: '',
-                type: 'text',
-                required: true,
-                order: 3
-            }),
             new ControlTextbox({
                 key: 'email',
                 label: 'Email',
@@ -63,21 +36,48 @@ export class RegisterComponent implements OnInit {
                 value: '',
                 type: 'email',
                 required: true,
-                order: 4
+                order: 1
             }),
             new ControlTextbox({
                 key: 'password',
-                label: 'Password',
-                placeholder: 'Password',
+                label: 'Mật khẩu',
+                placeholder: 'Mật khẩu',
                 value: '',
                 type: 'password',
                 required: true,
-                order: 5
+                order: 2
             }),
             new ControlTextbox({
+                key: 'confirmPassword',
+                label: 'Nhập lại mật khẩu',
+                placeholder: 'Nhập lại mật khẩu',
+                value: '',
+                type: 'password',
+                required: true,
+                order: 3
+            }),
+            new ControlTextbox({
+                key: 'firstname',
+                label: 'Họ',
+                placeholder: 'Họ',
+                value: '',
+                type: 'text',
+                required: true,
+                order: 4
+            }),
+            new ControlTextbox({
+                key: 'lastname',
+                label: 'Tên',
+                placeholder: 'Tên',
+                value: '',
+                type: 'text',
+                required: true,
+                order: 5
+            }), 
+            new ControlTextbox({
                 key: 'mobile',
-                label: 'Mobile',
-                placeholder: 'Mobile',
+                label: 'Số điện thoại',
+                placeholder: 'Số điện thoại',
                 value: '',
                 type: 'text',
                 required: true,

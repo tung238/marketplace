@@ -1,21 +1,22 @@
 <!--tslint:disable-->
 <div #f="ngForm" [formGroup]="form" [ngSwitch]="control.type" [class.has-danger]="invalid" [class.has-success]="valid" [class.form-check]="control.type === 'checkbox'">
 
+    <div class="form-group">
     <label *ngSwitchCase="'dropdown'" [attr.for]="control.key">{{control.label}}</label>
-    <select *ngSwitchCase="'dropdown'" [id]="control.key" [formControlName]="control.key" [class.is-valid]="valid" [class.is-invalid]="invalid">
+    <select class="form-control" *ngSwitchCase="'dropdown'" [id]="control.key" [formControlName]="control.key" [class.is-valid]="valid" [class.is-invalid]="invalid">
         <option *ngFor="let opt of control.options" [value]="opt.key">{{opt.value}}</option>
     </select>
 
     <!--This is not the switch case because of multiple control types-->
     <label *ngIf="control.type === 'text' || control.type === 'email' || control.type === 'password' || control.type === 'number'"
         [attr.for]="control.key">{{control.label}}</label>
-    <input *ngIf="control.type === 'text' || control.type === 'email' || control.type === 'password' || control.type === 'number'"
+    <input class="form-control" *ngIf="control.type === 'text' || control.type === 'email' || control.type === 'password' || control.type === 'number'"
         [id]="control.key" [formControlName]="control.key" [type]="control.type" [placeholder]="control.placeholder" [class.is-valid]="valid"
         [class.is-invalid]="invalid">
 
     <!--Textarea-->
     <label *ngIf="control.type === 'textarea'" [for]="control.key">{{control.label}}</label>
-    <textarea *ngIf="control.type === 'textarea'" [id]="control.key" rows="3" [formControlName]="control.key" [class.is-valid]="valid"
+    <textarea class="form-control" *ngIf="control.type === 'textarea'" [id]="control.key" rows="3" [formControlName]="control.key" [class.is-valid]="valid"
         [class.is-invalid]="invalid"></textarea>
 
     <!--Checkbox-->
@@ -36,5 +37,5 @@
     </div>
 
     <div class="error" *ngIf="errorMessage(control)"> {{ errorMessage(control) }} </div>
-
+</div>
 </div>

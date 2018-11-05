@@ -51,6 +51,7 @@ namespace TNMarketplace.Repository.EfCore
         public virtual DbSet<Setting> Settings { get; set; }
 
         public virtual DbSet<Region> Regions { get; set; }
+        public virtual DbSet<Area> Areas { get; internal set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, UserResolverService userService) : base(options)
         {
@@ -86,6 +87,7 @@ namespace TNMarketplace.Repository.EfCore
             modelBuilder.ApplyConfiguration(new SettingDictionaryMap());
             modelBuilder.ApplyConfiguration(new SettingMap());
             modelBuilder.ApplyConfiguration(new RegionMap());
+            modelBuilder.ApplyConfiguration(new AreaMap());
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes()
             .Where(e => typeof(IAuditable).IsAssignableFrom(e.ClrType)))

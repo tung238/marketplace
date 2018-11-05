@@ -4,7 +4,6 @@ namespace TNMarketplace.Core.ViewModels.AccountViewModels
 {
     public class RegisterViewModel
     {
-        [Required]
         [Display(Name = "Username")]
         public string Username { get; set; }
 

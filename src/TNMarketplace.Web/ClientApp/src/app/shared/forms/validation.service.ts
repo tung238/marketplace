@@ -1,13 +1,16 @@
-﻿export class ValidationService {
+﻿import { AbstractControl } from "@angular/forms";
+
+export class ValidationService {
 
     public static getValidatorErrorMessage(code: string, fieldLength: number | undefined) {
         const config: any = {
-            required: 'This is a required field',
-            minlength: 'Minimum length is ' + fieldLength,
-            maxlength: 'Maximum length is ' + fieldLength,
-            invalidCreditCard: 'Invalid credit card number',
-            invalidEmailAddress: 'Invalid email address',
-            invalidPassword: 'Password must be at least 6 characters long, and contain a number and special character.'
+            required: 'Thông tin này là bắt buộc',
+            minlength: 'Tối thiểu ' + fieldLength + ' ký tự',
+            maxlength: 'Tối đa ' + fieldLength + ' ký tự',
+            invalidCreditCard: 'Số tài khoản không đúng',
+            email: 'Email không đúng',
+            invalidPassword: 'Mật khẩu ít nhất 6 ký tự',
+            passwordNotMatch:'Xác nhận mật khẩu không đúng'
         };
         return config[code];
     }
@@ -25,10 +28,20 @@
     public static passwordValidator(control: any): any {
         // {6,100}           - Assert password is between 6 and 100 characters
         // (?=.*[0-9])       - Assert a string has at least one number
-        if (control.value && control.value.match(/^(?=.*[0-9])[a-zA-Z0-9!"@#$%^&*]{6,100}$/)) {
+        if (control.value && control.value.match(/^[a-zA-Z0-9!"@#$%^&*]{6,100}$/)) {
             return undefined;
         } else {
             return { invalidPassword: true };
         }
     }
+
+    public static passwordMatchValidator(control: AbstractControl) {
+        let password = control.get('password').value; // to get value in input tag
+        let confirmPassword = control.get('confirmPassword').value; // to get value in input tag
+         if(password != confirmPassword) {
+             control.get('confirmPassword').setErrors( {passwordNotMatch: true} )
+         } else {
+             return null
+         }
+     }
 }
