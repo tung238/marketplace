@@ -428,28 +428,6 @@ namespace TNMarketplace.Web.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("TNMarketplace.Core.Entities.CategoryListingType", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("ID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CategoryID")
-                        .HasColumnName("CategoryID");
-
-                    b.Property<int>("ListingTypeID")
-                        .HasColumnName("ListingTypeID");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("CategoryID");
-
-                    b.HasIndex("ListingTypeID");
-
-                    b.ToTable("CategoryListingTypes");
-                });
-
             modelBuilder.Entity("TNMarketplace.Core.Entities.CategoryStat", b =>
                 {
                     b.Property<int>("ID")
@@ -581,7 +559,8 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<bool>("Active")
                         .HasColumnName("Active");
 
-                    b.Property<int?>("AreaID");
+                    b.Property<int?>("AreaId")
+                        .HasColumnName("AreaId");
 
                     b.Property<int>("CategoryID")
                         .HasColumnName("CategoryID");
@@ -663,7 +642,7 @@ namespace TNMarketplace.Web.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("AreaID");
+                    b.HasIndex("AreaId");
 
                     b.HasIndex("CategoryID");
 
@@ -854,6 +833,11 @@ namespace TNMarketplace.Web.Migrations
 
                     b.Property<bool>("ShippingEnabled")
                         .HasColumnName("ShippingEnabled");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnName("Slug")
+                        .HasMaxLength(50);
 
                     b.HasKey("ID");
 
@@ -1402,19 +1386,6 @@ namespace TNMarketplace.Web.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TNMarketplace.Core.Entities.CategoryListingType", b =>
-                {
-                    b.HasOne("TNMarketplace.Core.Entities.Category", "Category")
-                        .WithMany("CategoryListingTypes")
-                        .HasForeignKey("CategoryID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("TNMarketplace.Core.Entities.ListingType", "ListingType")
-                        .WithMany("CategoryListingTypes")
-                        .HasForeignKey("ListingTypeID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("TNMarketplace.Core.Entities.CategoryStat", b =>
                 {
                     b.HasOne("TNMarketplace.Core.Entities.Category", "Category")
@@ -1425,9 +1396,9 @@ namespace TNMarketplace.Web.Migrations
 
             modelBuilder.Entity("TNMarketplace.Core.Entities.Listing", b =>
                 {
-                    b.HasOne("TNMarketplace.Core.Entities.Area")
+                    b.HasOne("TNMarketplace.Core.Entities.Area", "Area")
                         .WithMany("Listings")
-                        .HasForeignKey("AreaID");
+                        .HasForeignKey("AreaId");
 
                     b.HasOne("TNMarketplace.Core.Entities.Category", "Category")
                         .WithMany("Listings")
@@ -1441,8 +1412,7 @@ namespace TNMarketplace.Web.Migrations
 
                     b.HasOne("TNMarketplace.Core.Entities.Region", "Region")
                         .WithMany("Listings")
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("RegionId");
 
                     b.HasOne("TNMarketplace.Core.Entities.ApplicationUser", "AspNetUser")
                         .WithMany("Listings")

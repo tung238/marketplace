@@ -10,7 +10,7 @@ using TNMarketplace.Repository.EfCore;
 namespace TNMarketplace.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181030090613_InitialCreate")]
+    [Migration("20181106150642_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -355,6 +355,47 @@ namespace TNMarketplace.Web.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("TNMarketplace.Core.Entities.Area", b =>
+                {
+                    b.Property<int>("ID")
+                        .HasColumnName("ID");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnName("Name")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("NameWithType")
+                        .IsRequired()
+                        .HasColumnName("NameWithType")
+                        .HasMaxLength(400);
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnName("Path");
+
+                    b.Property<string>("PathWithType")
+                        .IsRequired()
+                        .HasColumnName("PathWithType");
+
+                    b.Property<int>("RegionId");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnName("Slug")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Type")
+                        .HasColumnName("Type")
+                        .HasMaxLength(200);
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("RegionId");
+
+                    b.ToTable("Areas");
+                });
+
             modelBuilder.Entity("TNMarketplace.Core.Entities.Category", b =>
                 {
                     b.Property<int>("ID")
@@ -387,28 +428,6 @@ namespace TNMarketplace.Web.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("TNMarketplace.Core.Entities.CategoryListingType", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("ID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CategoryID")
-                        .HasColumnName("CategoryID");
-
-                    b.Property<int>("ListingTypeID")
-                        .HasColumnName("ListingTypeID");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("CategoryID");
-
-                    b.HasIndex("ListingTypeID");
-
-                    b.ToTable("CategoryListingTypes");
                 });
 
             modelBuilder.Entity("TNMarketplace.Core.Entities.CategoryStat", b =>
@@ -542,6 +561,9 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<bool>("Active")
                         .HasColumnName("Active");
 
+                    b.Property<int?>("AreaId")
+                        .HasColumnName("AreaId");
+
                     b.Property<int>("CategoryID")
                         .HasColumnName("CategoryID");
 
@@ -570,6 +592,9 @@ namespace TNMarketplace.Web.Migrations
 
                     b.Property<DateTime>("Expiration")
                         .HasColumnName("Expiration");
+
+                    b.Property<int>("ExternalId")
+                        .HasColumnName("ExternalId");
 
                     b.Property<string>("IP")
                         .IsRequired()
@@ -618,6 +643,8 @@ namespace TNMarketplace.Web.Migrations
                         .HasMaxLength(128);
 
                     b.HasKey("ID");
+
+                    b.HasIndex("AreaId");
 
                     b.HasIndex("CategoryID");
 
@@ -808,6 +835,11 @@ namespace TNMarketplace.Web.Migrations
 
                     b.Property<bool>("ShippingEnabled")
                         .HasColumnName("ShippingEnabled");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnName("Slug")
+                        .HasMaxLength(50);
 
                     b.HasKey("ID");
 
@@ -1086,11 +1118,6 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<int>("ID")
                         .HasColumnName("ID");
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnName("Code")
-                        .HasMaxLength(10);
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnName("Name")
@@ -1353,16 +1380,11 @@ namespace TNMarketplace.Web.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TNMarketplace.Core.Entities.CategoryListingType", b =>
+            modelBuilder.Entity("TNMarketplace.Core.Entities.Area", b =>
                 {
-                    b.HasOne("TNMarketplace.Core.Entities.Category", "Category")
-                        .WithMany("CategoryListingTypes")
-                        .HasForeignKey("CategoryID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("TNMarketplace.Core.Entities.ListingType", "ListingType")
-                        .WithMany("CategoryListingTypes")
-                        .HasForeignKey("ListingTypeID")
+                    b.HasOne("TNMarketplace.Core.Entities.Region", "Region")
+                        .WithMany("Areas")
+                        .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -1376,6 +1398,10 @@ namespace TNMarketplace.Web.Migrations
 
             modelBuilder.Entity("TNMarketplace.Core.Entities.Listing", b =>
                 {
+                    b.HasOne("TNMarketplace.Core.Entities.Area", "Area")
+                        .WithMany("Listings")
+                        .HasForeignKey("AreaId");
+
                     b.HasOne("TNMarketplace.Core.Entities.Category", "Category")
                         .WithMany("Listings")
                         .HasForeignKey("CategoryID")
@@ -1388,8 +1414,7 @@ namespace TNMarketplace.Web.Migrations
 
                     b.HasOne("TNMarketplace.Core.Entities.Region", "Region")
                         .WithMany("Listings")
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("RegionId");
 
                     b.HasOne("TNMarketplace.Core.Entities.ApplicationUser", "AspNetUser")
                         .WithMany("Listings")

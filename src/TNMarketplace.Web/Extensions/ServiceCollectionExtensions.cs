@@ -278,7 +278,7 @@ namespace TNMarketplace.Web.Extensions
             services.AddTransient(typeof(IRepositoryAsync<>), typeof(Repository.EfCore.Repository<>));
 
             services.AddTransient<ICategoryService, CategoryService>();
-            services.AddTransient<ICategoryListingTypeService, CategoryListingTypeService>();
+            //services.AddTransient<ICategoryListingTypeService, CategoryListingTypeService>();
             services.AddTransient<ICategoryStatService, CategoryStatService>();
             services.AddTransient<IContentPageService, ContentPageService>();
             services.AddTransient<ICustomFieldCategoryService, CustomFieldCategoryService>();

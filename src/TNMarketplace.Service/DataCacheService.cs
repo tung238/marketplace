@@ -73,7 +73,7 @@ namespace TNMarketplace.Service
                             UpdateCache(CacheKeys.Categories, categories);
                             return categories;
                         case CacheKeys.ListingTypes:
-                            var ListingTypes = _serviceProvider.GetService < IListingTypeService>().Query().Include(x => x.Include(y=> y.CategoryListingTypes)).Select().ToList();
+                            var ListingTypes = _serviceProvider.GetService <IListingTypeService>().Queryable().ToList();
                             UpdateCache(CacheKeys.ListingTypes, ListingTypes);
                             return ListingTypes;
                         case CacheKeys.ContentPages:

@@ -165,12 +165,10 @@ namespace TNMarketplace.Web.Controllers.api
             if (category != null)
             {
                 items = items.Where(x => x.CategoryID == category.ID);
-                response.ListingTypes = _mapper.Map<List<SimpleListingType>>(_dataCacheService.ListingTypes.Where(x => x.CategoryListingTypes.Any(y => y.CategoryID == category.ID)));
             }
-            else
-            {
-                response.ListingTypes = _mapper.Map<List<SimpleListingType>>(_dataCacheService.ListingTypes);
-            }
+            
+            response.ListingTypes = _mapper.Map<List<SimpleListingType>>(_dataCacheService.ListingTypes);
+            
 
             items = items
                 .Include(y => y.ListingPictures)
@@ -285,7 +283,7 @@ namespace TNMarketplace.Web.Controllers.api
         public async Task<IActionResult> ListingTypesPartial(int categoryID, int listingID)
         {
             var model = new ListingUpdateModel();
-            model.ListingTypes = _dataCacheService.ListingTypes.Where(x => x.CategoryListingTypes.Any(y => y.CategoryID == categoryID)).ToList();
+            model.ListingTypes = _dataCacheService.ListingTypes;
             model.ListingItem = new Listing();
 
             if (listingID > 0)
@@ -403,7 +401,7 @@ namespace TNMarketplace.Web.Controllers.api
             model.ListingTypeID = listing.ListingTypeID;
 
             // Listing types
-            model.ListingTypes = _dataCacheService.ListingTypes.Where(x => x.CategoryListingTypes.Any(y => y.CategoryID == model.CategoryID)).ToList();
+            model.ListingTypes = _dataCacheService.ListingTypes;
 
             // Listing Categories
             model.Categories = _dataCacheService.Categories;
@@ -530,7 +528,7 @@ namespace TNMarketplace.Web.Controllers.api
             // Set default listing type ID
             if (listing.ListingTypeID == 0)
             {
-                var listingTypes = _dataCacheService.ListingTypes.Where(x => x.CategoryListingTypes.Any(y => y.CategoryID == listing.CategoryID));
+                var listingTypes = _dataCacheService.ListingTypes;
 
                 if (listingTypes == null)
                 {

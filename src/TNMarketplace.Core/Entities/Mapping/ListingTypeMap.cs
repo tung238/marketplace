@@ -19,6 +19,10 @@ namespace TNMarketplace.Core.Entities.Mapping
                 .IsRequired()
                 .HasMaxLength(100);
 
+            builder.Property(t => t.Slug)
+                .IsRequired()
+                .HasMaxLength(50);
+
             builder.Property(t => t.ButtonLabel)
                 .IsRequired()
                 .HasMaxLength(20);
@@ -40,6 +44,7 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.Property(t => t.PaymentEnabled).HasColumnName("PaymentEnabled");
             builder.Property(t => t.PriceEnabled).HasColumnName("PriceEnabled");
             builder.Property(t => t.ShippingEnabled).HasColumnName("ShippingEnabled");
+            builder.Property(t => t.Slug).HasColumnName("Slug");
         }
     }
 }

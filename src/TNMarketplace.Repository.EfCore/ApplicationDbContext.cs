@@ -29,7 +29,7 @@ namespace TNMarketplace.Repository.EfCore
         public virtual DbSet<Resource> Resources { get; set; }
 
         public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<CategoryListingType> CategoryListingTypes { get; set; }
+        //public virtual DbSet<CategoryListingType> CategoryListingTypes { get; set; }
         public virtual DbSet<CategoryStat> CategoryStats { get; set; }
         public virtual DbSet<ContentPage> ContentPages { get; set; }
         public virtual DbSet<EmailTemplate> EmailTemplates { get; set; }
@@ -66,7 +66,7 @@ namespace TNMarketplace.Repository.EfCore
             //modelBuilder.Configurations.Add(new AspNetUserLoginMap());
             modelBuilder.ApplyConfiguration(new ApplicationUserMap());
             modelBuilder.ApplyConfiguration(new CategoryMap());
-            modelBuilder.ApplyConfiguration(new CategoryListingTypeMap());
+            //modelBuilder.ApplyConfiguration(new CategoryListingTypeMap());
             modelBuilder.ApplyConfiguration(new CategoryStatMap());
             modelBuilder.ApplyConfiguration(new ContentPageMap());
             modelBuilder.ApplyConfiguration(new EmailTemplateMap());

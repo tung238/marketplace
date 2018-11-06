@@ -18,6 +18,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using TNMarketplace.Core;
 using TNMarketplace.Core.Entities;
+using TNMarketplace.Core.Extensions;
 using TNMarketplace.Core.Infrastructure;
 using TNMarketplace.Repository.EfCore.JsonModel;
 
@@ -67,8 +68,7 @@ namespace TNMarketplace.Repository.EfCore
             InstallListingTypes();
             InstallRegions();
             InstallAreas();
-            InstallCategories();
-            InstallCategoryTypes();
+            //InstallCategories();
             InstallSampleData(await _userManager.FindByEmailAsync("user@user.com"));
             InstallPictures();
         }
@@ -354,233 +354,117 @@ namespace TNMarketplace.Repository.EfCore
 
         private void InstallSampleData(ApplicationUser user)
         {
-            if (_context.Listings.Any())
+            FileStream fileStream = null;
+            try
+            {
+                fileStream = new FileStream("Migrations/chotot.txt", FileMode.Open);
+            }catch (Exception e)
             {
                 return;
             }
-            _context.Listings.Add(new Listing()
+            int count = 0;
+            using (StreamReader reader = new StreamReader(fileStream))
             {
-                Title = "Cho thuê biệt thự 2MT đường số 1 và 8A xã Bình Hưng BC",
-                Description = @"Cho thuê biệt thự 2MT đường số 1 và 8A xã Bình Hưng BC",
-                CategoryID = 1,
-                ListingTypeID = 1,
-                UserID = user.Id,
-                Price = 80000000,
-                ContactName = "Tùng Trần",
-                ContactEmail = "",
-                ContactPhone = "938497498",
-                IP = "",
-                Location = "Đường số 1 Xã Bình Hưng",
-                Latitude = 55.730344,
-                Longitude = 12.5767257,
-                Expiration = DateTime.MaxValue.Date,
-                Active = true,
-                Enabled = true,
-                Created = DateTime.Now,
-                LastUpdated = DateTime.Now,
-                RegionId = 79,
-                ObjectState = ObjectState.Added
-            });
+                //read all categories, regions, areas
+                var areas = _context.Areas.ToList();
+                var regions = _context.Regions.ToList();
+                var categories = _context.Categories.ToList();
+                var listingTypes = _context.ListingTypes.ToList();
+                string line = null;
+                while((line = reader.ReadLine()) != null)
+                {
+                    var s = line.Split("$$", StringSplitOptions.None);
+                    if (s.Length != 8)
+                    {
+                        continue;
+                    }
+                    var listing = new Listing
+                    {
+                        //id$$title$$body$$categoryName$$District$$Province$$Phone$$Price
+                        Active = true,
+                        UserID = user.Id,
+                        ContactEmail = "",
+                        ContactName = "",
+                        ContactPhone = s[6],
+                        Title = s[1],
+                        Description = s[2],
+                        Enabled = true,
+                        IP = "",
+                        LastUpdated = DateTime.Now,
+                        Created = DateTime.Now,
+                        ObjectState = ObjectState.Added,
+                        ShowPhone = true,
+                        Expiration = DateTime.Now.AddMonths(3),
+                        Latitude = null,
+                        Longitude = null,
+                        Location = "",
+                        Price = s[7].GetDoubleValue(),
+                        ShowEmail = true,
+                        ExternalId = Convert.ToInt32(s[0])
+                    };
+                    if (_context.Listings.FirstOrDefault(l => l.ExternalId == listing.ExternalId) != null)
+                    {
+                        continue;
+                    }
+                    var categorySlug = s[5].ConvertToSlug();
+                    var regionslug = s[4].ConvertToSlug();
+                    var areaName = s[3];
+                    var cat = categories.FirstOrDefault(c => c.Slug.Equals(categorySlug, StringComparison.OrdinalIgnoreCase));
+                    if (cat == null)
+                    {
+                        cat = new Category
+                        {
+                            Name = s[5],
+                            Slug = categorySlug,
+                            Enabled = true,
+                            ObjectState = ObjectState.Added,
+                            Description = s[5],
+                            Ordering = categories.Count,
+                            Parent = 0
+                        };
+                        _context.Categories.Add(cat);
+                        _context.SaveChanges();
+                        categories = _context.Categories.ToList();
+                        cat = categories.First(c => c.Slug.Equals(categorySlug, StringComparison.OrdinalIgnoreCase));
+                    }
+                    listing.CategoryID = cat.ID;
+                    var region = regions.First(r => r.Slug.Equals(regionslug, StringComparison.OrdinalIgnoreCase));
+                    listing.RegionId = region.ID;
 
-            _context.Listings.Add(new Listing()
+                    var listingType = listingTypes.First();
+                    var listingTitleUnsign = listing.Title.ConvertToUnSign();
+                    if (listingTitleUnsign.Contains("thue"))
+                    {
+                        listingType = listingTypes.First(l => l.Name.ConvertToUnSign().Contains("thue"));
+                    }
+                    else if (listingTitleUnsign.Contains("mua"))
+                    {
+                        listingType = listingTypes.First(l => l.Name.ConvertToUnSign().Contains("mua"));
+                    }
+                    listing.ListingTypeID = listingType.ID;
+                    var area = areas.FirstOrDefault(a => a.NameWithType.ConvertToUnSign().Equals(areaName.ConvertToUnSign()));
+                    if (area != null)
+                    {
+                        listing.AreaId = area.ID;
+                    }
+                    _context.Listings.Add(listing);
+                    count++;
+                    if (count >= 100)
+                    {
+                        _context.SaveChanges();
+                        count = 0;
+                    }
+                }
+            }
+            //move file after complete
+            try
             {
-                Title = "Cho thuê biệt thự đường 11, huyện BÌnh Chánh, trệt 2 lầu, 8 phòng",
-                Description = @"Cho thuê biệt thự đường 11, huyện BÌnh Chánh, trệt 2 lầu, 8 phòng",
-                CategoryID = 2,
-                ListingTypeID = 1,
-                UserID = user.Id,
-                Price = 65000000,
-                ContactName = "Phước Kiển",
-                ContactEmail = "demo@raodiaoc.com",
-                ContactPhone = "937217070",
-                IP = "",
-                Location = "Huyện Bình Chánh",
-                Latitude = 55.6735479,
-                Longitude = 12.559128399999963,
-                Active = true,
-                Enabled = true,
-                Expiration = DateTime.MaxValue.Date,
-                Created = DateTime.Now,
-                LastUpdated = DateTime.Now,
-                RegionId = 79,
-
-                ObjectState = ObjectState.Added
-            });
-
-            _context.Listings.Add(new Listing()
+                File.Move("Migrations/chotot.txt", $"Migrations/chotot_{DateTime.Now.ToString("MM_dd_yyyy_HH_mm")}.txt");
+            }
+            catch (Exception e)
             {
-                Title = "Cho thuê biệt thự dường số KDC Trung Sơn, Bình Chánh",
-                Description = @"Cho thuê biệt thự dường số KDC Trung Sơn, Bình Chánh",
-                CategoryID = 2,
-                ListingTypeID = 1,
-                UserID = user.Id,
-                Price = 38000000,
-                ContactName = "Thiên Trường",
-                ContactEmail = "demo@raodiaoc.com",
-                ContactPhone = "936359596",
-                IP = "",
-                Location = "Huyện Bình Chánh",
-                Latitude = 55.6786854,
-                Longitude = 12.5694609,
-                Active = true,
-                Enabled = true,
-                Expiration = DateTime.MaxValue.Date,
-                Created = DateTime.Now,
-                LastUpdated = DateTime.Now,
-                RegionId = 79,
-
-                ObjectState = ObjectState.Added
-            });
-
-            _context.Listings.Add(new Listing()
-            {
-                Title = "Bán biệt thự kdc phong phú ấp 5 dt 7x16m",
-                Description = @"Bán biệt thự kdc phong phú ấp 5 dt 7x16m",
-                CategoryID = 2,
-                ListingTypeID = 1,
-                UserID = user.Id,
-                Price = 5000000000,
-                ContactName = "Tân Định",
-                ContactEmail = "demo@raodiaoc.com",
-                ContactPhone = "909546419",
-                IP = "",
-                Location = "Đường số 16 Khu Dân Cư Ấp 5 Phong Phú",
-                Latitude = 55.6779527,
-                Longitude = 12.538388800000007,
-                Active = true,
-                Enabled = true,
-                Expiration = DateTime.MaxValue.Date,
-                Created = DateTime.Now,
-                LastUpdated = DateTime.Now,
-                RegionId = 79,
-
-                ObjectState = ObjectState.Added
-            });
-
-            _context.Listings.Add(new Listing()
-            {
-                Title = "Chính thức mở bán khu biệt thự hưng thịnh villa tọa lạc quốc lộ 1A",
-                Description = @"Chính thức mở bán khu biệt thự hưng thịnh villa tọa lạc quốc lộ 1A",
-                CategoryID = 1,
-                ListingTypeID = 1,
-                UserID = user.Id,
-                Price = 5400000000,
-                ContactName = "Nguyễn Đình Chiểu",
-                ContactEmail = "demo@raodiaoc.com",
-                ContactPhone = "939853312",
-                IP = "",
-                Location = "Nguyễn Hữu Trí",
-                Latitude = 55.6608952,
-                Longitude = 12.6031471,
-                Active = true,
-                Enabled = true,
-                Expiration = DateTime.MaxValue.Date,
-                Created = DateTime.Now,
-                LastUpdated = DateTime.Now,
-                RegionId = 79,
-
-                ObjectState = ObjectState.Added
-            });
-
-            _context.Listings.Add(new Listing()
-            {
-                Title = "Ngân hàng ACB cần thanh toán 100 lock biệt thự SHR, 140m2",
-                Description = @"Ngân hàng ACB cần thanh toán 100 lock biệt thự SHR, 140m2",
-                CategoryID = 1,
-                ListingTypeID = 1,
-                UserID = user.Id,
-                Price = 2500000000,
-                ContactName = "Zen-Shiatsu",
-                ContactEmail = "demo@raodiaoc.com",
-                ContactPhone = "939853312",
-                IP = "",
-                Location = "Trịnh Như Khuê Xã Bình Chánh",
-                Latitude = 55.677783,
-                Longitude = 12.591222,
-                Active = true,
-                Enabled = true,
-                Expiration = DateTime.MaxValue.Date,
-                Created = DateTime.Now,
-                LastUpdated = DateTime.Now,
-                RegionId = 79,
-
-                ObjectState = ObjectState.Added
-            });
-
-            _context.Listings.Add(new Listing()
-            {
-                Title = "La Maison De Cần Giờ, bán 3 căn biệt thự liền kề 8 x32.Giá 3,9 tỷ/căn",
-                Description = @"La Maison De Cần Giờ, bán 3 căn biệt thự liền kề 8 x32.Giá 3,9 tỷ/căn",
-                CategoryID = 1,
-                ListingTypeID = 1,
-                UserID = user.Id,
-                Price = 3900000000,
-                ContactName = "Healingstedet",
-                ContactEmail = "demo@raodiaoc.com",
-                ContactPhone = "975989959",
-                IP = "",
-                Location = "Huyện Cần Giờ",
-                Latitude = 55.660869,
-                Longitude = 12.603241,
-                Active = true,
-                Enabled = true,
-                Expiration = DateTime.MaxValue.Date,
-                Created = DateTime.Now,
-                LastUpdated = DateTime.Now,
-                RegionId = 79,
-
-                ObjectState = ObjectState.Added
-            });
-
-            _context.Listings.Add(new Listing()
-            {
-                Title = "Đinh cư bán biệt thự vườn,6x20m2,4PN,Shr,MT đường 12m",
-                Description = @"Đinh cư bán biệt thự vườn,6x20m2,4PN,Shr,MT đường 12m",
-                CategoryID = 1,
-                ListingTypeID = 1,
-                UserID = user.Id,
-                Price = 2000000,
-                ContactName = "Lê Văn Lương",
-                ContactEmail = "demo@raodiaoc.com",
-                ContactPhone = "932683027",
-                IP = "",
-                Location = " Nguyễn Văn Bứa Xã Xuân Thới Sơn",
-                Latitude = 55.697579,
-                Longitude = 12.574109,
-                Active = true,
-                Enabled = true,
-                Expiration = DateTime.MaxValue.Date,
-                Created = DateTime.Now,
-                LastUpdated = DateTime.Now,
-                RegionId = 79,
-
-                ObjectState = ObjectState.Added
-            });
-
-            _context.Listings.Add(new Listing()
-            {
-                Title = "Bán gấp Biệt Thự NineSouth. Căn góc 7x20m. Có sổ. Giá 9.5 tỷ.",
-                Description = @"Bán gấp Biệt Thự NineSouth. Căn góc 7x20m. Có sổ. Giá 9.5 tỷ.",
-                CategoryID = 3,
-                ListingTypeID = 1,
-                UserID = user.Id,
-                Price = 2900000000,
-                ContactName = "VinaCapital",
-                ContactEmail = "demo@raodiaoc.com",
-                ContactPhone = "904840402",
-                IP = "",
-                Location = "Nguyễn Hữu Thọ",
-                Latitude = 55.696199,
-                Longitude = 12.571483,
-                Active = true,
-                Enabled = true,
-                Expiration = DateTime.MaxValue.Date,
-                Created = DateTime.Now,
-                LastUpdated = DateTime.Now,
-                RegionId = 79,
-
-                ObjectState = ObjectState.Added
-            });
+                return;
+            }
         }
 
         private void InstallListingTypes()
@@ -591,8 +475,9 @@ namespace TNMarketplace.Repository.EfCore
             }
             _context.ListingTypes.Add(new ListingType()
             {
-                Name = "Mua",
-                ButtonLabel = "Đăng tin Mua",
+                Name = "Bán",
+                ButtonLabel = "Đăng tin Bán",
+                Slug = "ban",
                 OrderTypeID = (int)Enum_ListingOrderType.None,
                 OrderTypeLabel = "Mua",
                 PriceUnitLabel = "",
@@ -603,10 +488,11 @@ namespace TNMarketplace.Repository.EfCore
             });
             _context.ListingTypes.Add(new ListingType()
             {
-                Name = "Bán",
-                ButtonLabel = "Đăng tin Bán",
+                Name = "Mua",
+                ButtonLabel = "Đăng tin Mua",
                 OrderTypeID = (int)Enum_ListingOrderType.None,
                 OrderTypeLabel = "Mua",
+                Slug = "mua",
                 PriceUnitLabel = "",
                 PaymentEnabled = true,
                 PriceEnabled = true,
@@ -617,6 +503,7 @@ namespace TNMarketplace.Repository.EfCore
             {
                 Name = "Cho thuê",
                 ButtonLabel = "Đăng tin Cho thuê",
+                Slug = "cho_thue",
                 OrderTypeID = (int)Enum_ListingOrderType.None,
                 OrderTypeLabel = "Thuê",
                 PriceUnitLabel = "",
@@ -630,143 +517,55 @@ namespace TNMarketplace.Repository.EfCore
             _context.SaveChanges();
         }
 
-        private void InstallCategories()
-        {
-            if (_context.Categories.Any())
-            {
-                return;
-            }
-            _context.Categories.Add(new Category()
-            {
-                Name = "Căn hộ / Chung cư",
-                Description = "Căn hộ / Chung cư",
-                Slug = "can-ho-chung-cu",
-                Parent = 0,
-                Enabled = true,
-                Ordering = 0,
-                ObjectState = ObjectState.Added
-            });
+        //private void InstallCategories()
+        //{
+        //    if (_context.Categories.Any())
+        //    {
+        //        return;
+        //    }
+        //    _context.Categories.Add(new Category()
+        //    {
+        //        Name = "Căn hộ / Chung cư",
+        //        Description = "Căn hộ / Chung cư",
+        //        Slug = "can-ho-chung-cu",
+        //        Parent = 0,
+        //        Enabled = true,
+        //        Ordering = 0,
+        //        ObjectState = ObjectState.Added
+        //    });
 
-            _context.Categories.Add(new Category()
-            {
-                Name = "Nhà ở",
-                Description = "Nhà ở",
-                Slug = "nha-o",
-                Parent = 0,
-                Enabled = true,
-                Ordering = 1,
-                ObjectState = ObjectState.Added
-            });
+        //    _context.Categories.Add(new Category()
+        //    {
+        //        Name = "Nhà ở",
+        //        Description = "Nhà ở",
+        //        Slug = "nha-o",
+        //        Parent = 0,
+        //        Enabled = true,
+        //        Ordering = 1,
+        //        ObjectState = ObjectState.Added
+        //    });
 
-            _context.Categories.Add(new Category()
-            {
-                Name = "Đất",
-                Description = "Đất",
-                Slug = "dat",
-                Parent = 0,
-                Enabled = true,
-                Ordering = 2,
-                ObjectState = ObjectState.Added
-            });
-            _context.Categories.Add(new Category()
-            {
-                Name = "Văn phòng / Mặt bằng kinh doanh",
-                Description = "Văn phòng / Mặt bằng kinh doanh",
-                Slug = "van-phong-mat-bang-kinh-doanh",
-                Parent = 0,
-                Enabled = true,
-                Ordering = 3,
-                ObjectState = ObjectState.Added
-            });
-        }
-
-        private void InstallCategoryTypes()
-        {
-            if (_context.CategoryListingTypes.Any())
-            {
-                return;
-            }
-            _context.CategoryListingTypes.Add(new CategoryListingType()
-            {
-                CategoryID = 1,
-                ListingTypeID = 1,
-                ObjectState = ObjectState.Added
-            });
-
-            _context.CategoryListingTypes.Add(new CategoryListingType()
-            {
-                CategoryID = 2,
-                ListingTypeID = 1,
-                ObjectState = ObjectState.Added
-            });
-
-            _context.CategoryListingTypes.Add(new CategoryListingType()
-            {
-                CategoryID = 3,
-                ListingTypeID = 1,
-                ObjectState = ObjectState.Added
-            });
-            _context.CategoryListingTypes.Add(new CategoryListingType()
-            {
-                CategoryID = 4,
-                ListingTypeID = 1,
-                ObjectState = ObjectState.Added
-            });
-
-            _context.CategoryListingTypes.Add(new CategoryListingType()
-            {
-                CategoryID = 1,
-                ListingTypeID = 2,
-                ObjectState = ObjectState.Added
-            });
-
-            _context.CategoryListingTypes.Add(new CategoryListingType()
-            {
-                CategoryID = 2,
-                ListingTypeID = 2,
-                ObjectState = ObjectState.Added
-            });
-
-            _context.CategoryListingTypes.Add(new CategoryListingType()
-            {
-                CategoryID = 3,
-                ListingTypeID = 2,
-                ObjectState = ObjectState.Added
-            });
-            _context.CategoryListingTypes.Add(new CategoryListingType()
-            {
-                CategoryID = 4,
-                ListingTypeID = 2,
-                ObjectState = ObjectState.Added
-            });
-
-            _context.CategoryListingTypes.Add(new CategoryListingType()
-            {
-                CategoryID = 1,
-                ListingTypeID = 3,
-                ObjectState = ObjectState.Added
-            });
-
-            _context.CategoryListingTypes.Add(new CategoryListingType()
-            {
-                CategoryID = 2,
-                ListingTypeID = 3,
-                ObjectState = ObjectState.Added
-            });
-
-            _context.CategoryListingTypes.Add(new CategoryListingType()
-            {
-                CategoryID = 3,
-                ListingTypeID = 3,
-                ObjectState = ObjectState.Added
-            });
-            _context.CategoryListingTypes.Add(new CategoryListingType()
-            {
-                CategoryID = 4,
-                ListingTypeID = 3,
-                ObjectState = ObjectState.Added
-            });
-        }
+        //    _context.Categories.Add(new Category()
+        //    {
+        //        Name = "Đất",
+        //        Description = "Đất",
+        //        Slug = "dat",
+        //        Parent = 0,
+        //        Enabled = true,
+        //        Ordering = 2,
+        //        ObjectState = ObjectState.Added
+        //    });
+        //    _context.Categories.Add(new Category()
+        //    {
+        //        Name = "Văn phòng / Mặt bằng kinh doanh",
+        //        Description = "Văn phòng / Mặt bằng kinh doanh",
+        //        Slug = "van-phong-mat-bang-kinh-doanh",
+        //        Parent = 0,
+        //        Enabled = true,
+        //        Ordering = 3,
+        //        ObjectState = ObjectState.Added
+        //    });
+        //}
 
         private void InstallPictures()
         {

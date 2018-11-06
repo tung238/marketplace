@@ -8,7 +8,7 @@ namespace TNMarketplace.Core.Entities
     {
         public ListingType()
         {
-            this.CategoryListingTypes = new List<CategoryListingType>();
+            //this.CategoryListingTypes = new List<CategoryListingType>();
             this.Listings = new List<Listing>();
         }
 
@@ -21,7 +21,8 @@ namespace TNMarketplace.Core.Entities
         public string OrderTypeLabel { get; set; }
         public bool PaymentEnabled { get; set; }
         public bool ShippingEnabled { get; set; }
-        public virtual ICollection<CategoryListingType> CategoryListingTypes { get; set; }
+        public string Slug { get; set; }
+        //public virtual ICollection<CategoryListingType> CategoryListingTypes { get; set; }
         public virtual ICollection<Listing> Listings { get; set; }
     }
 }

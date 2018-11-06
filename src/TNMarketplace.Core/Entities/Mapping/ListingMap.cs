@@ -67,6 +67,7 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.Property(t => t.Created).HasColumnName("Created");
             builder.Property(t => t.LastUpdated).HasColumnName("LastUpdated");
             builder.Property(t => t.RegionId).HasColumnName("RegionId");
+            builder.Property(t => t.AreaId).HasColumnName("AreaId");
 
             // Relationships
             builder.HasOne(t => t.AspNetUser)
@@ -79,8 +80,11 @@ namespace TNMarketplace.Core.Entities.Mapping
                 .WithMany(t => t.Listings).IsRequired()
                 .HasForeignKey(d => d.ListingTypeID).OnDelete(DeleteBehavior.Cascade);
             builder.HasOne(t => t.Region)
-                .WithMany(t => t.Listings).IsRequired()
-                .HasForeignKey(d => d.RegionId).OnDelete(DeleteBehavior.Cascade);
+                .WithMany(t => t.Listings)
+                .HasForeignKey(d => d.RegionId).OnDelete(DeleteBehavior.ClientSetNull);
+            builder.HasOne(t => t.Area)
+                .WithMany(t => t.Listings)
+                .HasForeignKey(d => d.AreaId).OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }

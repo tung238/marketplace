@@ -24,6 +24,7 @@ namespace TNMarketplace.Core.Entities
         public int ListingTypeID { get; set; }
         public string UserID { get; set; }
         public int RegionId { get; set; }
+        public Nullable<int> AreaId { get; set; }
         public Nullable<double> Price { get; set; }
         //public string PriceString { get; set; }
         //public int NumberOfImages { get; set; }
@@ -45,6 +46,7 @@ namespace TNMarketplace.Core.Entities
         public virtual ApplicationUser AspNetUser { get; set; }
         public virtual Category Category { get; set; }
         public virtual Region Region { get; set; }
+        public virtual Area Area { get; set; }
         public virtual ICollection<ListingMeta> ListingMetas { get; set; }
         public virtual ICollection<ListingPicture> ListingPictures { get; set; }
         public virtual ICollection<ListingReview> ListingReviews { get; set; }
