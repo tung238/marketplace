@@ -7,13 +7,19 @@ using System.Security.Principal;
 using System.Threading.Tasks;
 using TNMarketplace.Core.Entities;
 
-namespace TNMarketplace.Web.Models
+namespace TNMarketplace.Core
 {
-    public class TreeItem<T>
+    public class TreeItem
     {
-        public T Item { get; set; }
+        public int ID { get; set; }
+
+        public string Name { get; set; }
+        public string Slug { get; set; }
+        public string Type { get; set; }
+        public string NameWithType { get; set; }
+
         public bool IsLeaf { get; set; }
-        public List<TreeItem<T>> Children { get; set; }
+        public List<TreeItem> Children { get; set; }
     }
 
     public static class ExtensionMethods
@@ -31,21 +37,21 @@ namespace TNMarketplace.Web.Models
         /// <param name="root_id">Root element id</param>
         /// 
         /// <returns>Tree of items</returns>
-        public static IEnumerable<TreeItem<T>> GenerateTree<T, K>(
-            this List<T> collection,
-            Func<T, K> id_selector,
-            Func<T, K> parent_id_selector,
-            K root_id = default(K))
-        {
-            foreach (var c in collection.Where(c => parent_id_selector(c).Equals(root_id)))
-            {
-                yield return new TreeItem<T>
-                {
-                    Item = c,
-                    Children = collection.GenerateTree(id_selector, parent_id_selector, id_selector(c)).ToList()
-                };
-            }
-        }
+        //public static IEnumerable<TreeItem> GenerateTree<T, K>(
+        //    this IEnumerable<T> collection,
+        //    Func<T, K> id_selector,
+        //    Func<T, K> parent_id_selector,
+        //    K root_id = default(K))
+        //{
+        //    foreach (var c in collection.Where(c => parent_id_selector(c).Equals(root_id)))
+        //    {
+        //        yield return new TreeItem
+        //        {
+        //            Item = c,
+        //            Children = collection.GenerateTree(id_selector, parent_id_selector, id_selector(c)).ToList()
+        //        };
+        //    }
+        //}
 
         //public static SelectList ToSelectList<TEnum>(this TEnum enumObj)
         //   where TEnum : struct, IComparable, IFormattable, IConvertible

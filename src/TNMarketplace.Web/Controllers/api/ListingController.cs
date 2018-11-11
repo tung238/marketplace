@@ -279,20 +279,6 @@ namespace TNMarketplace.Web.Controllers.api
                 category = _categoryService.Find(category.Parent);
             }
         }
-        [HttpGet("ListingTypesPartial")]
-        public async Task<IActionResult> ListingTypesPartial(int categoryID, int listingID)
-        {
-            var model = new ListingUpdateModel();
-            model.ListingTypes = _dataCacheService.ListingTypes;
-            model.ListingItem = new Listing();
-
-            if (listingID > 0)
-                model.ListingItem = await _listingService.FindAsync(listingID);
-
-            model.ListingTypeID = model.ListingItem.ListingTypeID;
-
-            return Ok(model);
-        }
 
         [HttpGet("ListingType")]
         public IActionResult ListingType(int listingTypeID)
@@ -309,105 +295,6 @@ namespace TNMarketplace.Web.Controllers.api
             });
         }
 
-        [HttpGet("ListingUpdate")]
-        public async Task<IActionResult> ListingUpdate(int? id)
-        {
-            //if (_dataCacheService.Categories.Count == 0)
-            //{
-            //    TempData[TempDataKeys.UserMessageAlertState] = "bg-danger";
-            //    TempData[TempDataKeys.UserMessage] = "[[[There are not categories available yet.]]]";
-            //}
-
-            Listing listing;
-
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-
-            var model = new ListingUpdateModel()
-            {
-                Categories = _dataCacheService.Categories
-            };
-
-            if (id.HasValue)
-            {
-                // return unauthorized if not authenticated
-                if (!User.Identity.IsAuthenticated)
-                    return Unauthorized();
-
-                if (await NotMeListing(id.Value))
-                    return Unauthorized();
-
-                listing = await _listingService.FindAsync(id);
-
-                if (listing == null)
-                    return NotFound();
-
-                // Pictures
-                var pictures = await _listingPictureservice.Query(x => x.ListingID == id).SelectAsync();
-
-                var picturesModel = pictures.Select(x =>
-                    new PictureModel()
-                    {
-                        ID = x.PictureID,
-                        Url = _imageHelper.GetListingImagePath(x.PictureID),
-                        ListingID = x.ListingID,
-                        Ordering = x.Ordering
-                    }).OrderBy(x => x.Ordering).ToList();
-
-                model.Pictures = picturesModel;
-            }
-            else
-            {
-                listing = new Listing()
-                {
-                    CategoryID = _dataCacheService.Categories.Any() ? _dataCacheService.Categories.FirstOrDefault().ID : 0,
-                    Created = DateTime.Now.Date,
-                    LastUpdated = DateTime.Now.Date,
-                    Expiration = DateTime.MaxValue,
-                    Enabled = true,
-                    Active = true,
-                };
-
-                if (User.Identity.IsAuthenticated)
-                {
-                    listing.ContactEmail = user.Email;
-                    listing.ContactName = string.Format("{0} {1}", user.FirstName, user.LastName);
-                    listing.ContactPhone = user.PhoneNumber;
-                }
-            }
-
-            // Populate model with listing
-            await PopulateListingUpdateModel(listing, model);
-
-            return Ok(model);
-        }
-
-        private async Task<ListingUpdateModel> PopulateListingUpdateModel(Listing listing, ListingUpdateModel model)
-        {
-            model.ListingItem = listing;
-
-            // Custom fields
-            var customFieldCategoryQuery = await _customFieldCategoryService.Query(x => x.CategoryID == listing.CategoryID)
-                .Include(x => x.Include(y => y.MetaField).ThenInclude(z => z.ListingMetas)).SelectAsync();
-            var customFieldCategories = customFieldCategoryQuery.ToList();
-            var customFieldModel = new CustomFieldListingModel()
-            {
-                ListingID = listing.ID,
-                MetaCategories = customFieldCategories
-            };
-
-            model.CustomFields = customFieldModel;
-            model.UserID = listing.UserID;
-            model.CategoryID = listing.CategoryID;
-            model.ListingTypeID = listing.ListingTypeID;
-
-            // Listing types
-            model.ListingTypes = _dataCacheService.ListingTypes;
-
-            // Listing Categories
-            model.Categories = _dataCacheService.Categories;
-
-            return model;
-        }
         [HttpGet("Listing")]
         [AllowAnonymous]
         public async Task<IActionResult> Listing(int id)
@@ -496,7 +383,7 @@ namespace TNMarketplace.Web.Controllers.api
         }
 
         [HttpPost("ListingUpdate")]
-        public async Task<ActionResult> ListingUpdate(Listing listing, List<IFormFile> files)
+        public async Task<ActionResult> ListingUpdate(ListingUpdateModel listing)
         {
             if (_dataCacheService.Categories.Count == 0)
             {
@@ -523,10 +410,8 @@ namespace TNMarketplace.Web.Controllers.api
 
             bool updateCount = false;
 
-            int nextPictureOrderId = 0;
-
             // Set default listing type ID
-            if (listing.ListingTypeID == 0)
+            if (listing.ListingTypeId == 0)
             {
                 var listingTypes = _dataCacheService.ListingTypes;
 
@@ -540,19 +425,19 @@ namespace TNMarketplace.Web.Controllers.api
                     return Ok(resultFailed);
                 }
 
-                listing.ListingTypeID = listingTypes.FirstOrDefault().ID;
+                listing.ListingTypeId = listingTypes.FirstOrDefault().ID;
             }
 
             if (listing.ID == 0)
             {
-                listing.ObjectState = ObjectState.Added;
-                listing.IP = Request.GetVisitorIP();
-                listing.Expiration = DateTime.MaxValue.AddDays(-1);
-                listing.UserID = userIdCurrent;
-                listing.Enabled = true;
+                //listing.ObjectState = ObjectState.Added;
+                //listing.IP = Request.GetVisitorIP();
+                //listing.Expiration = DateTime.MaxValue.AddDays(-1);
+                //listing.UserID = userIdCurrent;
+                //listing.Enabled = true;
 
-                updateCount = true;
-                _listingService.Insert(listing);
+                //updateCount = true;
+                //_listingService.Insert(listing);
             }
             else
             {
@@ -563,7 +448,7 @@ namespace TNMarketplace.Web.Controllers.api
 
                 listingExisting.Title = listing.Title;
                 listingExisting.Description = listing.Description;
-                listingExisting.Active = listing.Active;
+                listingExisting.Active = listing.Active ?? true;
                 listingExisting.Price = listing.Price;
 
                 listingExisting.ContactEmail = listing.ContactEmail;
@@ -574,11 +459,11 @@ namespace TNMarketplace.Web.Controllers.api
                 listingExisting.Longitude = listing.Longitude;
                 listingExisting.Location = listing.Location;
 
-                listingExisting.ShowPhone = listing.ShowPhone;
-                listingExisting.ShowEmail = listing.ShowEmail;
+                listingExisting.ShowPhone = listing.ShowPhone ?? true;
+                listingExisting.ShowEmail = listing.ShowEmail ?? true;
 
-                listingExisting.CategoryID = listing.CategoryID;
-                listingExisting.ListingTypeID = listing.ListingTypeID;
+                listingExisting.CategoryID = listing.CategoryIds.Last();
+                listingExisting.ListingTypeID = listing.ListingTypeId;
 
                 listingExisting.ObjectState = ObjectState.Modified;
 
@@ -594,7 +479,7 @@ namespace TNMarketplace.Web.Controllers.api
             }
 
             // Get custom fields
-            var customFieldCategoryQuery = await _customFieldCategoryService.Query(x => x.CategoryID == listing.CategoryID)
+            var customFieldCategoryQuery = await _customFieldCategoryService.Query(x => x.CategoryID == listing.CategoryIds.Last())
                 .Include(x => x.Include(y => y.MetaField).ThenInclude(z => z.ListingMetas)).SelectAsync();
             var customFieldCategories = customFieldCategoryQuery.ToList();
 
@@ -625,55 +510,55 @@ namespace TNMarketplace.Web.Controllers.api
 
             await _unitOfWorkAsync.SaveChangesAsync();
 
-            if (files.Count > 0)
-            {
-                var itemPictureQuery = _listingPictureservice.Queryable().Where(x => x.ListingID == listing.ID);
-                if (itemPictureQuery.Count() > 0)
-                    nextPictureOrderId = itemPictureQuery.Max(x => x.Ordering);
-            }
+            //if (files.Count > 0)
+            //{
+            //    var itemPictureQuery = _listingPictureservice.Queryable().Where(x => x.ListingID == listing.ID);
+            //    if (itemPictureQuery.Count() > 0)
+            //        nextPictureOrderId = itemPictureQuery.Max(x => x.Ordering);
+            //}
 
-            if (files != null && files.Count() > 0)
-            {
-                foreach (var file in files)
-                {
-                    if ((file != null) && (file.Length > 0) && !string.IsNullOrEmpty(file.FileName))
-                    {
-                        // Picture picture and get id
-                        var picture = new Picture();
-                        picture.MimeType = "image/jpeg";
-                        _pictureService.Insert(picture);
-                        await _unitOfWorkAsync.SaveChangesAsync();
+            //if (files != null && files.Count() > 0)
+            //{
+            //    foreach (var file in files)
+            //    {
+            //        if ((file != null) && (file.Length > 0) && !string.IsNullOrEmpty(file.FileName))
+            //        {
+            //            // Picture picture and get id
+            //            var picture = new Picture();
+            //            picture.MimeType = "image/jpeg";
+            //            _pictureService.Insert(picture);
+            //            await _unitOfWorkAsync.SaveChangesAsync();
 
-                        Size size = new Size(500, 0);
-                        using (Image<Rgba32> image = Image.Load(file.OpenReadStream()))
-                        {
-                            var path = Path.Combine(_environment.WebRootPath, "/images/listing", string.Format("{0}.{1}", picture.ID.ToString("00000000"), "jpg"));
+            //            Size size = new Size(500, 0);
+            //            using (Image<Rgba32> image = Image.Load(file.OpenReadStream()))
+            //            {
+            //                var path = Path.Combine(_environment.WebRootPath, "/images/listing", string.Format("{0}.{1}", picture.ID.ToString("00000000"), "jpg"));
 
-                            image.Mutate(x => x
-                                 .Resize(image.Width / 2, image.Height / 2));
-                            image.Save(path); // Automatic encoder selected based on extension.
-                        }
+            //                image.Mutate(x => x
+            //                     .Resize(image.Width / 2, image.Height / 2));
+            //                image.Save(path); // Automatic encoder selected based on extension.
+            //            }
 
-                        var itemPicture = new ListingPicture
-                        {
-                            ListingID = listing.ID,
-                            PictureID = picture.ID,
-                            Ordering = nextPictureOrderId
-                        };
+            //            var itemPicture = new ListingPicture
+            //            {
+            //                ListingID = listing.ID,
+            //                PictureID = picture.ID,
+            //                Ordering = nextPictureOrderId
+            //            };
 
-                        _listingPictureservice.Insert(itemPicture);
+            //            _listingPictureservice.Insert(itemPicture);
 
-                        nextPictureOrderId++;
-                    }
-                }
-            }
+            //            nextPictureOrderId++;
+            //        }
+            //    }
+            //}
 
             await _unitOfWorkAsync.SaveChangesAsync();
 
             // Update statistics count
             if (updateCount)
             {
-                _sqlDbService.UpdateCategoryItemCount(listing.CategoryID);
+                _sqlDbService.UpdateCategoryItemCount(listing.CategoryIds.Last());
                 _dataCacheService.RemoveCachedItem(CacheKeys.Statistics);
             }
             var result = new { Success = true, Message = "[[[Listing is updated!]]]" };
@@ -713,7 +598,7 @@ namespace TNMarketplace.Web.Controllers.api
 
                 await _unitOfWorkAsync.SaveChangesAsync();
 
-                var path = Path.Combine(_environment.WebRootPath, "/images/listing", string.Format("{0}.{1}", id.ToString("00000000"), "jpg"));
+                var path = Path.Combine(_environment.ContentRootPath, "/images/listing", string.Format("{0}.{1}", id.ToString("00000000"), "jpg"));
 
                 System.IO.File.Delete(path);
 

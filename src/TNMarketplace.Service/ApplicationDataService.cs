@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 using TNMarketplace.Core;
 using TNMarketplace.Core.Entities;
 using TNMarketplace.Core.ViewModels;
+using TNMarketplace.Repository.EfCore.JsonModel;
 
 namespace TNMarketplace.Service
 {
@@ -25,33 +27,101 @@ namespace TNMarketplace.Service
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IStringLocalizer<ApplicationDataService> _stringLocalizer;
         private readonly IMemoryCache _cache;
+        private readonly DataCacheService _dataCacheService;
+        private readonly IMapper _mapper;
+
         public ApplicationDataService(
             IOptions<RequestLocalizationOptions> locOptions,
             IHttpContextAccessor context,
+            DataCacheService dataCacheService,
             SignInManager<ApplicationUser> signInManager,
             IStringLocalizer<ApplicationDataService> stringLocalizer,
-            IMemoryCache memoryCache
+            IMemoryCache memoryCache,
+            IMapper mapper
             )
         {
+            _mapper = mapper;
             _locOptions = locOptions;
             _context = context;
             _signInManager = signInManager;
             _stringLocalizer = stringLocalizer;
             _cache = memoryCache;
+            _dataCacheService = dataCacheService;
         }
 
         public async Task<object> GetApplicationData(HttpContext context)
         {
-            var data = Helpers.JsonSerialize(new
+            string data = "";
+            if (!_cache.TryGetValue("GetApplicationData", out data))
             {
-                Content = GetContentByCulture(context),
-                CookieConsent = GetCookieConsent(context),
-                Cultures = _locOptions.Value.SupportedUICultures
-                        .Select(c => new { Value = c.Name, Text = c.DisplayName, Current = (c.Name == Thread.CurrentThread.CurrentCulture.Name) })
-                        .ToList(),
-                LoginProviders = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList().Select(a => a.Name)
-            });
+                var regions = _dataCacheService.Regions;
 
+                var regionsTree = new List<TreeItem>();
+                foreach(var r in regions)
+                {
+                    var rItem = new TreeItem
+                    {
+                        ID = r.ID,
+                        Name = r.NameWithType,
+                        NameWithType = r.NameWithType,
+                        Children = new List<TreeItem>()
+                    };
+                    foreach(var a in r.Areas)
+                    {
+                        var aItem = new TreeItem
+                        {
+                          
+                                ID = a.ID,
+                                Name = a.NameWithType,
+                                NameWithType = a.NameWithType,
+                           
+                            IsLeaf = true
+                        };
+                        rItem.Children.Add(aItem);
+                    }
+                    regionsTree.Add(rItem);
+
+                }
+                var categoriesTree = new List<TreeItem>();
+                var categories = _dataCacheService.Categories;
+                foreach(var cat in categories.Where(c=>c.Parent == 0 ))
+                {
+                    var cItem = new TreeItem
+                    {
+                        IsLeaf = false,
+                        ID = cat.ID,
+                        Name = cat.Name,
+                        Slug = cat.Slug,
+                        Children = new List<TreeItem>()
+                    };
+                    foreach(var child in categories.Where(c=>c.Parent == cat.ID))
+                    {
+                        var childItem = new TreeItem
+                        {
+                            IsLeaf = true,
+                            ID = child.ID,
+                            Name = child.Name,
+                            Slug = child.Slug,
+                            Children = new List<TreeItem>()
+                        };
+                        cItem.Children.Add(childItem);
+                    }
+                    categoriesTree.Add(cItem);
+                }
+                data = Helpers.JsonSerialize(new
+                {
+                    Content = GetContentByCulture(context),
+                    CookieConsent = GetCookieConsent(context),
+                    Cultures = _locOptions.Value.SupportedUICultures
+                            .Select(c => new { Value = c.Name, Text = c.DisplayName, Current = (c.Name == Thread.CurrentThread.CurrentCulture.Name) })
+                            .ToList(),
+                    LoginProviders = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList().Select(a => a.Name),
+                    CategoriesTree = categoriesTree,
+                    RegionsTree = regionsTree,
+                    ListingTypes = _mapper.Map<List<SimpleListingType>>(_dataCacheService.ListingTypes)
+                });
+                _cache.Set("GetApplicationData", data);
+            }
             return data;
         }
 

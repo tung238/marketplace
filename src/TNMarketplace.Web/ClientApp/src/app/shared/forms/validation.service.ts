@@ -10,7 +10,7 @@ export class ValidationService {
             invalidCreditCard: 'Số tài khoản không đúng',
             email: 'Email không đúng',
             invalidPassword: 'Mật khẩu ít nhất 6 ký tự',
-            passwordNotMatch:'Xác nhận mật khẩu không đúng'
+            passwordNotMatch: 'Xác nhận mật khẩu không đúng'
         };
         return config[code];
     }
@@ -35,13 +35,14 @@ export class ValidationService {
         }
     }
 
-    public static passwordMatchValidator(control: AbstractControl) {
-        let password = control.get('password').value; // to get value in input tag
-        let confirmPassword = control.get('confirmPassword').value; // to get value in input tag
-         if(password != confirmPassword) {
-             control.get('confirmPassword').setErrors( {passwordNotMatch: true} )
-         } else {
-             return null
-         }
-     }
+    public static passwordMatchValidator(control: AbstractControl): any {
+        if (control.get('password') && control.get('confirmPassword')) {
+            let password = control.get('password').value; // to get value in input tag
+            let confirmPassword = control.get('confirmPassword').value; // to get value in input tag
+            if (password != confirmPassword) {
+                control.get('confirmPassword').setErrors({ passwordNotMatch: true })
+            }
+        }
+        return null;
+    }
 }

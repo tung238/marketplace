@@ -4,7 +4,7 @@
     <div class="product-desc">
       <div nz-col nzXs="24" nzSm="24" nzMd="14" class="product-view">
         <h2>{{listingItem.listingCurrent?.title}}</h2>
-        <p> <i class="fa fa-map-marker"></i><a href="#">state</a>, <a href="#">{{listingItem.listingCurrent?.region?.name}}</a>| Added at {{listingItem.listingCurrent?.created | date: 'short'}}, Ad ID: {{listingItem.listingCurrent?.id}}</p>
+        <p> <i class="fa fa-map-marker"></i><a href="#">{{listingItem.listingCurrent?.area?.name}}</a>, <a href="#">{{listingItem.listingCurrent?.region?.name}}</a>| Đăng lúc {{listingItem.listingCurrent?.created | date: 'short'}}, Mã tin: {{listingItem.listingCurrent?.id}}</p>
         <nz-carousel nzAutoPlay class="flexslider">
           <div nz-carousel-content *ngFor="let index of array"><img src="/assets/images/banner.jpg"></div>
         </nz-carousel>

@@ -9,10 +9,18 @@ declare module NodeJS {
 interface NodeModule {
     id: string;
 }
-
+interface IPictureModel {
+    id: number;
+    listingID: number;
+    url: string;
+    ordering: number;
+}
 interface IApplicationConfig {
     cultures: ICulture[];
     content: StringMap[];
+    regionsTree: any[];
+    categoriesTree: any[];
+    listingTypes: any[];
     loginProviders: string[];
     cookieConsent: ICookieConsent;
 }

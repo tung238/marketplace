@@ -16,7 +16,7 @@ export class ListingsComponent implements OnInit, OnDestroy {
   allListingsModel: any;
   pictureListingsModel: any;
   // nzPageIndex: number = 1;
-  pageSize = 1;
+  pageSize = 20;
   mySubscription: Subscription;
   constructor(private listingService: ListingService,
     private router: Router

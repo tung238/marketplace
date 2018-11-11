@@ -557,7 +557,7 @@
         [nzPageIndex]="allListingsModel?.pagedListMetaData?.pageNumber" 
         [nzTotal]="allListingsModel?.pagedListMetaData?.totalItemCount" 
         [nzPageSize]="allListingsModel?.pagedListMetaData?.pageSize" 
-        nzShowSizeChanger [nzPageSizeOptions]="[1, 10, 20, 30, 40]" (nzPageSizeChange)="nzPageSizeChange($event)" 
+        nzShowSizeChanger [nzPageSizeOptions]="[10, 20, 30, 40]" (nzPageSizeChange)="nzPageSizeChange($event)" 
         (nzPageIndexChange) = "nzPageIndexChange($event)">
       </nz-pagination>
       </nz-tab>
@@ -582,7 +582,7 @@
         [nzPageIndex]="pictureListingsModel?.pagedListMetaData?.pageNumber" 
         [nzTotal]="pictureListingsModel?.pagedListMetaData?.totalItemCount" 
         [nzPageSize]="pictureListingsModel?.pagedListMetaData?.pageSize" 
-        nzShowSizeChanger [nzPageSizeOptions]="[1, 10, 20, 30, 40]" (nzPageSizeChange)="nzPageSizeChange($event)"
+        nzShowSizeChanger [nzPageSizeOptions]="[10, 20, 30, 40]" (nzPageSizeChange)="nzPageSizeChange($event)"
         (nzPageIndexChange) = "nzPageIndexChange($event)">
       </nz-pagination>
       </nz-tab>

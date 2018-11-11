@@ -19,36 +19,36 @@ namespace TNMarketplace.Web.Utilities
         }
         public string ImageVersion(string filePath)
         {
-            DateTime lastWriteTime = File.GetLastWriteTime(Path.Combine(_environment.WebRootPath, filePath));
+            DateTime lastWriteTime = File.GetLastWriteTime(Path.Combine(_environment.ContentRootPath, filePath));
 
             // display version in dex format
-            return string.Format("{0}?v={1:x}", Path.Combine(_environment.WebRootPath, filePath), lastWriteTime.Ticks);
+            return string.Format("{0}?v={1:x}", Path.Combine(_environment.ContentRootPath, filePath), lastWriteTime.Ticks);
         }
 
         public bool HasImage(int id)
         {
             var filePath = string.Format("/images/listing/{0}.jpg", id.ToString(fileFormat));
 
-            return File.Exists(Path.Combine(_environment.WebRootPath, filePath));
+            return File.Exists(Path.Combine(_environment.ContentRootPath, filePath));
         }
 
         public string GetListingImagePath(int id)
         {
             var filePath = string.Format("/images/listing/{0}.jpg", id.ToString(fileFormat));
-            if (File.Exists(Path.Combine(_environment.WebRootPath, filePath)))
+            if (File.Exists(Path.Combine(_environment.ContentRootPath, filePath)))
             {
                 return ImageVersion(filePath);
             }
             else
             {
-                return "http://placehold.it/500x300";
+                return "https://placehold.it/500x300";
             }
         }
 
         public string GetUserProfileImagePath(string name)
         {
             var filePath = string.Format("~/images/profile/{0}.jpg", name);
-            if (File.Exists(Path.Combine(_environment.WebRootPath, filePath)))
+            if (File.Exists(Path.Combine(_environment.ContentRootPath, filePath)))
             {
                 return ImageVersion(filePath);
             }
@@ -61,7 +61,7 @@ namespace TNMarketplace.Web.Utilities
         public string GetCommunityImagePath(string name, string format = "jpg", bool returnEmptyIfNotFound = false)
         {
             var filePath = string.Format("/images/community/{0}.{1}", name, format);
-            if (File.Exists(Path.Combine(_environment.WebRootPath, filePath)))
+            if (File.Exists(Path.Combine(_environment.ContentRootPath, filePath)))
             {
                 return ImageVersion(filePath);
             }
@@ -71,7 +71,7 @@ namespace TNMarketplace.Web.Utilities
             }
             else
             {
-                return "http://placehold.it/500x300";
+                return "https://placehold.it/500x300";
             }
         }
     }

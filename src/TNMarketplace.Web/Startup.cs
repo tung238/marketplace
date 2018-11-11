@@ -11,6 +11,8 @@ using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using System.Collections.Generic;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace TNMarketplace.Web
 {
@@ -108,12 +110,12 @@ namespace TNMarketplace.Web
 
             //if (env.IsDevelopment())
             //{
-                app.AddDevMiddlewares();
+            app.AddDevMiddlewares();
             //}
             //else
             //{
-                app.UseHsts();
-                app.UseResponseCompression();
+            app.UseHsts();
+            app.UseResponseCompression();
             //}
 
             app.AddCustomLocalization();
@@ -135,7 +137,11 @@ namespace TNMarketplace.Web
             app.UseAuthentication();
 
             app.UseStaticFiles();
-
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(HostingEnvironment.ContentRootPath, "upload")),
+                RequestPath = "/upload"
+            });
             app.UseSpaStaticFiles();
 
             app.UseCookiePolicy();

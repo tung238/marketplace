@@ -85,9 +85,13 @@ namespace TNMarketplace.Service
                             UpdateCache(CacheKeys.EmailTemplates, emailTemplates);
                             return emailTemplates;
                         case CacheKeys.Regions:
-                            var regions = _serviceProvider.GetService<IRegionService>().Queryable().ToList();
+                            var regions = _serviceProvider.GetService<IRegionService>().Queryable().Include(r=>r.Areas).ToList();
                             UpdateCache(CacheKeys.Regions, regions);
                             return regions;
+                        case CacheKeys.Areas:
+                            var areas = _serviceProvider.GetService<IAreaService>().Queryable().ToList();
+                            UpdateCache(CacheKeys.Areas, areas);
+                            return areas;
                         case CacheKeys.Statistics:
                             SaveCategoryStats();
 
@@ -198,6 +202,14 @@ namespace TNMarketplace.Service
             get
             {
                 return GetCachedItem(CacheKeys.Regions) as List<Region>;
+            }
+        }
+
+        public List<Area> Areas
+        {
+            get
+            {
+                return GetCachedItem(CacheKeys.Areas) as List<Area>;
             }
         }
 

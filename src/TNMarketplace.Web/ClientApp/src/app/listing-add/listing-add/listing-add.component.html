@@ -1,3 +1,31 @@
-<p>
-  listing-add works!
-</p>
+<!-- <nz-steps [nzCurrent]="current" nzProgressDot>
+  <nz-step nzTitle="Finished"></nz-step>
+  <nz-step nzTitle="In Progress"></nz-step>
+  <nz-step nzTitle="Waiting"></nz-step>
+  <nz-step nzTitle="Waiting"></nz-step>
+  <nz-step nzTitle="Waiting"></nz-step>
+</nz-steps>
+
+<div *ngIf="current==0" class="steps-content">
+  <h3>Sign Up</h3>
+  <appc-dynamic-form (onSubmit)="register($event)" [controls]="controls" [btnText]="'Register'"></appc-dynamic-form>
+</div>
+<div *ngIf="current==1" class="steps-content">dfggd</div>
+<div *ngIf="current==2" class="steps-content">ccccc}</div>
+<div *ngIf="current==3" class="steps-content">45345345</div>
+<div *ngIf="current==4" class="steps-content">cvbcvbcvbcvb</div>
+<div class="steps-action">
+  <button nz-button nzType="default" (click)="pre()" *ngIf="current > 0">
+    <span>Previous</span>
+  </button>
+  <button nz-button nzType="default" (click)="next()" *ngIf="current < 2">
+    <span>Next</span>
+  </button>
+  <button nz-button nzType="primary" (click)="done()" *ngIf="current === 2">
+    <span>Done</span>
+  </button>
+</div> -->
+<div class="listing-add-container">
+<h1>Đăng tin</h1>
+<appc-dynamic-form (onSubmit)="listingAdd($event)" [controls]="controls" [btnText]="'Đăng tin'"></appc-dynamic-form>
+</div>

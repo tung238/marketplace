@@ -10,7 +10,7 @@ namespace TNMarketplace.Web.Models
     {
         public SortViewModel()
         {
-            PageSize = /*(int)Enum_EstateSortPageSize.Page20*/1;
+            PageSize = (int)Enum_EstateSortPageSize.Page20;
             PageNumber = 1;
         }
 

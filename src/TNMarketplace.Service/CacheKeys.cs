@@ -13,6 +13,7 @@ namespace TNMarketplace.Service
         ContentPages,
         EmailTemplates,
         Statistics,
-        Regions
+        Regions,
+        Areas
     }
 }

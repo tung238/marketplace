@@ -302,7 +302,7 @@ namespace TNMarketplace.Web.Extensions
             services.AddTransient<IMessageService, MessageService>();
             services.AddTransient<IMessageThreadService, MessageThreadService>();
             services.AddTransient<IMessageParticipantService, MessageParticipantService>();
-
+            services.AddTransient<IAreaService, AreaService>();
             services.AddTransient<IMessageReadStateService, MessageReadStateService>();
             services.AddTransient<ImageHelper, ImageHelper>();
 

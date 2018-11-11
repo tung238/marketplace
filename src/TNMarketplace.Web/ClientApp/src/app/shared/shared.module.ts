@@ -17,6 +17,7 @@ import { SubMenuComponent } from './components/sub-menu/sub-menu.component';
 import { ProductGridRowComponent } from './components/product-grid-row/product-grid-row.component';
 import { ProductListRowComponent } from './components/product-list-row/product-list-row.component';
 import { PhonePipe } from './pipes/phone.pipe';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { PhonePipe } from './pipes/phone.pipe';
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
-    AppSharedModule
+    AppSharedModule,
+    NgZorroAntdModule
     // No need to export as these modules don't expose any components/directive etc'
   ],
   declarations: [

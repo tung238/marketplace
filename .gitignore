@@ -235,3 +235,4 @@ ModelManifest.xml
 /src/TNMarketplace.Web/Properties/PublishProfiles/TNMarketplace - Web Deploy.pubxml
 src/TNMarketplace.Web/swagger-codegen-cli.jar
 src/TNMarketplace.Web/ClientApp/src/app/api/
+src/TNMarketplace.Web/upload/

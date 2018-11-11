@@ -1,41 +1,65 @@
 <!--tslint:disable-->
-<div #f="ngForm" [formGroup]="form" [ngSwitch]="control.type" [class.has-danger]="invalid" [class.has-success]="valid" [class.form-check]="control.type === 'checkbox'">
+<div #f="ngForm" [formGroup]="form" [ngSwitch]="control.type" [class.has-danger]="invalid" [class.has-success]="valid"
+    [class.form-check]="control.type === 'checkbox'">
 
     <div class="form-group">
-    <label *ngSwitchCase="'dropdown'" [attr.for]="control.key">{{control.label}}</label>
-    <select class="form-control" *ngSwitchCase="'dropdown'" [id]="control.key" [formControlName]="control.key" [class.is-valid]="valid" [class.is-invalid]="invalid">
-        <option *ngFor="let opt of control.options" [value]="opt.key">{{opt.value}}</option>
-    </select>
+        <label *ngSwitchCase="'dropdown'" [attr.for]="control.key">{{control.label}}</label>
+        <select class="form-control" *ngSwitchCase="'dropdown'" [id]="control.key" [formControlName]="control.key"
+            [class.is-valid]="valid" [class.is-invalid]="invalid">
+            <option *ngFor="let opt of control.options" [value]="opt.key">{{opt.value}}</option>
+        </select>
 
-    <!--This is not the switch case because of multiple control types-->
-    <label *ngIf="control.type === 'text' || control.type === 'email' || control.type === 'password' || control.type === 'number'"
-        [attr.for]="control.key">{{control.label}}</label>
-    <input class="form-control" *ngIf="control.type === 'text' || control.type === 'email' || control.type === 'password' || control.type === 'number'"
-        [id]="control.key" [formControlName]="control.key" [type]="control.type" [placeholder]="control.placeholder" [class.is-valid]="valid"
-        [class.is-invalid]="invalid">
+        <!--This is not the switch case because of multiple control types-->
+        <label *ngIf="control.type === 'text' || control.type === 'email' || control.type === 'password' || control.type === 'number'"
+            [attr.for]="control.key">{{control.label}}</label>
+        <input class="form-control" *ngIf="control.type === 'text' || control.type === 'email' || control.type === 'password' || control.type === 'number'"
+            [id]="control.key" [formControlName]="control.key" [type]="control.type" [placeholder]="control.placeholder"
+            [class.is-valid]="valid" [class.is-invalid]="invalid">
 
-    <!--Textarea-->
-    <label *ngIf="control.type === 'textarea'" [for]="control.key">{{control.label}}</label>
-    <textarea class="form-control" *ngIf="control.type === 'textarea'" [id]="control.key" rows="3" [formControlName]="control.key" [class.is-valid]="valid"
-        [class.is-invalid]="invalid"></textarea>
+        <!--Textarea-->
+        <label *ngIf="control.type === 'textarea'" [for]="control.key">{{control.label}}</label>
+        <textarea class="form-control" *ngIf="control.type === 'textarea'" [id]="control.key" rows="3"
+            [formControlName]="control.key" [class.is-valid]="valid" [class.is-invalid]="invalid"></textarea>
 
-    <!--Checkbox-->
-    <label *ngSwitchCase="'checkbox'" [attr.for]="control.key" class="custom-control custom-checkbox">
-        <input #ck *ngSwitchCase="'checkbox'" (change)="control.value = ck.checked" [id]="control.key" [formControlName]="control.key"
-            [type]="control.type" class="custom-control-input">
-        <span>{{control.label}}</span>
-    </label>
+        <!--Checkbox-->
+        <label *ngSwitchCase="'checkbox'" [attr.for]="control.key" class="custom-control custom-checkbox">
+            <input #ck *ngSwitchCase="'checkbox'" (change)="control.value = ck.checked" [id]="control.key"
+                [formControlName]="control.key" [type]="control.type" class="custom-control-input">
+            <span>{{control.label}}</span>
+        </label>
 
-    <!--Checkbox list-->
-    <div *ngIf="control.type === 'checkboxlist'">
-        <div *ngFor="let item of control.options.options">
-            <label>
-                <input class="custom-control-input" type="checkbox" [id]="item.key" [value]="item.key" [checked]="f.value[control.key].indexOf(item.key)> -1"
-                    (change)="control.updateCheckedOptions(item.key, $event, f)"> {{item.value}}
-            </label>
+        <!--Checkbox list-->
+        <div *ngIf="control.type === 'checkboxlist'">
+            <div *ngFor="let item of control.options.options">
+                <label>
+                    <input class="custom-control-input" type="checkbox" [id]="item.key" [value]="item.key" [checked]="f.value[control.key].indexOf(item.key)> -1"
+                        (change)="control.updateCheckedOptions(item.key, $event, f)"> {{item.value}}
+                </label>
+            </div>
         </div>
+        <!--Cascader-->
+        <label *ngIf="control.type === 'cascader'" [for]="control.key">{{control.label}}</label>
+        <nz-cascader *ngIf="control.type === 'cascader'" [(nzOptions)]="control.options" [nzShowSearch]="true"
+             [id]="control.key" [formControlName]="control.key" [class.is-valid]="valid"
+            [class.is-invalid]="invalid" [nzLabelProperty]="control.nzLabelProperty" [nzValueProperty]="control.nzValueProperty">
+        </nz-cascader>
+        <!--Upload-->
+        <label *ngIf="control.type === 'upload'" [for]="control.key">{{control.label}}</label>
+        <nz-upload *ngIf="control.type === 'upload'" nzAction="https://localhost:5001/api/fileupload/upload" 
+        nzListType="picture-card" [(nzFileList)]="control.fileList" [nzSize]="2048" (nzChange) = "control.fileListChange($event)"
+        [nzFileType]="image/jpeg" 
+        
+            [nzShowButton]="fileList?.length < 3" [nzPreview]="handlePreview">
+            <i nz-icon type="plus"></i>
+            <div class="ant-upload-text">Upload</div>
+        </nz-upload>
+        <!--new radio group-->
+        <nz-radio-group *ngIf="control.type === 'checkboxlistnew'" [nzButtonStyle]="'solid'" [id]="control.key" [formControlName]="control.key" [class.is-valid]="valid"
+        [class.is-invalid]="invalid">
+            <label nz-radio-button nzValue="1">Bán</label>
+            <label nz-radio-button nzValue="2">Mua</label>
+            <label nz-radio-button nzValue="3">Cho Thuê</label>
+          </nz-radio-group>
+        <div class="error" *ngIf="errorMessage(control)"> {{ errorMessage(control) }} </div>
     </div>
-
-    <div class="error" *ngIf="errorMessage(control)"> {{ errorMessage(control) }} </div>
-</div>
 </div>
