@@ -46,8 +46,6 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.Property(t => t.UserProvider).HasColumnName("UserProvider");
             builder.Property(t => t.UserReceiver).HasColumnName("UserReceiver");
             builder.Property(t => t.PaymentPlugin).HasColumnName("PaymentPlugin");
-            builder.Property(t => t.Created).HasColumnName("Created");
-            builder.Property(t => t.Modified).HasColumnName("Modified");
 
             // Relationships
             builder.HasOne(t => t.AspNetUserProvider)

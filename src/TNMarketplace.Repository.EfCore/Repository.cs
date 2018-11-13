@@ -67,7 +67,7 @@ namespace TNMarketplace.Repository.EfCore
 
         public virtual void Insert(TEntity entity)
         {
-            entity.ObjectState = ObjectState.Added; ;
+            entity.ObjectState = ObjectState.Added;
             _dbSet.Attach(entity);
             _context.SyncObjectState(entity);
         }

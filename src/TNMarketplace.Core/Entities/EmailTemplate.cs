@@ -11,7 +11,5 @@ namespace TNMarketplace.Core.Entities
         public string Subject { get; set; }
         public string Body { get; set; }
         public bool SendCopy { get; set; }
-        public System.DateTime Created { get; set; }
-        public System.DateTime LastUpdated { get; set; }
     }
 }

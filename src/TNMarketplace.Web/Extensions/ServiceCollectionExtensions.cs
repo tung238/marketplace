@@ -252,29 +252,14 @@ namespace TNMarketplace.Web.Extensions
             // New instance every time, only configuration class needs so its ok
             services.AddSingleton<IStringLocalizerFactory, EFStringLocalizerFactory>();
             services.AddTransient<EmailService, AuthMessageSender>();
-            services.AddTransient<IApplicationDataService, ApplicationDataService>();
+            services.AddScoped<IApplicationDataService, ApplicationDataService>();
             services.AddScoped<IUnitOfWork, HttpUnitOfWork>();
-            services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
+            services.AddScoped<IDatabaseInitializer, DatabaseInitializer>();
             services.AddTransient<TNMarketplace.Repository.EfCore.ApplicationDbContext>();
             services.AddTransient<UserResolverService>();
             services.AddScoped<ApiExceptionFilter>();
             services.AddTransient<IUnitOfWorkAsync, UnitOfWork>();
-            services.AddTransient<IDataContextAsync, TNMarketplace.Repository.EfCore.ApplicationDbContext>();
-            //services.AddTransient<IRepositoryAsync<ApplicationUserPhoto>, Repository.EfCore.Repository<ApplicationUserPhoto>>();
-            //services.AddTransient<IRepositoryAsync<Category>, Repository.EfCore.Repository<Category>>();
-            //services.AddTransient<IRepositoryAsync<CategoryListingType>, Repository.EfCore.Repository<CategoryListingType>>();
-            //services.AddTransient<IRepositoryAsync<CategoryStat>, Repository.EfCore.Repository<CategoryStat>>();
-            //services.AddTransient<IRepositoryAsync<ContactUs>, Repository.EfCore.Repository<ContactUs>>();
-            //services.AddTransient<IRepositoryAsync<ContentPage>, Repository.EfCore.Repository<ContentPage>>();
-            //services.AddTransient<IRepositoryAsync<Culture>, Repository.EfCore.Repository<Culture>>();
-            //services.AddTransient<IRepositoryAsync<EmailTemplate>, Repository.EfCore.Repository<EmailTemplate>>();
-            //services.AddTransient<IRepositoryAsync<Listing>, Repository.EfCore.Repository<Listing>>();
-            //services.AddTransient<IRepositoryAsync<ListingMeta>, Repository.EfCore.Repository<ListingMeta>>();
-            //services.AddTransient<IRepositoryAsync<ListingPicture>, Repository.EfCore.Repository<ListingPicture>>();
-            //services.AddTransient<IRepositoryAsync<ListingReview>, Repository.EfCore.Repository<ListingReview>>();
-            //services.AddTransient<IRepositoryAsync<ListingStat>, Repository.EfCore.Repository<ListingStat>>();
-            //services.AddTransient<IRepositoryAsync<ListingType>, Repository.EfCore.Repository<ListingType>>();
-            //services.AddTransient<IRepositoryAsync<Setting>, Repository.EfCore.Repository<Setting>>();
+            services.AddScoped<IDataContextAsync, TNMarketplace.Repository.EfCore.ApplicationDbContext>();
             services.AddTransient(typeof(IRepositoryAsync<>), typeof(Repository.EfCore.Repository<>));
 
             services.AddTransient<ICategoryService, CategoryService>();
@@ -292,7 +277,6 @@ namespace TNMarketplace.Web.Extensions
             services.AddTransient<IListingService, ListingService>();
             services.AddTransient<IListingStatService, ListingStatService>();
             services.AddTransient<IListingTypeService, ListingTypeService>();
-            services.AddTransient<IPictureService, PictureService>();
             services.AddTransient<IRegionService, RegionService>();
             services.AddTransient<ISettingDictionaryService, SettingDictionaryService>();
             services.AddTransient<ISettingService, SettingService>();

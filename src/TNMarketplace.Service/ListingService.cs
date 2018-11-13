@@ -29,7 +29,7 @@ namespace TNMarketplace.Service
                 itemsCountDictionary.Add(i, 0);
             }
 
-            var itemsCountQuery = Queryable().Where(x => x.Created >= fromDate).GroupBy(x => x.Created).Select(x => new { i = x.Key, j = x.Count() }).ToDictionary(x => x.i, x => x.j);
+            var itemsCountQuery = Queryable().Where(x => x.CreatedAt >= fromDate).GroupBy(x => x.CreatedAt).Select(x => new { i = x.Key, j = x.Count() }).ToDictionary(x => x.i, x => x.j);
             foreach (var item in itemsCountQuery)
             {
                 itemsCountDictionary[item.Key] = item.Value;

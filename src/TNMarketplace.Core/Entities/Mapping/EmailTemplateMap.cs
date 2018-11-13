@@ -33,8 +33,6 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.Property(t => t.Subject).HasColumnName("Subject");
             builder.Property(t => t.Body).HasColumnName("Body");
             builder.Property(t => t.SendCopy).HasColumnName("SendCopy");
-            builder.Property(t => t.Created).HasColumnName("Created");
-            builder.Property(t => t.LastUpdated).HasColumnName("LastUpdated");
         }
     }
 }

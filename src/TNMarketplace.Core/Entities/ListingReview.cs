@@ -17,7 +17,6 @@ namespace TNMarketplace.Core.Entities
         public bool Active { get; set; }
         public bool Enabled { get; set; }
         public bool Spam { get; set; }
-        public System.DateTime Created { get; set; }
         public virtual ApplicationUser AspNetUserFrom { get; set; }
         public virtual ApplicationUser AspNetUserTo { get; set; }
         public virtual Listing Listing { get; set; }

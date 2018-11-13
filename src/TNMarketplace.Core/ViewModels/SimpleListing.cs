@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using TNMarketplace.Core.Entities;
 
-namespace TNMarketplace.Web.Models
+namespace TNMarketplace.Core.ViewModels
 {
     public class SimpleListing
     {
@@ -13,6 +13,7 @@ namespace TNMarketplace.Web.Models
         public int ListingTypeID { get; set; }
         public string UserID { get; set; }
         public int RegionId { get; set; }
+        public int AreaId { get; set; }
         public Nullable<double> Price { get; set; }
         public string ContactName { get; set; }
         public string ContactEmail { get; set; }
@@ -25,10 +26,12 @@ namespace TNMarketplace.Web.Models
         public string Location { get; set; }
         public Nullable<double> Latitude { get; set; }
         public Nullable<double> Longitude { get; set; }
-        public System.DateTime Created { get; set; }
-        public System.DateTime LastUpdated { get; set; }
+        public System.DateTime CreatedAt { get; set; }
+        public string CreatedBy { get; set; }
         public virtual SimpleCategory Category { get; set; }
         public virtual SimpleRegion Region { get; set; }
+        public virtual SimpleArea Area { get; set; }
+
         public virtual ICollection<ListingMeta> ListingMetas { get; set; }
         public virtual ICollection<ListingReview> ListingReviews { get; set; }
         public virtual SimpleListingType ListingType { get; set; }

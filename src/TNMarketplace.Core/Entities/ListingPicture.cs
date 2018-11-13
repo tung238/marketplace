@@ -8,9 +8,9 @@ namespace TNMarketplace.Core.Entities
     {
         public int ID { get; set; }
         public int ListingID { get; set; }
-        public int PictureID { get; set; }
+        public string Url { get; set; }
         public int Ordering { get; set; }
         public virtual Listing Listing { get; set; }
-        public virtual Picture Picture { get; set; }
+        //public virtual Picture Picture { get; set; }
     }
 }

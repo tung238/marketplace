@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ListingService } from '../../api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { ListingItemModel } from '@app/api/model/listingItemModel';
 
 @Component({
   selector: 'appc-listing-item',
@@ -11,7 +10,7 @@ import { ListingItemModel } from '@app/api/model/listingItemModel';
 })
 export class ListingItemComponent implements OnInit {
 
-  listingItem: ListingItemModel = {};
+  listingItem: any = {};
   array = [ 1, 2, 3 ];
 
   constructor(private listingService: ListingService, 
@@ -34,7 +33,7 @@ export class ListingItemComponent implements OnInit {
   }
 
   getListingById(listingId: number){
-    this.listingService.apiListingListingGet(listingId).subscribe((response: ListingItemModel) =>{
+    this.listingService.apiListingListingGet(listingId).subscribe((response: any) =>{
       this.listingItem = response;
       console.log(response);
     })

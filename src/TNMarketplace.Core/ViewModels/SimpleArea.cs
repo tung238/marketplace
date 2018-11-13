@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace TNMarketplace.Web.Models
+namespace TNMarketplace.Core.ViewModels
 {
-    public class SimpleRegion
+    public class SimpleArea
     {
         public int ID { get; set; }
 
@@ -13,6 +12,5 @@ namespace TNMarketplace.Web.Models
         public string Slug { get; set; }
         public string Type { get; set; }
         public string NameWithType { get; set; }
-        public string Code { get; set; }
     }
 }

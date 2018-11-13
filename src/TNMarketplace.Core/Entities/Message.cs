@@ -15,8 +15,6 @@ namespace TNMarketplace.Core.Entities
         public int MessageThreadID { get; set; }
         public string Body { get; set; }
         public string UserFrom { get; set; }
-        public System.DateTime Created { get; set; }
-        public System.DateTime LastUpdated { get; set; }
         public virtual ApplicationUser AspNetUser { get; set; }
         public virtual MessageThread MessageThread { get; set; }
         public virtual ICollection<MessageReadState> MessageReadStates { get; set; }

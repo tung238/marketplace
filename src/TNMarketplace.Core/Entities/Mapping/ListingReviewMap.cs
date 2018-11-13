@@ -42,7 +42,6 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.Property(t => t.Active).HasColumnName("Active");
             builder.Property(t => t.Enabled).HasColumnName("Enabled");
             builder.Property(t => t.Spam).HasColumnName("Spam");
-            builder.Property(t => t.Created).HasColumnName("Created");
 
             // Relationships
             builder.HasOne(t => t.AspNetUserFrom)

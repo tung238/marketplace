@@ -64,8 +64,6 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.Property(t => t.Location).HasColumnName("Location");
             builder.Property(t => t.Latitude).HasColumnName("Latitude");
             builder.Property(t => t.Longitude).HasColumnName("Longitude");
-            builder.Property(t => t.Created).HasColumnName("Created");
-            builder.Property(t => t.LastUpdated).HasColumnName("LastUpdated");
             builder.Property(t => t.RegionId).HasColumnName("RegionId");
             builder.Property(t => t.AreaId).HasColumnName("AreaId");
 

@@ -11,8 +11,6 @@ namespace TNMarketplace.Core.Entities
         public int CountSpam { get; set; }
         public int CountRepeated { get; set; }
         public int ListingID { get; set; }
-        public System.DateTime Created { get; set; }
-        public System.DateTime LastUpdated { get; set; }
         public virtual Listing Listing { get; set; }
     }
 }

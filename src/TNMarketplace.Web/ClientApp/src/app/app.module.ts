@@ -25,6 +25,7 @@ import en from '@angular/common/locales/en';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { Configuration, ApiModule } from './api';
 import localeVi from '@angular/common/locales/vi';
+import { AuthGuard } from './auth.guard';
 
 registerLocaleData(localeVi);
 registerLocaleData(en);
@@ -57,7 +58,7 @@ export function appServiceFactory(appService: AppService): Function {
       { path: '', component: HomeComponent, pathMatch: 'full', data: { state: 'home' } },
       { path: 'dang-nhap', loadChildren: './account/+login/login.module#LoginModule' },
       { path: 'dang-ky', loadChildren: './account/+register/register.module#RegisterModule' },
-      { path: 'dang-tin', loadChildren: './listing-add/listing-add.module#ListingAddModule' },
+      { path: 'dang-tin', loadChildren: './listing-add/listing-add.module#ListingAddModule', canActivate: [AuthGuard] },
       { path: 'createaccount', loadChildren: './account/+create/create.module#CreateAccountModule' },
       { path: 'thong-tin', loadChildren: './account/+profile/profile.module#ProfileModule' },
       { path: 'signalr', loadChildren: './+signalr/signalr.module#SignalrModule' },
@@ -75,6 +76,7 @@ export function appServiceFactory(appService: AppService): Function {
   ],
   providers: [
     AppService,
+    AuthGuard,
     { provide: LOCALE_ID, useValue: "vi-VN" },
     { provide: APP_INITIALIZER, useFactory: appServiceFactory, deps: [AppService], multi: true },
     { provide: NZ_I18N, useValue: en_US },

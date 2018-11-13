@@ -22,8 +22,6 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.Property(t => t.CountSpam).HasColumnName("CountSpam");
             builder.Property(t => t.CountRepeated).HasColumnName("CountRepeated");
             builder.Property(t => t.ListingID).HasColumnName("ListingID");
-            builder.Property(t => t.Created).HasColumnName("Created");
-            builder.Property(t => t.LastUpdated).HasColumnName("LastUpdated");
 
             // Relationships
             builder.HasOne(t => t.Listing)

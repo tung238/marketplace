@@ -106,8 +106,6 @@ namespace TNMarketplace.Core.Entities.Mapping
                 builder.Property(t => t.TimeFormat).HasColumnName("TimeFormat");
                 builder.Property(t => t.ListingReviewEnabled).HasColumnName("ListingReviewEnabled");
                 builder.Property(t => t.ListingReviewMaxPerDay).HasColumnName("ListingReviewMaxPerDay");
-                builder.Property(t => t.Created).HasColumnName("Created");
-                builder.Property(t => t.LastUpdated).HasColumnName("LastUpdated");
             }
         }
     }

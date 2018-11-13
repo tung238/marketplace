@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TNMarketplace.Repository.EfCore;
 
 namespace TNMarketplace.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181112150410_updatelistingpictures")]
+    partial class updatelistingpictures
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -320,7 +322,7 @@ namespace TNMarketplace.Web.Migrations
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -399,7 +401,7 @@ namespace TNMarketplace.Web.Migrations
                         .HasColumnName("Type")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -443,7 +445,7 @@ namespace TNMarketplace.Web.Migrations
                         .HasColumnName("Slug")
                         .HasMaxLength(255);
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -469,7 +471,7 @@ namespace TNMarketplace.Web.Migrations
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -522,7 +524,7 @@ namespace TNMarketplace.Web.Migrations
                         .HasColumnName("Title")
                         .HasMaxLength(150);
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -547,7 +549,7 @@ namespace TNMarketplace.Web.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -584,7 +586,7 @@ namespace TNMarketplace.Web.Migrations
                         .HasColumnName("Subject")
                         .HasMaxLength(100);
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -677,7 +679,7 @@ namespace TNMarketplace.Web.Migrations
                         .HasColumnName("Title")
                         .HasMaxLength(500);
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -718,7 +720,7 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<int>("ListingID")
                         .HasColumnName("ListingID");
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -752,7 +754,7 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<int>("Ordering")
                         .HasColumnName("Ordering");
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -803,7 +805,7 @@ namespace TNMarketplace.Web.Migrations
                         .HasColumnName("Title")
                         .HasMaxLength(250);
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -853,7 +855,7 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<int>("ListingID")
                         .HasColumnName("ListingID");
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -910,7 +912,7 @@ namespace TNMarketplace.Web.Migrations
                         .HasColumnName("Slug")
                         .HasMaxLength(50);
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -937,7 +939,7 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<int>("MessageThreadID")
                         .HasColumnName("MessageThreadID");
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -969,7 +971,7 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<int>("MessageThreadID")
                         .HasColumnName("MessageThreadID");
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -1004,7 +1006,7 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<DateTime?>("ReadDate")
                         .HasColumnName("ReadDate");
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -1040,7 +1042,7 @@ namespace TNMarketplace.Web.Migrations
                         .HasColumnName("Subject")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -1068,7 +1070,7 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<int>("FieldID")
                         .HasColumnName("FieldID");
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -1116,7 +1118,7 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<bool>("Searchable")
                         .HasColumnName("Searchable");
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -1175,7 +1177,7 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<DateTime?>("ToDate")
                         .HasColumnName("ToDate");
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -1228,7 +1230,7 @@ namespace TNMarketplace.Web.Migrations
                         .HasColumnName("Type")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -1361,7 +1363,7 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<double>("TransactionMinimumSize")
                         .HasColumnName("TransactionMinimumSize");
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 
@@ -1394,7 +1396,7 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<int>("SettingID")
                         .HasColumnName("SettingID");
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("UpdatedBy");
 

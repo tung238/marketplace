@@ -26,8 +26,6 @@ namespace TNMarketplace.Core.Entities
         public string UserProvider { get; set; }
         public string UserReceiver { get; set; }
         public string PaymentPlugin { get; set; }
-        public System.DateTime Created { get; set; }
-        public System.DateTime Modified { get; set; }
         public virtual ApplicationUser AspNetUserProvider { get; set; }
         public virtual ApplicationUser AspNetUserReceiver { get; set; }
         public virtual ICollection<ListingReview> ListingReviews { get; set; }

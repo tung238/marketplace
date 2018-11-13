@@ -27,8 +27,6 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.Property(t => t.Name).HasColumnName("Name");
             builder.Property(t => t.Value).HasColumnName("Value");
             builder.Property(t => t.SettingID).HasColumnName("SettingID");
-            builder.Property(t => t.Created).HasColumnName("Created");
-            builder.Property(t => t.LastUpdated).HasColumnName("LastUpdated");
 
             // Relationships
             builder.HasOne(t => t.Setting)

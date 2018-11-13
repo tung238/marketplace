@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ListingService } from '../../api';
 import { Router, UrlSegment, Params, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ListingItemModel } from '@app/api/model/listingItemModel';
 
 @Component({
   selector: 'appc-listings',

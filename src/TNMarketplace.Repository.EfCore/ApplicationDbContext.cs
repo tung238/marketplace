@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TNMarketplace.Core;
 using TNMarketplace.Core.Entities;
 using TNMarketplace.Core.Entities.Mapping;
 using TNMarketplace.Core.Infrastructure;
@@ -46,7 +47,6 @@ namespace TNMarketplace.Repository.EfCore
         public virtual DbSet<MetaCategory> MetaCategories { get; set; }
         public virtual DbSet<MetaField> MetaFields { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<Picture> Pictures { get; set; }
         public virtual DbSet<SettingDictionary> SettingDictionaries { get; set; }
         public virtual DbSet<Setting> Settings { get; set; }
 
@@ -83,27 +83,26 @@ namespace TNMarketplace.Repository.EfCore
             modelBuilder.ApplyConfiguration(new MetaCategoryMap());
             modelBuilder.ApplyConfiguration(new MetaFieldMap());
             modelBuilder.ApplyConfiguration(new OrderMap());
-            modelBuilder.ApplyConfiguration(new PictureMap());
             modelBuilder.ApplyConfiguration(new SettingDictionaryMap());
             modelBuilder.ApplyConfiguration(new SettingMap());
             modelBuilder.ApplyConfiguration(new RegionMap());
             modelBuilder.ApplyConfiguration(new AreaMap());
 
-            foreach (var entityType in modelBuilder.Model.GetEntityTypes()
-            .Where(e => typeof(IAuditable).IsAssignableFrom(e.ClrType)))
-            {
-                modelBuilder.Entity(entityType.ClrType)
-                    .Property<DateTime>("CreatedAt");
+            //foreach (var entityType in modelBuilder.Model.GetEntityTypes()
+            //.Where(e => typeof(Entity).IsAssignableFrom(e.ClrType)))
+            //{
+            //    modelBuilder.Entity(entityType.ClrType)
+            //        .Property<DateTime>("CreatedAt");
 
-                modelBuilder.Entity(entityType.ClrType)
-                    .Property<DateTime>("UpdatedAt");
+            //    modelBuilder.Entity(entityType.ClrType)
+            //        .Property<DateTime>("UpdatedAt");
 
-                modelBuilder.Entity(entityType.ClrType)
-                    .Property<string>("CreatedBy");
+            //    modelBuilder.Entity(entityType.ClrType)
+            //        .Property<string>("CreatedBy");
 
-                modelBuilder.Entity(entityType.ClrType)
-                    .Property<string>("UpdatedBy");
-            }
+            //    modelBuilder.Entity(entityType.ClrType)
+            //        .Property<string>("UpdatedBy");
+            //}
 
 
             base.OnModelCreating(modelBuilder);
@@ -118,8 +117,11 @@ namespace TNMarketplace.Repository.EfCore
         /// <returns></returns>
         public override int SaveChanges()
         {
+            SyncObjectsStatePreCommit();
             this.AuditEntities();
-            return base.SaveChanges();
+            var changes = base.SaveChanges();
+            SyncObjectsStatePostCommit();
+            return changes;
         }
 
         public async Task<int> SaveChangesAsync()
@@ -128,7 +130,6 @@ namespace TNMarketplace.Repository.EfCore
         }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
-            this.AuditEntities();
             try
             {
                 var validationErrors = ChangeTracker
@@ -142,6 +143,7 @@ namespace TNMarketplace.Repository.EfCore
                 }
 
                 SyncObjectsStatePreCommit();
+                this.AuditEntities();
                 var changesAsync = await base.SaveChangesAsync(cancellationToken);
                 SyncObjectsStatePostCommit();
                 return changesAsync;
@@ -204,21 +206,21 @@ namespace TNMarketplace.Repository.EfCore
             // Get the authenticated user name 
             string userName = _userService.GetUser();
 
-            // For every changed entity marked as IAditable set the values for the audit properties
-            foreach (EntityEntry<IAuditable> entry in ChangeTracker.Entries<IAuditable>())
-            {
-                // If the entity was added.
-                if (entry.State == EntityState.Added)
+            //For every changed entity marked as IAditable set the values for the audit properties
+            foreach (EntityEntry<Entity> entry in ChangeTracker.Entries<Entity>())
                 {
-                    entry.Property("CreatedBy").CurrentValue = userName;
-                    entry.Property("CreatedAt").CurrentValue = now;
+                    // If the entity was added.
+                    if (entry.State == EntityState.Added)
+                    {
+                        entry.Property("CreatedBy").CurrentValue = userName;
+                        entry.Property("CreatedAt").CurrentValue = now;
+                    }
+                    else if (entry.State == EntityState.Modified) // If the entity was updated
+                    {
+                        entry.Property("UpdatedBy").CurrentValue = userName;
+                        entry.Property("UpdatedAt").CurrentValue = now;
+                    }
                 }
-                else if (entry.State == EntityState.Modified) // If the entity was updated
-                {
-                    entry.Property("UpdatedBy").CurrentValue = userName;
-                    entry.Property("UpdatedAt").CurrentValue = now;
-                }
-            }
         }
     }
 }

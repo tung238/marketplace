@@ -16,7 +16,5 @@ namespace TNMarketplace.Core.Entities
         public string Keywords { get; set; }
         public string UserID { get; set; }
         public bool Published { get; set; }
-        public System.DateTime Created { get; set; }
-        public System.DateTime LastUpdated { get; set; }
     }
 }

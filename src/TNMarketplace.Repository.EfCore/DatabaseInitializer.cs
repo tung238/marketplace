@@ -70,7 +70,7 @@ namespace TNMarketplace.Repository.EfCore
             InstallAreas();
             //InstallCategories();
             InstallSampleData(await _userManager.FindByEmailAsync("user@user.com"));
-            InstallPictures();
+            //InstallPictures();
         }
 
 
@@ -266,8 +266,6 @@ namespace TNMarketplace.Repository.EfCore
                 TimeFormat = DateTimeFormatInfo.CurrentInfo.ShortTimePattern,
                 ListingReviewEnabled = true,
                 ListingReviewMaxPerDay = 5,
-                Created = DateTime.Now,
-                LastUpdated = DateTime.Now,
                 ObjectState = ObjectState.Added
             });
 
@@ -304,8 +302,6 @@ namespace TNMarketplace.Repository.EfCore
 	                        </tbody>
                         </table>",
                 SendCopy = true,
-                Created = DateTime.Now,
-                LastUpdated = DateTime.Now,
                 ObjectState = ObjectState.Added
             });
 
@@ -325,8 +321,6 @@ namespace TNMarketplace.Repository.EfCore
 	                        </tbody>
                         </table>",
                 SendCopy = true,
-                Created = DateTime.Now,
-                LastUpdated = DateTime.Now,
                 ObjectState = ObjectState.Added
             });
 
@@ -346,8 +340,6 @@ namespace TNMarketplace.Repository.EfCore
 				            </tbody>
 			            </table>",
                 SendCopy = true,
-                Created = DateTime.Now,
-                LastUpdated = DateTime.Now,
                 ObjectState = ObjectState.Added
             });
         }
@@ -390,8 +382,6 @@ namespace TNMarketplace.Repository.EfCore
                         Description = s[2],
                         Enabled = true,
                         IP = "",
-                        LastUpdated = DateTime.Now,
-                        Created = DateTime.Now,
                         ObjectState = ObjectState.Added,
                         ShowPhone = true,
                         Expiration = DateTime.Now.AddMonths(3),
@@ -567,34 +557,34 @@ namespace TNMarketplace.Repository.EfCore
         //    });
         //}
 
-        private void InstallPictures()
-        {
-            if (_context.Pictures.Any())
-            {
-                return;
-            }
-            for (int i = 1; i <= 9; i++)
-            {
-                _context.Pictures.Add(new Picture()
-                {
-                    MimeType = "image/jpeg",
-                    ObjectState = ObjectState.Added
-                });
+        //private void InstallPictures()
+        //{
+        //    if (_context.Pictures.Any())
+        //    {
+        //        return;
+        //    }
+        //    for (int i = 1; i <= 9; i++)
+        //    {
+        //        _context.Pictures.Add(new Picture()
+        //        {
+        //            MimeType = "image/jpeg",
+        //            ObjectState = ObjectState.Added
+        //        });
 
-                _context.SaveChanges();
+        //        _context.SaveChanges();
 
-                _context.ListingPictures.Add(new ListingPicture()
-                {
-                    ListingID = i,
-                    PictureID = i,
-                    ObjectState = ObjectState.Added
-                });
+        //        _context.ListingPictures.Add(new ListingPicture()
+        //        {
+        //            ListingID = i,
+        //            PictureID = i,
+        //            ObjectState = ObjectState.Added
+        //        });
 
-                // Copy files
-                //var pathFrom = Path.Combine(_hostingEnvironment.WebRootPath, "/images/sample/listing", string.Format("{0}.{1}", i.ToString("00000000"), "jpg"));
-                //var pathTo = Path.Combine(_hostingEnvironment.WebRootPath, "/images/listing", string.Format("{0}.{1}", i.ToString("00000000"), "jpg"));
-                //File.Copy(pathFrom, pathTo, true);
-            }
-        }
+        //        // Copy files
+        //        //var pathFrom = Path.Combine(_hostingEnvironment.WebRootPath, "/images/sample/listing", string.Format("{0}.{1}", i.ToString("00000000"), "jpg"));
+        //        //var pathTo = Path.Combine(_hostingEnvironment.WebRootPath, "/images/listing", string.Format("{0}.{1}", i.ToString("00000000"), "jpg"));
+        //        //File.Copy(pathFrom, pathTo, true);
+        //    }
+        //}
     }
 }

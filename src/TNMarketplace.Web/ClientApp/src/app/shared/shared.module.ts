@@ -18,6 +18,7 @@ import { ProductGridRowComponent } from './components/product-grid-row/product-g
 import { ProductListRowComponent } from './components/product-list-row/product-list-row.component';
 import { PhonePipe } from './pipes/phone.pipe';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { MultilinePipe } from './pipes/multiline.pipe';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
     ProductGridRowComponent,
     ProductListRowComponent,
     PhonePipe,
+    MultilinePipe
   ],
   exports: [
     // Modules
@@ -56,6 +58,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
     ProductListRowComponent,
     UppercasePipe,
     PhonePipe,
+    MultilinePipe
   ],
   providers: [
     FormControlService

@@ -9,6 +9,7 @@ import { forEach } from '@angular/router/src/utils/collection';
 import { ControlCheckboxListNew } from '@app/shared/forms/controls/control-checkbox-list-new';
 import { ListingService, Listing } from '@app/api';
 import { ListingUpdateModel } from '@app/api/model/listingUpdateModel';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'appc-listing-add',
@@ -21,11 +22,11 @@ export class ListingAddComponent implements OnInit {
   regionsTree: any[];
   categoriesTree: any[];
   listingTypes:any[];
-  index = 'First-content';
 
   constructor(
     private appService: AppService,
-    private listingService: ListingService
+    private listingService: ListingService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -129,7 +130,9 @@ export class ListingAddComponent implements OnInit {
     var control = this.controls.find(c => c.key == "images");
     var images = [];
     if (control) {
-      images = (control as ControlUpload).fileList.map(f => f.url);
+      images = (control as ControlUpload).fileList.map(f => {
+        return {url: f.url, id: 0};
+      });
     }
     var listingModel: ListingUpdateModel = {};
     listingModel.id = event.id || 0;
@@ -143,10 +146,12 @@ export class ListingAddComponent implements OnInit {
     listingModel.listingTypeId = event.listingType;
     listingModel.pictures = images;
     listingModel.price = event.price;
-    listingModel.regionIds = event.regionIds;
+    listingModel.regionIds = event.regions;
     listingModel.title = event.title;
     this.listingService.apiListingListingUpdatePost(listingModel).subscribe(res=>{
-      console.log(res);
+      if (res.success){
+        this.router.navigateByUrl("/");
+      }
     });
   }
 

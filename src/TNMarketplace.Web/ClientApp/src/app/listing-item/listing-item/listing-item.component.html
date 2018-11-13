@@ -4,16 +4,16 @@
     <div class="product-desc">
       <div nz-col nzXs="24" nzSm="24" nzMd="14" class="product-view">
         <h2>{{listingItem.listingCurrent?.title}}</h2>
-        <p> <i class="fa fa-map-marker"></i><a href="#">{{listingItem.listingCurrent?.area?.name}}</a>, <a href="#">{{listingItem.listingCurrent?.region?.name}}</a>| Đăng lúc {{listingItem.listingCurrent?.created | date: 'short'}}, Mã tin: {{listingItem.listingCurrent?.id}}</p>
+        <p> <i class="fa fa-map-marker"></i><a routerLink="/{{listingItem?.listingCurrent?.region?.slug}}/{{listingItem?.listingCurrent?.category?.slug}}">{{listingItem.listingCurrent?.area?.nameWithType}}</a>, <a routerLink="/{{listingItem?.listingCurrent?.region?.slug}}/{{listingItem?.listingCurrent?.category?.slug}}">{{listingItem.listingCurrent?.region?.nameWithType}}</a>| Đăng lúc {{listingItem.listingCurrent?.createdAt | date: 'short'}}, Mã tin: {{listingItem.listingCurrent?.id}}</p>
         <nz-carousel nzAutoPlay class="flexslider">
-          <div nz-carousel-content *ngFor="let index of array"><img src="/assets/images/banner.jpg"></div>
+          <div nz-carousel-content *ngFor="let item of listingItem?.pictures"><img class="image-responsive" src="{{item.url}}"></div>
         </nz-carousel>
         <!-- //FlexSlider -->
         <div class="product-details">
           <h4><span class="w3layouts-agileinfo">Nhãn hiệu </span> : <a href="#">Company name</a><div class="clearfix"></div></h4>
           <h4><span class="w3layouts-agileinfo">Lượt xem </span> : <strong>150</strong></h4>
           <h4><span class="w3layouts-agileinfo">Fuel </span> : Petrol</h4>
-          <h4><span class="w3layouts-agileinfo">Summary</span> :<p>{{listingItem.listingCurrent?.description}}</p><div class="clearfix"></div></h4>
+          <h4><span class="w3layouts-agileinfo">Summary</span> :<p style="white-space: pre-line">{{listingItem.listingCurrent?.description | multiline }}</p><div class="clearfix"></div></h4>
         
         </div>
       </div>
@@ -30,8 +30,8 @@
             <div class="clearfix"></div>
           </div>
           <div class="itemtype">
-            <p class="p-price">Item Type</p>
-            <h4>Cars</h4>
+            <p class="p-price">Loại</p>
+            <h4><a routerLink="/{{listingItem?.listingCurrent?.region?.slug}}/{{listingItem?.listingCurrent?.category?.slug}}">{{listingItem?.listingCurrent?.category?.name}}</a></h4>
             <div class="clearfix"></div>
           </div>
         </div>

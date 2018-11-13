@@ -5,6 +5,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { SharedModule } from '@app/shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { ListingService } from '@app/api';
+import { AuthGuard } from '@app/auth.guard';
 
 @NgModule({
   imports: [

@@ -10,8 +10,6 @@ namespace TNMarketplace.Core.Entities
         public string Name { get; set; }
         public string Value { get; set; }
         public int SettingID { get; set; }
-        public System.DateTime Created { get; set; }
-        public System.DateTime LastUpdated { get; set; }
         public virtual Setting Setting { get; set; }
     }
 }

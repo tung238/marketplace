@@ -19,16 +19,13 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.ToTable("ListingPictures");
             builder.Property(t => t.ID).HasColumnName("ID");
             builder.Property(t => t.ListingID).HasColumnName("ListingID");
-            builder.Property(t => t.PictureID).HasColumnName("PictureID");
+            builder.Property(t => t.Url).HasColumnName("Url");
             builder.Property(t => t.Ordering).HasColumnName("Ordering");
 
             // Relationships
             builder.HasOne(t => t.Listing)
                 .WithMany(t => t.ListingPictures)
                 .HasForeignKey(d => d.ListingID).OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(t => t.Picture)
-                .WithMany(t => t.ListingPictures)
-                .HasForeignKey(d => d.PictureID).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

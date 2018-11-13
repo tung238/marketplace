@@ -47,8 +47,6 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.Property(t => t.Keywords).HasColumnName("Keywords");
             builder.Property(t => t.UserID).HasColumnName("UserID");
             builder.Property(t => t.Published).HasColumnName("Published");
-            builder.Property(t => t.Created).HasColumnName("Created");
-            builder.Property(t => t.LastUpdated).HasColumnName("LastUpdated");
         }
     }
 }

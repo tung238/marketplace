@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ListingItemModel } from '@app/api/model/listingItemModel';
 
 @Component({
   selector: 'appc-product-grid-row',
@@ -8,7 +7,7 @@ import { ListingItemModel } from '@app/api/model/listingItemModel';
 })
 export class ProductGridRowComponent implements OnInit {
   @Input()
-  listingItem: ListingItemModel;
+  listingItem: any;
   constructor() { }
 
   ngOnInit() {

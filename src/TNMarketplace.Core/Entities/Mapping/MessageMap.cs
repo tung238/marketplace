@@ -29,8 +29,6 @@ namespace TNMarketplace.Core.Entities.Mapping
                 builder.Property(t => t.MessageThreadID).HasColumnName("MessageThreadID");
                 builder.Property(t => t.Body).HasColumnName("Body");
                 builder.Property(t => t.UserFrom).HasColumnName("UserFrom");
-                builder.Property(t => t.Created).HasColumnName("Created");
-                builder.Property(t => t.LastUpdated).HasColumnName("LastUpdated");
 
                 // Relationships
                 builder.HasOne(t => t.AspNetUser)

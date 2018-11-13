@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TNMarketplace.Core.Entities;
+using TNMarketplace.Core.ViewModels;
 using X.PagedList;
 
 namespace TNMarketplace.Web.Models
@@ -20,7 +21,7 @@ namespace TNMarketplace.Web.Models
 
         public IPagedList<ListingItemModel> ListingsPageList { get; set; }
         public PagedListMetaData PagedListMetaData { get; set; }
-        public List<SimpleCategory> Categories { get; set; }
+        //public List<SimpleCategory> Categories { get; set; }
         public List<SimpleCategory> BreadCrumb { get; set; }
         public List<SimpleListingType> ListingTypes { get; set; }
     }

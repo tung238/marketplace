@@ -41,8 +41,6 @@ namespace TNMarketplace.Core.Entities
         public string Location { get; set; }
         public Nullable<double> Latitude { get; set; }
         public Nullable<double> Longitude { get; set; }
-        public System.DateTime Created { get; set; }
-        public System.DateTime LastUpdated { get; set; }
         public virtual ApplicationUser AspNetUser { get; set; }
         public virtual Category Category { get; set; }
         public virtual Region Region { get; set; }

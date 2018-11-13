@@ -1,6 +1,6 @@
 ﻿using TNMarketplace.Core.Entities;
 
-namespace TNMarketplace.Web.Models
+namespace TNMarketplace.Core.ViewModels
 {
     public class SimpleUser
     {
