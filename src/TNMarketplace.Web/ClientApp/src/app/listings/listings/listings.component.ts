@@ -28,7 +28,7 @@ export class ListingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.listingViewMode = 1;
+    this.listingViewMode = 2;
     this.prepareGetListings();
     this.mySubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -58,7 +58,7 @@ export class ListingsComponent implements OnInit, OnDestroy {
     var urlSegments = this.router.routerState.snapshot.root.children[0].url;
     var params = this.router.routerState.snapshot.root.children[0].queryParams;
     if (params["vm"] == "grid") {
-      this.listingViewMode = 2;
+      this.listingViewMode = 1;
     }
     // this.selectedTabIndex = 0;
     if (urlSegments != null && urlSegments.length > 0) {

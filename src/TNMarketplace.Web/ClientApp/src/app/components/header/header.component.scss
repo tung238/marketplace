@@ -220,7 +220,7 @@ a.post-w3layouts-ad {
 		font-size: 42px;
 	}
 	.agileits_search {
-		width: 68%;
+		width: 70%;
 		margin-top:10px;
 	}
 	#agileinfo_search {
@@ -1488,14 +1488,14 @@ a.post-w3layouts-ad {
 	}
 }
 @media (max-width: 384px){
-	.agileits_search input[type="text"], #agileinfo_search {
-		font-size: 12px;
-	}
 	#agileinfo_search {
 		width: 29%;
-		padding: 8px 2px;
+		height: 37px;
 	}
-	.agileits_search .btn-default {
+	.agileits_search input[type="text"]{
+		height: 37px;
+	}
+	.agileits_search .btn-default{
 		height: 37px;
 	}
 	a.post-w3layouts-ad {

@@ -191,12 +191,8 @@ h3.rate {
 /*-- responsive media queries --*/
 
 @media (max-width: 1440px){
-	.agileits_search input[type="text"] {
-		width: 64%;
-	}
-	#agileinfo_search {
-		width: 27%;
-	}
+	
+
 	a.w3layouts-explore-all {
 		width: 24%;
 	}
@@ -261,13 +257,7 @@ h3.rate {
 	.w3-categories h3,.w3l-popular-ads h3,.w3layouts-partners h3 {
 		font-size: 38px;
 	}
-	.agileits_search {
-		width: 68%;
-		margin-top:5px;
-	}
-	#agileinfo_search {
-		width: 27%;
-	}
+	
 	.w3ls-portfolio-left {
 		width: 50%;
 	}
@@ -311,16 +301,6 @@ h3.rate {
 	.main-banner {
 		min-height: 280px;
 		padding: 60px 0 0 0;
-	}
-	.focus-image i {
-		font-size: 35px;
-		width: 85px;
-		height: 85px;
-		line-height: 85px;
-	}
-	.focus-layout {
-		margin: 3px;
-		padding: 20px 0px 20px 0;
 	}
 	.agileits-footer-bottom {
 		padding: 20px 0 25px;
@@ -582,17 +562,7 @@ h3.rate {
 		font-size: 14px;
 		padding: 10px 15px;
 	}
-	.agileits_search input[type="text"] {
-		width: 58%;
-		padding: 9px;
-	}
-	#agileinfo_search {
-		width: 30%;
-		padding: 8.5px 2px;
-	}
-	.agileits_search .btn-default {
-		height: 40px;
-	}
+	
 	.w3ls-header-right ul li.dropdown {
 		padding: 0 9px;
 	}
@@ -1072,10 +1042,6 @@ h3.rate {
 		font-size: 16px;
 		padding: 7px 18px;
 	}
-	.focus-layout h4 {
-		font-size: 17px;
-		height: 35px;
-	}
 	.categories {
 		padding: 30px 0;
 	}
@@ -1446,9 +1412,6 @@ h3.rate {
 	.w3layouts-partners ul li {
 		width: 36%;
 		margin: 20px 6%;
-	}
-	.focus-layout {
-		padding: 16px 0px 16px 0;
 	}
 	.trending-ads {
 		padding: 30px 0 50px 0px;
@@ -1853,9 +1816,6 @@ h3.rate {
 		font-size: 17px;
 		line-height: 20px;
 	}
-	.focus-layout {
-		padding: 16px 5px 16px 5px;
-	}
 	.app-button {
 		width: 45%;
 	}
@@ -1994,16 +1954,7 @@ h3.rate {
 	}
 }
 @media (max-width: 384px){
-	.agileits_search input[type="text"], #agileinfo_search {
-		font-size: 12px;
-	}
-	#agileinfo_search {
-		width: 29%;
-		padding: 8px 2px;
-	}
-	.agileits_search .btn-default {
-		height: 37px;
-	}
+	
 	a.post-w3layouts-ad {
 		padding: 9px 20px;
 		width: 44%;
@@ -2063,9 +2014,6 @@ h3.rate {
 	.modal-lg {
 		width: 350px;
 		padding: 10px 27px;
-	}
-	.focus-layout h4 {
-		font-size: 16px;
 	}
 	.wthree-help h3 {
 		font-size: 26px;
@@ -2179,9 +2127,6 @@ h3.rate {
 		width: 100%;
 		margin: 0.5em 0 0.5em 0;
 	}
-	.focus-layout {
-		padding: 16px 0px 16px 0px;
-	}
 	.slider {
 		min-height: 187px;
 		padding-top: 75px;
@@ -2191,12 +2136,7 @@ h3.rate {
 	.main-banner, .banner {
 		min-height: 175px;
 	}
-	.agileits_search .btn-default {
-		width: 35px;
-	}
-	#agileinfo_search {
-		width: 31%;
-	}
+
 	a.post-w3layouts-ad {
 		width: 50%;
 		margin-left: 25%;

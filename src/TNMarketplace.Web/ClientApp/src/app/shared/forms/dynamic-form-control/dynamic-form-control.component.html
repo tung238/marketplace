@@ -45,7 +45,7 @@
         </nz-cascader>
         <!--Upload-->
         <label *ngIf="control.type === 'upload'" [for]="control.key">{{control.label}}</label>
-        <nz-upload *ngIf="control.type === 'upload'" nzAction="https://localhost:5001/api/fileupload/upload" 
+        <nz-upload *ngIf="control.type === 'upload'" nzAction="/api/fileupload/upload" 
         nzListType="picture-card" [(nzFileList)]="control.fileList" [nzSize]="2048" (nzChange) = "control.fileListChange($event)"
         [nzFileType]="image/jpeg" 
         

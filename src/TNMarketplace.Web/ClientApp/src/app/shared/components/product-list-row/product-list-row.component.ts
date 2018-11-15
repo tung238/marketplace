@@ -6,9 +6,18 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./product-list-row.component.scss']
 })
 export class ProductListRowComponent implements OnInit {
+  private _listingItem: any;
+  get listingItem(){
+    return this._listingItem;
+  }
 
   @Input()
-  listingItem: any;
+  set listingItem(item){
+    if (item.urlPicture == null || item.urlPicture.length == 0){
+      item.urlPicture = 'https://placehold.it/500x300';
+    }
+    this._listingItem = item;
+  }
   constructor() { }
 
   ngOnInit() {
@@ -29,7 +38,7 @@ export class ProductListRowComponent implements OnInit {
     str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
     str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
     str = str.replace(/Đ/g, "D");
-    str = str.replace(/ /g, "_");
-    return `/${str}/${this.listingItem.listingCurrent.id}.html`;
+    str = str.replace(/ |,|;/g, "-");
+    return `/${str.toLowerCase()}/${this.listingItem.listingCurrent.id}.html`;
 }
 }

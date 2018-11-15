@@ -16,13 +16,6 @@
     color: #000;
 	margin-bottom:20px;
 }
-.agileinfo_signin{
-	width: 50%;
-    padding: 60px 40px;
-    background: #fff;
-    margin: 0 auto;
-    box-shadow: 0px 0px 25px #242424;
-}
 .agileinfo_signin form{
 	display:block;
 }
@@ -124,4 +117,65 @@ a.w3layouts-t {
 }
 a.w3layouts-t:hover {
     text-decoration:underline;
+}
+
+.agileinfo_signin {
+    width: 50%;
+    padding: 60px 40px;
+    background: #fff;
+    margin: 0 auto;
+    box-shadow: 0px 0px 25px #242424;
+}
+@media (max-width: 1366px) {
+    .agileinfo_signin {
+        width: 60%;
+    }
+}
+@media (max-width: 1080px) {
+    .agileinfo_signin {
+        width: 65%;
+        padding: 50px 40px;
+    }
+}
+@media (max-width: 991px) {
+    .agileinfo_signin {
+        width: 70%;
+        padding: 45px 30px;
+    }
+}
+@media (max-width: 900px) {
+    .agileinfo_signin {
+        width: 75%;
+    }
+}
+@media (max-width: 800px) {
+    .agileinfo_signin {
+        width: 65%;
+    }
+}
+
+@media (max-width: 667px) {
+    .agileinfo_signin {
+        width: 70%;
+        padding: 35px 25px;
+    }
+}
+
+@media (max-width: 640px) {
+    .agileinfo_signin {
+        width: 75%;
+        padding: 40px 25px;
+    }
+}
+@media (max-width: 600px) {
+    .agileinfo_signin {
+        width: 80%;
+        padding: 30px 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .agileinfo_signin {
+        width: 90%;
+    }
 }

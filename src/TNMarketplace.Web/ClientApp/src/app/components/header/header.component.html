@@ -46,7 +46,8 @@
                     <a routerLink="/tro-giup"><i class="fa fa-question-circle" aria-hidden="true"></i> Trợ giúp</a>
                 </li>
                 <li class="dropdown head-dpdn">
-                    <a href="javascript:void(null);"><span class="active uls-trigger"><i class="fa fa-language" aria-hidden="true"></i>Ngôn ngữ</span></a>
+                    <a href="javascript:void(null);"><span class="active uls-trigger"><i class="fa fa-language"
+                                aria-hidden="true"></i>Ngôn ngữ</span></a>
                 </li>
                 <li class="dropdown head-dpdn">
                     <div class="header-right">
@@ -58,33 +59,35 @@
 
         <div class="clearfix"> </div>
     </div>
-    <div class="agile-its-header container">
-        <div class="logo">
-            <h2><a routerLink="/">moichao<span>.com</span></a></h2>
+    <div class="container">
+        <div class="agile-its-header">
+            <div class="logo">
+                <h2><a routerLink="/">moichao<span>.com</span></a></h2>
+            </div>
+            <div class="agileits_search">
+                <form action="#" method="post">
+                    <input name="Search" type="text" placeholder="How can we help you today?" required=" ">
+                    <select id="agileinfo_search" name="agileinfo_search" required="">
+                        <option value="">All Categories</option>
+                        <option value="Mobiles">Mobiles</option>
+                        <option value="Electronics &amp; Appliances">Electronics &amp; Appliances</option>
+                        <option value="Cars">Cars</option>
+                        <option value="Bikes">Bikes</option>
+                        <option value="Furnitures">Furnitures</option>
+                        <option value="Books, Sports &amp; Hobbies">Books, Sports &amp; Hobbies</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Kids">Kids</option>
+                        <option value="Services">Services</option>
+                        <option value="Jobs">Jobs</option>
+                        <option value="Real Estates">Real Estates</option>
+                    </select>
+                    <button type="submit" class="btn btn-default" aria-label="Left Align">
+                        <i class="fa fa-search" aria-hidden="true"> </i>
+                    </button>
+                </form>
+                <a class="post-w3layouts-ad" routerLink="/dang-tin">Đăng tin miễn phí</a>
+            </div>
+            <div class="clearfix"></div>
         </div>
-        <div class="agileits_search">
-            <form action="#" method="post">
-                <input name="Search" type="text" placeholder="How can we help you today?" required=" ">
-                <select id="agileinfo_search" name="agileinfo_search" required="">
-                    <option value="">All Categories</option>
-                    <option value="Mobiles">Mobiles</option>
-                    <option value="Electronics &amp; Appliances">Electronics &amp; Appliances</option>
-                    <option value="Cars">Cars</option>
-                    <option value="Bikes">Bikes</option>
-                    <option value="Furnitures">Furnitures</option>
-                    <option value="Books, Sports &amp; Hobbies">Books, Sports &amp; Hobbies</option>
-                    <option value="Fashion">Fashion</option>
-                    <option value="Kids">Kids</option>
-                    <option value="Services">Services</option>
-                    <option value="Jobs">Jobs</option>
-                    <option value="Real Estates">Real Estates</option>
-                </select>
-                <button type="submit" class="btn btn-default" aria-label="Left Align">
-                    <i class="fa fa-search" aria-hidden="true"> </i>
-                </button>
-            </form>
-            <a class="post-w3layouts-ad" routerLink="/dang-tin">Đăng tin miễn phí</a>
-        </div>
-        <div class="clearfix"></div>
     </div>
 </header>

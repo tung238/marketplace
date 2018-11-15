@@ -21,7 +21,7 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.Property(t => t.Slug)
                 .IsRequired()
                 .HasMaxLength(255);
-
+            builder.Property(t => t.IconClass).HasMaxLength(20);
             // Table & Column Mappings
             builder.ToTable("Categories");
             builder.Property(t => t.ID).HasColumnName("ID");
@@ -31,6 +31,7 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.Property(t => t.Parent).HasColumnName("Parent");
             builder.Property(t => t.Enabled).HasColumnName("Enabled");
             builder.Property(t => t.Ordering).HasColumnName("Ordering");
+            builder.Property(t => t.IconClass).HasColumnName("IconClass");
         }
     }
 }
