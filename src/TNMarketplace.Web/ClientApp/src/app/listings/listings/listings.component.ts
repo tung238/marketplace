@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ListingService } from '../../api';
 import { Router, UrlSegment, Params, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AppService } from '@app/app.service';
 
 @Component({
   selector: 'appc-listings',
@@ -11,16 +12,17 @@ import { Subscription } from 'rxjs';
 export class ListingsComponent implements OnInit, OnDestroy {
   // selectedTabIndex = 0;
   listingViewMode: number;
+  isLoading = true;
   isPhotoOnly: boolean = false;
   allListingsModel: any;
-  pictureListingsModel: any;
   // nzPageIndex: number = 1;
   pageSize = 20;
   mySubscription: Subscription;
   listOfOption = [];
-  listOfSelectedValue = [ 'a10', 'c12' ];
+  listOfSelectedValue = [ ];
 
   constructor(private listingService: ListingService,
+    private appService: AppService,
     private router: Router
   ) {
   }
@@ -75,23 +77,71 @@ export class ListingsComponent implements OnInit, OnDestroy {
     let pageNumber =  params["p"] != undefined &&  params["p"] > 0 ?  params["p"]: 1;
     let res = this.listingService.apiListingSearchGet(undefined, paths.map(c => c.path), params["s"], params["l"], this.isPhotoOnly,
       params["pf"], params["pt"], undefined, undefined, pageNumber, this.pageSize).subscribe((r) => {
-        if (this.isPhotoOnly) {
-          this.pictureListingsModel = r;
-        } else {
+        this.isLoading = false;
           this.allListingsModel = r;
-        }
-        console.log(r);
+          console.log(r);
       })
   }
-
-  selectTab(photoOnly: boolean) {
-    var urlSegments = this.router.routerState.snapshot.root.children[0].url;
-    var params = this.router.routerState.snapshot.root.children[0].queryParams;
-    this.isPhotoOnly = photoOnly;
-    if (urlSegments != null && urlSegments.length > 0) {
-      this.getListings(urlSegments, params);
-      return;
+  getBreadCrumb(){
+    var appData = this.appService.appData;
+    if (!appData){
+      return [];
     }
+    var breadcrumb = [];
+    var categories = appData.categoriesTree;
+    var regions = appData.regionsTree;
+    var urlSegments = this.router.routerState.snapshot.root.children[0].url;
+    var usedSegments: Array<UrlSegment> = [];
+    var region: any;
+    var area: any;
+    var category: any;
+    var subcategory: any;
+    urlSegments.forEach(element => {
+      if (!region){
+        region = regions.find(re=>re.slug == element.path);
+      }
+      if (!category){
+        category = categories.find(cat=>cat.slug == element.path);
+      }
+    });
+    
+    urlSegments.forEach(element=>{
+      if (region && !area){
+        area = region.children.find(c=>c.slug == element.path);
+      }
+      if(category && !subcategory){
+        subcategory = category.children.find(ca=>ca.slug == element.path);
+      }
+    });
+    if(region){
+      breadcrumb.push({iconClass: region.iconClass, routeLink: `/${region.slug}`, name:region.name});
+      if (area){
+        breadcrumb.push({routeLink: `/${region.slug}/${area.slug}`, name: area.name});
+      }
+    }
+    if(category){
+      if (!region){
+        breadcrumb.push({routeLink: `/${category.slug}`, name: category.name});
+      }else{
+        if (!area){
+          breadcrumb.push({routeLink: `/${region.slug}/${category.slug}`, name: category.name});
+        }else{
+          breadcrumb.push({routeLink: `/${region.slug}/${area.slug}/${category.slug}`, name: category.name});
+        }
+      }
+      if(subcategory){
+        if (!region){
+          breadcrumb.push({routeLink: `/${category.slug}/${subcategory.slug}`, name: subcategory.name});
+        }else{
+          if(!area){
+            breadcrumb.push({routeLink: `/${region.slug}/${category.slug}/${subcategory.slug}`, name: subcategory.name});
+          }else{
+            breadcrumb.push({routeLink: `/${region.slug}/${area.slug}/${category.slug}/${subcategory.slug}`, name: subcategory.name});
+          }
+        }
+      }
+    }
+    breadcrumb.unshift({iconClass: 'fa fa-home', routeLink:'/', name:'Home'});
+    return breadcrumb;
   }
-
 }

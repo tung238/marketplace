@@ -63,6 +63,7 @@ namespace TNMarketplace.Service
                     {
                         ID = r.ID,
                         Name = r.NameWithType,
+                        Slug = r.Slug,
                         NameWithType = r.NameWithType,
                         Children = new List<TreeItem>()
                     };
@@ -74,6 +75,7 @@ namespace TNMarketplace.Service
                                 ID = a.ID,
                                 Name = a.NameWithType,
                                 NameWithType = a.NameWithType,
+                                Slug = a.Slug,
                            
                             IsLeaf = true
                         };

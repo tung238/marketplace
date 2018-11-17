@@ -1,6 +1,6 @@
-<appc-breadcrumb></appc-breadcrumb>
+<appc-breadcrumb [breadcrumb]="getBreadCrumb()"></appc-breadcrumb>
 <div class="container">
-  <div class="select-box">
+  <!-- <div class="select-box">
     <div class="select-city-for-local-ads ads-list">
       <label>Select your city to see local ads</label>
       <select>
@@ -407,12 +407,12 @@
       </div>
     </div>
     <div class="clearfix"></div>
-  </div>
+  </div> -->
 
 
 
   <div class="ads-grid">
-    <div nz-col nzXs="12" nzSm="8" nzMd="6" class="side-bar">
+    <div nz-col nzXs="24" nzSm="24" nzMd="6" class="side-bar">
       <div class="search-hotel">
         <h3 class="agileits-sear-head">Tìm kiếm</h3>
         <form>
@@ -428,9 +428,10 @@
       </div>
       <div class="w3-brand-select">
         <h3 class="agileits-sear-head">Brand name</h3>
-        <nz-select [nzMaxMultipleCount]="3" style="width: 100%" nzMode="multiple" nzPlaceHolder="Please select" [(ngModel)]="listOfSelectedValue">
-            <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
-          </nz-select>
+        <nz-select [nzMaxMultipleCount]="3" style="width: 100%" nzMode="multiple" nzPlaceHolder="Please select"
+          [(ngModel)]="listOfSelectedValue">
+          <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+        </nz-select>
       </div>
       <div class="w3ls-featured-ads">
         <h2 class="sear-head fer">Featured Ads</h2>
@@ -474,61 +475,43 @@
       </div>
     </div>
     <div nz-col nzXs="24" nzSm="24" nzMd="18" class="agileinfo-ads-display">
-      <nz-tabset>
-        <nz-tab nzTitle="Tất cả tin rao" (nzSelect)="selectTab(false)">
-          <div class="view-controls-list">
-            <label>Xem theo : </label>
-            <a class="gridview" [class.active]="listingViewMode==1" (click)="listingViewMode = 1"><i class="fa fa-th"></i></a>
-            <a class="listview" [class.active]="listingViewMode==2" (click)="listingViewMode = 2"><i class="fa fa-th-list"></i></a>
-          </div>
-          <div class="sort">
-              <div class="sort-by">
-               <label>Sắp xếp : </label>
-               <select>
-                       <option value="0">Tin mới nhất</option>
-                       <option value="1">Giá tăng dần</option>
-                       <option value="2">Giá giảm dần</option>
-               </select>
-                </div>
-              </div>
-          <div class="clearfix"></div>
-          <appc-listing-grid [listings]="allListingsModel?.listingsPageList" *ngIf="listingViewMode==1"></appc-listing-grid>
-          <appc-listing-list [listings]="allListingsModel?.listingsPageList" *ngIf="listingViewMode==2"></appc-listing-list>
-          <div class="clearfix"></div>
-          <div *ngIf="allListingsModel?.listingsPageList?.length == 0">
-            <p>Không tìm thấy kết quả lọc hiện tại</p>
-          </div>
-          <nz-pagination *ngIf="allListingsModel?.listingsPageList?.length != 0" [nzPageIndex]="allListingsModel?.pagedListMetaData?.pageNumber"
-            [nzTotal]="allListingsModel?.pagedListMetaData?.totalItemCount" [nzPageSize]="allListingsModel?.pagedListMetaData?.pageSize"
-            nzShowSizeChanger [nzPageSizeOptions]="[10, 20, 30, 40]" (nzPageSizeChange)="nzPageSizeChange($event)"
-            (nzPageIndexChange)="nzPageIndexChange($event)">
-          </nz-pagination>
-        </nz-tab>
-        <nz-tab nzTitle="Tin rao có hình" (nzSelect)="selectTab(true)">
-          <div class="view-controls-list">
-            <label>Xem theo :</label>
-            <a class="gridview" [class.active]="listingViewMode==1" (click)="listingViewMode = 1"><i class="fa fa-th"></i></a>
-            <a class="listview" [class.active]="listingViewMode==2" (click)="listingViewMode = 2"><i class="fa fa-th-list"></i></a>
-          </div>
-          <div class="clearfix"></div>
-          <appc-listing-grid [listings]="pictureListingsModel?.listingsPageList" *ngIf="listingViewMode==1"></appc-listing-grid>
-          <appc-listing-list [listings]="pictureListingsModel?.listingsPageList" *ngIf="listingViewMode==2"></appc-listing-list>
-          <div class="clearfix"></div>
-          <div *ngIf="pictureListingsModel?.listingsPageList?.length == 0">
-            <p>Không tìm thấy kết quả lọc hiện tại</p>
-          </div>
-          <nz-pagination *ngIf="pictureListingsModel?.listingsPageList?.length != 0" [nzPageIndex]="pictureListingsModel?.pagedListMetaData?.pageNumber"
-            [nzTotal]="pictureListingsModel?.pagedListMetaData?.totalItemCount" [nzPageSize]="pictureListingsModel?.pagedListMetaData?.pageSize"
-            nzShowSizeChanger [nzPageSizeOptions]="[10, 20, 30, 40]" (nzPageSizeChange)="nzPageSizeChange($event)"
-            (nzPageIndexChange)="nzPageIndexChange($event)">
-          </nz-pagination>
-        </nz-tab>
-      </nz-tabset>
+      <div class="view-controls-list">
+        <label>Xem theo : </label>
+        <a class="listview" [class.active]="listingViewMode==2" (click)="listingViewMode = 2"><i class="fa fa-th-list"></i></a>
+        <a class="gridview" [class.active]="listingViewMode==1" (click)="listingViewMode = 1"><i class="fa fa-th"></i></a>
+      </div>
+      <div class="sort">
+        <div class="sort-by">
+          <label>Sắp xếp : </label>
+          <select>
+            <option value="0">Tin mới nhất</option>
+            <option value="1">Giá tăng dần</option>
+            <option value="2">Giá giảm dần</option>
+          </select>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <nz-skeleton *ngIf="isLoading"></nz-skeleton>
+      <nz-skeleton *ngIf="isLoading"></nz-skeleton>
+      <nz-skeleton *ngIf="isLoading"></nz-skeleton>
+      <nz-skeleton *ngIf="isLoading"></nz-skeleton>
+      <nz-skeleton *ngIf="isLoading"></nz-skeleton>
 
+      <appc-listing-grid [listings]="allListingsModel?.listingsPageList" *ngIf="listingViewMode==1"></appc-listing-grid>
+      <appc-listing-list [listings]="allListingsModel?.listingsPageList" *ngIf="listingViewMode==2"></appc-listing-list>
+      <div class="clearfix"></div>
+      <div *ngIf="allListingsModel != null && allListingsModel?.listingsPageList?.length == 0">
+        <p>Không tìm thấy kết quả lọc hiện tại</p>
+      </div>
+      <nz-pagination *ngIf="allListingsModel != null && allListingsModel.listingsPageList?.length != 0" [nzPageIndex]="allListingsModel?.pagedListMetaData?.pageNumber"
+        [nzTotal]="allListingsModel?.pagedListMetaData?.totalItemCount" [nzPageSize]="allListingsModel?.pagedListMetaData?.pageSize"
+        nzShowSizeChanger [nzPageSizeOptions]="[10, 20, 30, 40]" (nzPageSizeChange)="nzPageSizeChange($event)"
+        (nzPageIndexChange)="nzPageIndexChange($event)">
+      </nz-pagination>
     </div>
     <div class="clearfix"></div>
   </div>
 </div>
-<br/>
-<br/>
-<br/>
+<br />
+<br />
+<br />

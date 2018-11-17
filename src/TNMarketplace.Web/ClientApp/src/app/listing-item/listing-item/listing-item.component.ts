@@ -38,5 +38,7 @@ export class ListingItemComponent implements OnInit {
       console.log(response);
     })
   }
+  getBreadCrumb(){
 
+  }
 }
