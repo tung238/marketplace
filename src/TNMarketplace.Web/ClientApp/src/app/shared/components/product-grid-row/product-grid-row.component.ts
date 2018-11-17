@@ -14,7 +14,7 @@ export class ProductGridRowComponent implements OnInit {
   @Input()
   set listingItem(item){
     if (item.urlPicture == null || item.urlPicture.length == 0){
-      item.urlPicture = 'https://placehold.it/500x300';
+      item.urlPicture = '/assets/images/m5.jpg';
     }
     this._listingItem = item;
   }

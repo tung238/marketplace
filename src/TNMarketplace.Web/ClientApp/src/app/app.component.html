@@ -33,9 +33,7 @@
   <nz-content>
     <!-- component routing placeholder -->
     <main >
-      <div class="container">
       <router-outlet #o="outlet"></router-outlet>
-    </div>
     </main>
     <!-- <main [@routerTransition]="getState(o)">
       <router-outlet #o="outlet"></router-outlet>
@@ -48,15 +46,3 @@
   <nz-back-top></nz-back-top>
 </nz-layout>
 <appc-simple-notifications [options]="notificationOptions"></appc-simple-notifications>
-<div class="w3-categories">
-  <h3>Danh mục tin</h3>
-  <div class="focus-grid w3layouts-boder1">
-    <a class="btn-8" href="categories.html">
-      <div class="focus-border">
-        <div class="focus-layout">
-          <div class="focus-image"><i class="fa fa-mobile"></i></div>
-          <h4 class="clrchg">Mobiles</h4>
-        </div>
-      </div>
-    </a>
-  </div>

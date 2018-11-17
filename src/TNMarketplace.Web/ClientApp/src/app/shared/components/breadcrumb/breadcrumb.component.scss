@@ -1,0 +1,39 @@
+/*-- breadcrumbs --*/
+.w3layouts-breadcrumbs {
+	background:#0099e5;
+	padding:11px 0;
+	text-align:left;
+}
+span.agile-breadcrumbs {
+    color: #fff;
+    font-size: 15px;
+}
+span.agile-breadcrumbs a {
+	color:#d0eaf7;
+	margin:0 5px;
+}
+span.agile-breadcrumbs a:hover {
+	color:#fff;
+}
+span.agile-breadcrumbs a i {
+    color: #d0eaf7;
+    font-size: 16px;
+	transition:0.5s all;
+	-webkit-transition:0.5s all;
+	-o-transition:0.5s all;
+	-ms-transition:0.5s all;
+	-moz-transition:0.5s all;
+}
+span.agile-breadcrumbs a i:hover  {
+    color: #fff;
+	transition:0.5s all;
+	-webkit-transition:0.5s all;
+	-o-transition:0.5s all;
+	-ms-transition:0.5s all;
+	-moz-transition:0.5s all;
+}
+/*-- //breadcrumbs --*/
+
+.ant-breadcrumb:last-child{
+    color: #fff;
+}

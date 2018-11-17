@@ -12,6 +12,7 @@ namespace TNMarketplace.Core.Entities
         public string Slug { get; set; }
         public string Type { get; set; }
         public string NameWithType { get; set; }
+        public int Ordering { get; set; }
         public virtual ICollection<Area> Areas { get; set; }
         public virtual ICollection<Listing> Listings { get; set; }
 

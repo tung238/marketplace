@@ -17,6 +17,9 @@ export class ListingsComponent implements OnInit, OnDestroy {
   // nzPageIndex: number = 1;
   pageSize = 20;
   mySubscription: Subscription;
+  listOfOption = [];
+  listOfSelectedValue = [ 'a10', 'c12' ];
+
   constructor(private listingService: ListingService,
     private router: Router
   ) {

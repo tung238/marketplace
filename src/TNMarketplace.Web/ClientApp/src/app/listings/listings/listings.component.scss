@@ -1,8 +1,9 @@
 /*-- products-page --*/
 .ads-list {
-	width:33.333%;
-	float:left;
+    width: 33.333%;
+    float: left;
 }
+
 .select-box {
     background: rgba(255, 76, 76, 0.66);
     padding: 30px 30px;
@@ -13,27 +14,32 @@
     -ms-border-radius: 6px;
     -o-border-radius: 6px;
 }
+
 .ads-list label {
-	display: block;
+    display: block;
     font-size: 14px;
     font-weight: 400;
     color: #000;
     margin-bottom: 6px;
 }
+
 .ads-list select {
-	width: 70%;
+    width: 70%;
     outline: none;
     color: #000;
     font-size: 15px;
     border: 1px solid #eee;
     padding: 7px 8px;
 }
+
 .btn-group.bootstrap-select.show-tick button {
     padding: 8px 10px;
 }
+
 .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
     width: 260px;
 }
+
 #custom-search-input {
     padding: 3px;
     border: solid 1px #D1E0EE;
@@ -47,12 +53,12 @@
     color: #000;
 }
 
-#custom-search-input input{
+#custom-search-input input {
     border: 0;
     box-shadow: none;
 }
 
-#custom-search-input button{
+#custom-search-input button {
     margin: 2px 0 0 0;
     background: none;
     box-shadow: none;
@@ -62,15 +68,16 @@
     border-left: solid 1px #ccc;
 }
 
-#custom-search-input button:hover{
+#custom-search-input button:hover {
     border: 0;
     box-shadow: none;
     border-left: solid 1px #ccc;
 }
 
-#custom-search-input .glyphicon-search{
+#custom-search-input .glyphicon-search {
     font-size: 23px;
 }
+
 .input-lg {
     height: 29px;
     padding: 0px 10px;
@@ -82,80 +89,117 @@
     -ms-border-radius: 0px;
     -o-border-radius: 0px;
 }
+
 #custom-search-input .glyphicon-search {
     font-size: 16px;
 }
+
 .btn-default {
     border-color: #D1E0EE;
 }
+
 .btn {
     display: inline-block;
 }
+
 .search-hotel input[type="text"] {
-  background:#fff;
-  border: none;
-  width: 81%;
-  outline: none;
-  padding: 11px 10px 10px 10px;
-  font-size: 13px;
-  color: #c4c4c4;
+    background: #fff;
+    border: none;
+    width: 81%;
+    outline: none;
+    padding: 11px 10px 10px 10px;
+    font-size: 13px;
+    color: #c4c4c4;
 }
-.search-hotel form input[type="submit"]{
-  background: url(/assets/images/search.png) no-repeat 13px 11px rgb(255, 137, 137);
-  width: 44px;
-  height: 39px;
-  border: none;
-  padding:0;
-  margin-top: 0;
-  }
-.search-grid-left{
-  padding: 15px;
-  background:#f5f4f0;
-  }
+
+.search-hotel form input[type="submit"] {
+    background: url(/assets/images/search.png) no-repeat 13px 11px rgb(255, 137, 137);
+    width: 44px;
+    height: 39px;
+    border: none;
+    padding: 0;
+    margin-top: 0;
+}
+
+.search-grid-left {
+    padding: 15px;
+    background: #f5f4f0;
+}
+
 h3.agileits-sear-head {
     color: rgba(255, 76, 76, 0.86);
     margin-bottom: 10px;
     font-size: 22px;
     font-weight: 400;
 }
-.search-hotel{
-padding: 15px 0;
-border-bottom: 1px solid #e5e3db; 
+
+.search-hotel {
+    padding: 15px 0;
+    border-bottom: 1px solid #e5e3db;
 }
 
 
 /* SWITCH CONTROLS */
-.view-controls-list{
+.view-controls-list {
     width: 20%;
     text-align: left;
     margin-bottom: 15px;
     float: left;
 }
-.view-controls-grid{
-	width: 20%;
+
+.view-controls-grid {
+    width: 20%;
     text-align: left;
     margin-bottom: 15px;
     float: left;
 }
+
 .view-controls-list label {
     font-size: 14px;
     color: #9A9A9A;
     font-weight: 400;
 }
-.view-controls-list a{
-	padding:5px;
-	color:black;
-	cursor:pointer;
-}
-.view-controls-list a:hover{
-	color:#0099e5;
-}
-.view-controls-list .active{
-	color:#0099e5;
+
+.view-controls-list a {
+    padding: 5px;
+    color: black;
+    cursor: pointer;
 }
 
-.nz-tab{
+.view-controls-list a:hover {
+    color: #0099e5;
+}
+
+.view-controls-list .active {
+    color: #0099e5;
+}
+
+.nz-tab {
     border: 1px solid #CCCCCC !important;
     padding: 15px;
     position: relative;
+}
+
+.sort {
+    float: RIGHT;
+}
+
+.sort-by label,
+.view-controls-list label {
+    font-size: 14px;
+    color: #9A9A9A;
+    margin-bottom: 8px;
+    font-weight: 400;
+}
+
+.side-bar {
+    background-color: #F9F9F9;
+    padding: 25px 15px;
+}
+
+.range,
+.w3-brand-select,
+.w3ls-featured-ads {
+    padding: 25px 0 30px 0;
+    border-bottom: 1px solid #e5e3db;
 }
