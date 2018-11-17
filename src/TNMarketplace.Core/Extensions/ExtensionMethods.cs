@@ -17,7 +17,7 @@ namespace TNMarketplace.Core
         public string Slug { get; set; }
         public string Type { get; set; }
         public string NameWithType { get; set; }
-
+        public string IconClass { get; set; }
         public bool IsLeaf { get; set; }
         public List<TreeItem> Children { get; set; }
     }

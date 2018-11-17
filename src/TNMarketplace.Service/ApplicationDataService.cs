@@ -94,6 +94,7 @@ namespace TNMarketplace.Service
                         ID = cat.ID,
                         Name = cat.Name,
                         Slug = cat.Slug,
+                        IconClass = cat.IconClass,
                         Children = new List<TreeItem>()
                     };
                     foreach(var child in categories.Where(c=>c.Parent == cat.ID))
@@ -104,6 +105,7 @@ namespace TNMarketplace.Service
                             ID = child.ID,
                             Name = child.Name,
                             Slug = child.Slug,
+                            IconClass = child.IconClass,
                             Children = new List<TreeItem>()
                         };
                         cItem.Children.Add(childItem);
@@ -167,7 +169,7 @@ namespace TNMarketplace.Service
         private object GetCookieConsent(HttpContext httpContext)
         {
             var consentFeature = httpContext.Features.Get<ITrackingConsentFeature>();
-            var showConsent = !consentFeature?.CanTrack ?? false;
+            var showConsent = false;//!consentFeature?.CanTrack ?? false;
             var cookieString = consentFeature?.CreateConsentCookie();
             return new { showConsent, cookieString };
         }

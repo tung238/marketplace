@@ -709,27 +709,6 @@ a:hover, a:focus {
       h4.footer-head {
           font-size: 26px;
       }
-      #container .list li .title {
-          font-size: 18px;
-      }
-      #container .list li .adprice {
-          font-size: 20px;
-          margin: 8px 0 0 0;
-      }
-      #container .list li .date {
-          font-size: 13px;
-      }
-      #container .list li .cityname {
-          font-size: 12.5px;
-      }
-      #container .list li p {
-          font-size: 12px;
-          margin-top: 10px;
-      }
-      .item-price:before {
-          left: -58.4%;
-          border-right-width: 68px;
-      }
       .icon-box {
           height: 68px;
       }
@@ -739,9 +718,6 @@ a:hover, a:focus {
       h5.title {
           font-size: 18px;
           height: 57px;
-      }
-      span.adprice {
-          font-size: 20px;
       }
       .ads-list select {
           width: 85%;
@@ -1928,16 +1904,6 @@ a:hover, a:focus {
       }
       .view-controls-list,.view-controls-grid {
           width: 30%;
-      }
-      #container .list li .list-right {
-          width: 100%;
-      }
-      #container .list li .list-left {
-          width: 72%;
-          margin-left: 3%;
-      }
-      #container .list li img {
-          width: 25%;
       }
       h5.title {
           height: 40px;

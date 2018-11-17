@@ -15,5 +15,6 @@ namespace TNMarketplace.Core.ViewModels
         public int Parent { get; set; }
         public bool Enabled { get; set; }
         public int Ordering { get; set; }
+        public string IconClass { get; set; }
     }
 }

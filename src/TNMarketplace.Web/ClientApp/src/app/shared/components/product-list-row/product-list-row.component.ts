@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AppService } from '@app/app.service';
 
 @Component({
   selector: 'appc-product-list-row',
@@ -7,18 +8,20 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ProductListRowComponent implements OnInit {
   private _listingItem: any;
-  get listingItem(){
+  get listingItem() {
     return this._listingItem;
   }
 
   @Input()
-  set listingItem(item){
-    if (item.urlPicture == null || item.urlPicture.length == 0){
+  set listingItem(item) {
+    if (item.urlPicture == null || item.urlPicture.length == 0) {
       item.urlPicture = '/assets/images/m5.jpg';
     }
     this._listingItem = item;
   }
-  constructor() { }
+  constructor(
+    private appService: AppService
+  ) { }
 
   ngOnInit() {
   }
@@ -39,6 +42,30 @@ export class ProductListRowComponent implements OnInit {
     str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
     str = str.replace(/Đ/g, "D");
     str = str.replace(/ |,|;/g, "-");
-    return `/${str.toLowerCase()}/${this.listingItem.listingCurrent.id}.html`;
-}
+    str = `/${str.toLowerCase()}_id${this.listingItem.listingCurrent.id}.html`;
+    var segments = [];
+    let item = this.listingItem.listingCurrent;
+    if (item.region) {
+      segments.unshift(this.listingItem.listingCurrent.region.slug);
+    }
+    if (item.area) {
+      segments.unshift(this.listingItem.listingCurrent.area.slug);
+    }
+    if (item.category) {
+      if (item.category.parent == 0) {
+        segments.unshift(item.category.slug);
+      } else {
+        let categories = this.appService.appData.categoriesTree;
+        let category = categories.find(c => c.id = item.category.parent);
+        if (category) {
+          segments.unshift(category.slug);
+          segments.unshift(item.category.slug);
+        }
+      }
+    }
+    segments.forEach(element => {
+      str = `${element}/${str}`;
+    });
+    return `/${str}`;
+  }
 }

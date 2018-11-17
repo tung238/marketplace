@@ -6,7 +6,7 @@
       <div class="product-desc">
         <div nz-col nzXs="24" nzSm="24" nzMd="14" class="product-view">
           <h2>{{listingItem.listingCurrent?.title}}</h2>
-          <p> <i class="fa fa-map-marker"></i><a routerLink="/{{listingItem?.listingCurrent?.region?.slug}}/{{listingItem?.listingCurrent?.category?.slug}}">{{listingItem.listingCurrent?.area?.nameWithType}}</a>,
+          <p> <i class="fa fa-map-marker"></i><a routerLink="/{{listingItem?.listingCurrent?.region?.slug}}/{{listingItem?.listingCurrent?.area?.slug}}/{{listingItem?.listingCurrent?.category?.slug}}">{{listingItem.listingCurrent?.area?.nameWithType}}</a>,
             <a routerLink="/{{listingItem?.listingCurrent?.region?.slug}}/{{listingItem?.listingCurrent?.category?.slug}}">{{listingItem.listingCurrent?.region?.nameWithType}}</a>|
             Đăng lúc {{listingItem.listingCurrent?.createdAt | date: 'short'}}, Mã tin:
             {{listingItem.listingCurrent?.id}}</p>
@@ -41,7 +41,7 @@
             </div>
             <div class="itemtype">
               <p class="p-price">Loại</p>
-              <h4><a routerLink="/{{listingItem?.listingCurrent?.region?.slug}}/{{listingItem?.listingCurrent?.category?.slug}}">{{listingItem?.listingCurrent?.category?.name}}</a></h4>
+              <h4><a routerLink="/{{listingItem?.listingCurrent?.region?.slug}}/{{listingItem?.listingCurrent?.area?.slug}}/{{listingItem?.listingCurrent?.category?.slug}}">{{listingItem?.listingCurrent?.category?.name}}</a></h4>
               <div class="clearfix"></div>
             </div>
           </div>
