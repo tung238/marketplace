@@ -1250,9 +1250,17 @@ namespace TNMarketplace.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("CreatedBy");
+
                     b.Property<int?>("CultureId");
 
                     b.Property<string>("Key");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.Property<string>("UpdatedBy");
 
                     b.Property<string>("Value");
 

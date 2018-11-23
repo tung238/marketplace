@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TNMarketplace.ImportTool": {
+      "commandName": "Project",
+      "commandLineArgs": "-p d:\\chotot.txt"
+    }
+  }
+}

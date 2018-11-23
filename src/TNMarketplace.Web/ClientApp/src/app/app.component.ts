@@ -17,12 +17,7 @@ import { AppService } from './app.service';
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
-  public notificationOptions = {
-    position: ['top', 'right'],
-    timeOut: 5000,
-    lastOnBottom: true
-  };
-  isCollapsed = true;
+  
   constructor(
     private router: Router,
     private title: Title,
@@ -37,16 +32,6 @@ export class AppComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       this.configureOidc();
     }
-    // appService.sideMenuSubject$.subscribe(v=>{
-    //   this.isCollapsed = v;
-    // })
-    this.router.events.subscribe((event:NavigationStart) => {
-      this.isCollapsed = true;
-    });
-  }
-
-  public toggleNav() {
-    this.isCollapsed = !this.isCollapsed;
   }
 
   public ngOnInit() {

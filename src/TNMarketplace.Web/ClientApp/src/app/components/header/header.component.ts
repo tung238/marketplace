@@ -4,6 +4,8 @@ import { OAuthService } from 'angular-oauth2-oidc';
 
 import { AccountService, DataService } from '@app/core';
 import { AppService } from '../../app.service';
+import { ProfileService } from '@app/account/+profile/profile.service';
+import { UserInfoModel } from '@app/account/+profile/profile.models';
 
 @Component({
     selector: 'appc-header',
@@ -12,11 +14,14 @@ import { AppService } from '../../app.service';
 })
 export class HeaderComponent implements OnInit {
     public isCollapsed = true;
+    public userInfo: UserInfoModel;
+    public userName: string = "";
     constructor(
         private accountService: AccountService,
         private dataService: DataService,
         private appService: AppService,
         private oAuthService: OAuthService,
+        private profileService: ProfileService,
         private router: Router
     ) { }
 
@@ -33,7 +38,12 @@ export class HeaderComponent implements OnInit {
     public get currentCulture(): ICulture {
         return this.cultures.filter(x => x.current)[0];
     }
-    public ngOnInit(): void { }
+    public ngOnInit(): void {
+        this.profileService.userInfo().subscribe(info=>{
+            this.userInfo = info;
+            this.userName = `${info.firstName} ${info.lastName}`;
+        })
+     }
 
     public toggleNav() {
         this.isCollapsed = !this.isCollapsed;

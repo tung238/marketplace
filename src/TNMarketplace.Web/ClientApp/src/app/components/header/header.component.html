@@ -36,8 +36,23 @@
                         nhập</a>
                 </li>
                 <li class="dropdown head-dpdn" *ngIf="isLoggedIn">
-                    <a (click)="logout()" href="javascript:void(null);"> {{'app_nav_logout' |
-                        translate}} </a>
+                    <nz-dropdown>
+                        <a nz-dropdown>
+                            {{userName}} <i nz-icon type="down"></i>
+                        </a>
+                        <ul nz-menu nzSelectable>
+                            <li nz-menu-item>
+                                <a routerLink="/admin">Trang quản lý</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a routerLink="/tai-khoan">Thông tin tài khoản</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a (click)="logout()" href="javascript:void(null);">{{'app_nav_logout' |
+                                    translate}} </a>
+                            </li>
+                        </ul>
+                    </nz-dropdown>
                 </li>
                 <li class="dropdown head-dpdn" *ngIf="!isLoggedIn">
                     <a routerLink="/dang-ky">{{'app_nav_register' | translate}}</a>

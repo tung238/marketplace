@@ -8,7 +8,7 @@ import { CreateAccountComponent } from './create.component';
     imports: [
         SharedModule,
         RouterModule.forChild([
-            { path: '', component: CreateAccountComponent, pathMatch: 'full', data: { state: 'create' } }
+            { path: '', component: CreateAccountComponent}
         ])
     ],
     declarations: [CreateAccountComponent]

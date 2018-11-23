@@ -21,7 +21,7 @@ export class ListingItemComponent implements OnInit {
    }
 
   ngOnInit() {
-    var urlSegments = this.router.routerState.snapshot.root.children[0].url;
+    var urlSegments = this.router.url.split('/').filter(entry => entry.trim() != '');
     if (urlSegments != null && urlSegments.length > 0){
       var id = this.getListingId();
       if (isNaN(id)){
@@ -40,9 +40,9 @@ export class ListingItemComponent implements OnInit {
     })
   }
   getListingId(): number{
-    var urlSegments = this.router.routerState.snapshot.root.children[0].url;
+    var urlSegments = this.router.url.split('/').filter(entry => entry.trim() != '');
     let str = urlSegments[urlSegments.length - 1];
-    let arr = str.path.split(/id|.html/)
+    let arr = str.split(/id|.html/)
     var listingId = 0;
     arr.forEach(item=>{
       if (item){
@@ -60,26 +60,26 @@ export class ListingItemComponent implements OnInit {
     var breadcrumb = [];
     var categories = appData.categoriesTree;
     var regions = appData.regionsTree;
-    var urlSegments = this.router.routerState.snapshot.root.children[0].url;
+    var urlSegments = this.router.url.split('/').filter(entry => entry.trim() != '');
     var region: any;
     var area: any;
     var category: any;
     var subcategory: any;
     urlSegments.forEach(element => {
       if (!region){
-        region = regions.find(re=>re.slug == element.path);
+        region = regions.find(re=>re.slug == element);
       }
       if (!category){
-        category = categories.find(cat=>cat.slug == element.path);
+        category = categories.find(cat=>cat.slug == element);
       }
     });
     
     urlSegments.forEach(element=>{
       if (region && !area){
-        area = region.children.find(c=>c.slug == element.path);
+        area = region.children.find(c=>c.slug == element);
       }
       if(category && !subcategory){
-        subcategory = category.children.find(ca=>ca.slug == element.path);
+        subcategory = category.children.find(ca=>ca.slug == element);
       }
     });
     if(region){

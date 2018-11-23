@@ -12,7 +12,7 @@ import { SharedModule } from '@app/shared/shared.module';
     NgZorroAntdModule,
     SharedModule,
     RouterModule.forChild([
-      { path: '', component: ListingItemComponent, pathMatch: 'full', data: { state: 'create' } }
+      { path: '', component: ListingItemComponent}
   ])
   ],
   declarations: [ListingItemComponent],

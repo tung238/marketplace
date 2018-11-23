@@ -8,10 +8,11 @@ import { ProfileService } from './profile.service';
 })
 export class ProfileComponent {
     menus = [
-        { route: 'userinfo', text: 'User info' },
-        { route: 'updatepassword', text: 'Update password' },
-        { route: 'userphoto', text: 'User photo' },
-        { route: 'otheraccounts', text: 'Other accounts' }
+        { route: 'userinfo', text: 'Thông tin' },
+        { route: 'updatepassword', text: 'Đổi mật khẩu' },
+        { route: 'tin-dang', text: 'Tin đăng của bạn' },
+        // { route: 'userphoto', text: 'User photo' },
+        // { route: 'otheraccounts', text: 'Tài khoản liên kết' }
     ];
 
     constructor(public profileService: ProfileService) { }

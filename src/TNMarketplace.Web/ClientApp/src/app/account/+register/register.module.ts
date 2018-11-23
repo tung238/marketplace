@@ -9,7 +9,7 @@ import { SharedModule } from '../../shared/shared.module';
     imports: [
         SharedModule,
         RouterModule.forChild([
-            { path: '', redirectTo: 'registerhome', pathMatch: 'full', data: { state: 'register' } },
+            { path: '', redirectTo: 'registerhome' },
             { path: 'registerhome', component: RegisterComponent },
             { path: 'registerconfirmation', component: RegisterConfirmationComponent }
         ])

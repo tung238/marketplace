@@ -14,7 +14,7 @@ import { ListingService } from '@app/api';
     SharedModule,
     NgZorroAntdModule,
     RouterModule.forChild([
-      { path: '', component: ListingsComponent, pathMatch: 'full', data: { state: 'create' } }
+      { path: '', component: ListingsComponent }
   ])
   ],
   declarations: [ListingListComponent, ListingGridComponent, ListingsComponent],

@@ -2,7 +2,7 @@
 
 namespace TNMarketplace.Core.Entities
 {
-    public class Resource
+    public class Resource: Entity
     {
         [Key]
         public int Id { get; set; }

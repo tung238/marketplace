@@ -119,7 +119,8 @@ namespace TNMarketplace.Repository.EfCore
 
                     var culture = new Culture
                     {
-                        Name = locale
+                        Name = locale,
+                        ObjectState = ObjectState.Added
                     };
                     var resources = new List<Resource>();
                     translations.Skip(1).ToList().ForEach(t =>
@@ -129,7 +130,8 @@ namespace TNMarketplace.Repository.EfCore
                         {
                             Culture = culture,
                             Key = line[0],
-                            Value = line[currentLocale]
+                            Value = line[currentLocale],
+                            ObjectState = ObjectState.Added
                         });
                     });
 

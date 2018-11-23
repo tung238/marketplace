@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ListingService } from '../../api';
-import { Router, UrlSegment, Params, NavigationEnd } from '@angular/router';
+import { Router, UrlSegment, Params, NavigationEnd, ActivatedRoute, ChildActivationEnd, ActivationEnd, ActivationStart, RoutesRecognized } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AppService } from '@app/app.service';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'appc-listings',
@@ -23,7 +24,8 @@ export class ListingsComponent implements OnInit, OnDestroy {
 
   constructor(private listingService: ListingService,
     private appService: AppService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
   }
 
@@ -60,7 +62,7 @@ export class ListingsComponent implements OnInit, OnDestroy {
 
   prepareGetListings() {
     // Trick the Router into believing it's last link wasn't previously loaded
-    var urlSegments = this.router.routerState.snapshot.root.children[0].url;
+    var urlSegments = this.router.url.split('/').filter(entry => entry.trim() != '');
     var params = this.router.routerState.snapshot.root.children[0].queryParams;
     if (params["vm"] == "grid") {
       this.listingViewMode = 1;
@@ -73,9 +75,9 @@ export class ListingsComponent implements OnInit, OnDestroy {
     this.router.navigate(["/"]);
   }
 
-  getListings(paths: UrlSegment[], params: Params) {
+  getListings(paths: string[], params: Params) {
     let pageNumber =  params["p"] != undefined &&  params["p"] > 0 ?  params["p"]: 1;
-    let res = this.listingService.apiListingSearchGet(undefined, paths.map(c => c.path), params["s"], params["l"], this.isPhotoOnly,
+    let res = this.listingService.apiListingSearchGet(undefined, paths, params["s"], params["l"], this.isPhotoOnly,
       params["pf"], params["pt"], undefined, undefined, pageNumber, this.pageSize).subscribe((r) => {
         this.isLoading = false;
           this.allListingsModel = r;
@@ -90,27 +92,26 @@ export class ListingsComponent implements OnInit, OnDestroy {
     var breadcrumb = [];
     var categories = appData.categoriesTree;
     var regions = appData.regionsTree;
-    var urlSegments = this.router.routerState.snapshot.root.children[0].url;
-    var usedSegments: Array<UrlSegment> = [];
+    var urlSegments = this.router.url.split('/').filter(entry => entry.trim() != '');
     var region: any;
     var area: any;
     var category: any;
     var subcategory: any;
     urlSegments.forEach(element => {
       if (!region){
-        region = regions.find(re=>re.slug == element.path);
+        region = regions.find(re=>re.slug == element);
       }
       if (!category){
-        category = categories.find(cat=>cat.slug == element.path);
+        category = categories.find(cat=>cat.slug == element);
       }
     });
     
     urlSegments.forEach(element=>{
       if (region && !area){
-        area = region.children.find(c=>c.slug == element.path);
+        area = region.children.find(c=>c.slug == element);
       }
       if(category && !subcategory){
-        subcategory = category.children.find(ca=>ca.slug == element.path);
+        subcategory = category.children.find(ca=>ca.slug == element);
       }
     });
     if(region){

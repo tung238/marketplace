@@ -126,21 +126,6 @@ namespace TNMarketplace.Web.Controllers.api
         #endregion
 
         #region Methods
-        //http://stackoverflow.com/questions/11774741/load-partial-view-depending-on-dropdown-selection-in-mvc3
-        [HttpGet("ListingPartial")]
-        public async Task<IActionResult> ListingPartial(int categoryID)
-        {
-            // Custom fields
-            var customFieldCategoryQuery = await _customFieldCategoryService.Query(x => x.CategoryID == categoryID)
-                .Include(x => x.Include(y => y.MetaField).ThenInclude(z => z.ListingMetas)).SelectAsync();
-            var customFieldCategories = customFieldCategoryQuery.ToList();
-            var customFieldModel = new CustomFieldListingModel()
-            {
-                MetaCategories = customFieldCategories
-            };
-
-            return Ok(customFieldModel);
-        }
         [HttpGet("Search")]
         [AllowAnonymous]
         public async Task<IActionResult> Search([FromQuery] SearchListingRequest model)
@@ -154,8 +139,12 @@ namespace TNMarketplace.Web.Controllers.api
             SearchListingResponse response = new SearchListingResponse();
             Region region = GetRegionFromModel(model);
             Category category = GetCategoryFromModel(model);
-
-            if (region != null )
+            Area area = region != null ? GetAreaFromModel(model, region) : null;
+            if (area != null)
+            {
+                items = items.Where(x => x.AreaId == area.ID);
+            }
+            else if (region != null )
             {
                 items = items.Where(x => x.RegionId == region.ID);
             }
@@ -262,6 +251,28 @@ namespace TNMarketplace.Web.Controllers.api
                 if (r!= null)
                 {
                     return r;
+                }
+            }
+            return null;
+        }
+
+        private Area GetAreaFromModel(SearchListingRequest request, Region region)
+        {
+            var segments = request.UrlSegments;
+            segments.Reverse();
+            foreach (var s in segments)
+            {
+                if (String.IsNullOrEmpty(s))
+                {
+                    continue;
+                }
+                if (region.Areas != null)
+                {
+                    var area = region.Areas.FirstOrDefault(a => s.Contains(a.Slug, StringComparison.OrdinalIgnoreCase));
+                    if (area != null)
+                    {
+                        return area;
+                    }
                 }
             }
             return null;

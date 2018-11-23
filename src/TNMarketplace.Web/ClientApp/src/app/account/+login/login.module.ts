@@ -8,7 +8,7 @@ import { SharedModule } from '../../shared/shared.module';
     imports: [
         SharedModule,
         RouterModule.forChild([
-            { path: '', component: LoginComponent, pathMatch: 'full', data: { state: 'login' } }
+            { path: '', component: LoginComponent}
         ])
     ],
     declarations: [LoginComponent]

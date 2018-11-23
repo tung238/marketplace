@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TNMarketplace.Repository.Ef
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TNMarketplace.Service", "src\TNMarketplace.Service\TNMarketplace.Service.csproj", "{4FAF61F6-B4AD-4FFF-8D39-3AEF99C95831}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TNMarketplace.ImportTool", "src\TNMarketplace.ImportTool\TNMarketplace.ImportTool.csproj", "{4028FCFD-E339-470B-A8EB-88E983963A73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{4FAF61F6-B4AD-4FFF-8D39-3AEF99C95831}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FAF61F6-B4AD-4FFF-8D39-3AEF99C95831}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FAF61F6-B4AD-4FFF-8D39-3AEF99C95831}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4028FCFD-E339-470B-A8EB-88E983963A73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4028FCFD-E339-470B-A8EB-88E983963A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4028FCFD-E339-470B-A8EB-88E983963A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4028FCFD-E339-470B-A8EB-88E983963A73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +89,7 @@ Global
 		{BD01FA3A-D2CF-4B20-AAB2-B304BCFD5B48} = {DE75BCFF-DB7E-48F6-BD0F-FBC5D36D560E}
 		{5F122CE4-1797-4BE7-8367-FD44993CAD5F} = {DE75BCFF-DB7E-48F6-BD0F-FBC5D36D560E}
 		{4FAF61F6-B4AD-4FFF-8D39-3AEF99C95831} = {DE75BCFF-DB7E-48F6-BD0F-FBC5D36D560E}
+		{4028FCFD-E339-470B-A8EB-88E983963A73} = {DE75BCFF-DB7E-48F6-BD0F-FBC5D36D560E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F123A03-0D43-4228-8BEC-E1E3F53EC73B}

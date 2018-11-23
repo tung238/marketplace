@@ -8,6 +8,7 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
 import { UserPhotoComponent } from './user-photo/user-photo.component';
 import { OtherAccountsComponent } from './other-accounts/other-accounts.component';
 import { SharedModule } from '../../shared/shared.module';
+import { MyListingComponent } from './my-listing/my-listing.component';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import { SharedModule } from '../../shared/shared.module';
                     { path: 'userinfo', component: UserInfoComponent },
                     { path: 'updatepassword', component: UpdatePasswordComponent },
                     { path: 'userphoto', component: UserPhotoComponent },
-                    { path: 'otheraccounts', component: OtherAccountsComponent }
+                    { path: 'otheraccounts', component: OtherAccountsComponent },
+                    { path: 'tin-dang', component: MyListingComponent }
                 ]
             },
         ])
@@ -29,7 +31,8 @@ import { SharedModule } from '../../shared/shared.module';
         UserInfoComponent,
         UpdatePasswordComponent,
         UserPhotoComponent,
-        OtherAccountsComponent
+        OtherAccountsComponent,
+        MyListingComponent
     ],
     providers: [ProfileService]
 })

@@ -50,7 +50,9 @@ import { NotificationsService } from './notifications.service';
 export class SimpleNotificationsComponent implements OnInit, OnDestroy {
 
     @Input() set options(opt: Options) {
-        this.attachChanges(opt);
+        if (this.options){
+            this.attachChanges(opt);
+        }
     }
 
     @Output() onCreate = new EventEmitter();

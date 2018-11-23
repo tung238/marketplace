@@ -13,7 +13,7 @@ namespace TNMarketplace.Repository
             _context = context;
         }
 
-        public string GetUser()
+        public virtual string GetUser()
         {
             return _context.HttpContext?.User?.Identity?.Name;
         }

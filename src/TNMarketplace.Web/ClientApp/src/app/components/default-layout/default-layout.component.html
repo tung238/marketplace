@@ -1,0 +1,34 @@
+<!-- Navigation -->
+<div class="agiletopbar">
+  <div [class.show-menu] = "!isCollapsed" class="wthreenavigation">
+    <div class="menu-wrap">
+    <nav class="menu">
+      <div class="icon-list">
+        <ng-container *ngFor="let item of rootCategories">
+        <a routerLink="/{{item.slug}}"><i class="{{item.iconClass}}"></i><span>{{item.name}}</span></a>
+      </ng-container>
+      </div>
+    </nav>
+    <button (click)= "toggleNav()" class="close-button" id="close-button">Close Menu</button>
+  </div>
+  <button (click)= "toggleNav()" class="menu-button" id="open-button"> </button>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<!-- //Navigation -->
+<nz-layout>
+  <!-- cookie consent component -->
+  <appc-cookie-consent></appc-cookie-consent>
+    <!-- header component -->
+    <appc-header></appc-header>
+  <nz-content>
+    <!-- component routing placeholder -->
+      <router-outlet></router-outlet>
+  </nz-content>
+  
+    <!-- footer component -->
+    <appc-footer></appc-footer>
+  
+  <nz-back-top></nz-back-top>
+</nz-layout>
+<appc-simple-notifications [options]="notificationOptions"></appc-simple-notifications>

@@ -13,7 +13,7 @@ import { AuthGuard } from '@app/auth.guard';
     NgZorroAntdModule,
     SharedModule,
     RouterModule.forChild([
-      { path: '', component: ListingAddComponent, pathMatch: 'full', data: { state: 'create' } }
+      { path: '', component: ListingAddComponent}
   ])
   ],
   declarations: [ListingAddComponent],
