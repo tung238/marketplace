@@ -31,17 +31,17 @@
         </div>
         <div class="w3ls-header-right">
             <ul>
-                <li class="dropdown head-dpdn" *ngIf="!isLoggedIn">
+                <li class="dropdown head-dpdn" *ngIf="!user">
                     <a routerLink="/dang-nhap"><i class="fa fa-user" aria-hidden="true"></i> Đăng
                         nhập</a>
                 </li>
-                <li class="dropdown head-dpdn" *ngIf="isLoggedIn">
+                <li class="dropdown head-dpdn" *ngIf="user">
                     <nz-dropdown>
                         <a nz-dropdown>
-                            {{userName}} <i nz-icon type="down"></i>
+                            {{user.name}} <i nz-icon type="down"></i>
                         </a>
                         <ul nz-menu nzSelectable>
-                            <li nz-menu-item>
+                            <li nz-menu-item *ngIf="user.role == 'Admin'">
                                 <a routerLink="/admin">Trang quản lý</a>
                             </li>
                             <li nz-menu-item>
@@ -54,7 +54,7 @@
                         </ul>
                     </nz-dropdown>
                 </li>
-                <li class="dropdown head-dpdn" *ngIf="!isLoggedIn">
+                <li class="dropdown head-dpdn" *ngIf="!user">
                     <a routerLink="/dang-ky">{{'app_nav_register' | translate}}</a>
                 </li>
                 <li class="dropdown head-dpdn">
@@ -77,26 +77,18 @@
     <div class="container">
         <div class="agile-its-header">
             <div class="logo">
-                <h2><a routerLink="/">moichao<span>.com</span></a></h2>
+                <!-- <h2><a routerLink="/">moichao<span>.com</span></a></h2> -->
+                <a routerLink="/">
+                <span><img src="/assets/images/logo.jpg"/></span>
+            </a>
             </div>
             <div class="agileits_search">
                 <form action="#" method="post">
-                    <input name="Search" type="text" placeholder="How can we help you today?" required=" ">
-                    <select id="agileinfo_search" name="agileinfo_search" required="">
-                        <option value="">All Categories</option>
-                        <option value="Mobiles">Mobiles</option>
-                        <option value="Electronics &amp; Appliances">Electronics &amp; Appliances</option>
-                        <option value="Cars">Cars</option>
-                        <option value="Bikes">Bikes</option>
-                        <option value="Furnitures">Furnitures</option>
-                        <option value="Books, Sports &amp; Hobbies">Books, Sports &amp; Hobbies</option>
-                        <option value="Fashion">Fashion</option>
-                        <option value="Kids">Kids</option>
-                        <option value="Services">Services</option>
-                        <option value="Jobs">Jobs</option>
-                        <option value="Real Estates">Real Estates</option>
+                    <input name="Search" type="text" placeholder="How can we help you today?" required="" [(ngModel)]="searchText">
+                    <select id="agileinfo_search" name="agileinfo_search" required="" [(ngModel)]="selectedCategory">
+                        <option *ngFor="let item of categories" value="{{item.slug}}">{{item.name}}</option>
                     </select>
-                    <button type="submit" class="btn btn-default" aria-label="Left Align">
+                    <button type="submit" class="btn btn-default" aria-label="Left Align" (click)="doSearch()">
                         <i class="fa fa-search" aria-hidden="true"> </i>
                     </button>
                 </form>

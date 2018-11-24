@@ -60,7 +60,7 @@ export class ListingItemComponent implements OnInit {
     var breadcrumb = [];
     var categories = appData.categoriesTree;
     var regions = appData.regionsTree;
-    var urlSegments = this.router.url.split('/').filter(entry => entry.trim() != '');
+    var urlSegments = this.router.url.split(/[.?/]/).filter(entry => entry.trim() != '');
     var region: any;
     var area: any;
     var category: any;

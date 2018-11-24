@@ -412,28 +412,65 @@
 
 
   <div class="ads-grid">
+    <div nz-col nzXs="24" nzSm="24" nzMd="18" class="agileinfo-ads-display">
+      <div class="view-controls-list">
+        <label>Xem theo : </label>
+        <a class="listview" [class.active]="listingViewMode==2" (click)="listingViewMode = 2"><i class="fa fa-th-list"></i></a>
+        <a class="gridview" [class.active]="listingViewMode==1" (click)="listingViewMode = 1"><i class="fa fa-th"></i></a>
+      </div>
+      <div class="sort">
+        <div class="sort-by">
+          <label>Sắp xếp : </label>
+          <select [(ngModel)]="sortOrder" (change)="onSortOrderChange($event)">
+            <option value="0">Tin mới nhất</option>
+            <option value="1">Giá tăng dần</option>
+            <option value="2">Giá giảm dần</option>
+          </select>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <nz-skeleton *ngIf="isLoading"></nz-skeleton>
+      <nz-skeleton *ngIf="isLoading"></nz-skeleton>
+      <nz-skeleton *ngIf="isLoading"></nz-skeleton>
+      <nz-skeleton *ngIf="isLoading"></nz-skeleton>
+      <nz-skeleton *ngIf="isLoading"></nz-skeleton>
+
+      <appc-listing-grid [listings]="allListingsModel?.listingsPageList" *ngIf="listingViewMode==1"></appc-listing-grid>
+      <appc-listing-list [listings]="allListingsModel?.listingsPageList" *ngIf="listingViewMode==2"></appc-listing-list>
+      <div class="clearfix"></div>
+      <div *ngIf="allListingsModel != null && allListingsModel?.listingsPageList?.length == 0">
+        <p>Không tìm thấy kết quả lọc hiện tại</p>
+      </div>
+      <nz-pagination *ngIf="allListingsModel != null && allListingsModel.listingsPageList?.length != 0" [nzPageIndex]="allListingsModel?.pagedListMetaData?.pageNumber"
+        [nzTotal]="allListingsModel?.pagedListMetaData?.totalItemCount" [nzPageSize]="allListingsModel?.pagedListMetaData?.pageSize"
+        nzShowSizeChanger [nzPageSizeOptions]="[10, 20, 30, 40]" (nzPageSizeChange)="nzPageSizeChange($event)"
+        (nzPageIndexChange)="nzPageIndexChange($event)">
+      </nz-pagination>
+    </div>
     <div nz-col nzXs="24" nzSm="24" nzMd="6" class="side-bar">
+      <form>
       <div class="search-hotel">
         <h3 class="agileits-sear-head">Tìm kiếm</h3>
-        <form>
-          <input type="text" value="Product name..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Product name...';}"
-            required="">
-          <input type="submit" value=" ">
-        </form>
+          <input name="search" type="text" placeholder="Tên sản phẩm..."
+            required="" [(ngModel)]="searchText">
+          <input type="submit" value="submit" (click)="doSearch()">
+      
       </div>
 
       <div class="range">
         <h3 class="agileits-sear-head">Giá</h3>
-        <nz-slider nzRange [nzDefaultValue]="[20, 50]" ></nz-slider>
+        <p *ngIf="priceRange">{{priceRange[0] | currency:'VND':'symbol':'1.0-2'}} - {{priceRange[1] |currency:'VND':'symbol':'1.0-2'}}</p>
+        <nz-slider name="range" [(ngModel)]="priceRange" nzRange [nzMax]="maxPrice" [nzTipFormatter]="formatter"></nz-slider>
       </div>
       <div class="w3-brand-select">
         <h3 class="agileits-sear-head">Brand name</h3>
-        <nz-select [nzMaxMultipleCount]="3" style="width: 100%" nzMode="multiple" nzPlaceHolder="Please select"
+        <nz-select name="brand" [nzMaxMultipleCount]="3" style="width: 100%" nzMode="multiple" nzPlaceHolder="Please select"
           [(ngModel)]="listOfSelectedValue">
           <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
         </nz-select>
       </div>
-      <div class="w3ls-featured-ads">
+    </form>
+      <!-- <div class="w3ls-featured-ads">
         <h2 class="sear-head fer">Featured Ads</h2>
         <div class="w3l-featured-ad">
           <a href="single.html">
@@ -472,44 +509,10 @@
           </a>
         </div>
         <div class="clearfix"></div>
-      </div>
-    </div>
-    <div nz-col nzXs="24" nzSm="24" nzMd="18" class="agileinfo-ads-display">
-      <div class="view-controls-list">
-        <label>Xem theo : </label>
-        <a class="listview" [class.active]="listingViewMode==2" (click)="listingViewMode = 2"><i class="fa fa-th-list"></i></a>
-        <a class="gridview" [class.active]="listingViewMode==1" (click)="listingViewMode = 1"><i class="fa fa-th"></i></a>
-      </div>
-      <div class="sort">
-        <div class="sort-by">
-          <label>Sắp xếp : </label>
-          <select>
-            <option value="0">Tin mới nhất</option>
-            <option value="1">Giá tăng dần</option>
-            <option value="2">Giá giảm dần</option>
-          </select>
-        </div>
-      </div>
-      <div class="clearfix"></div>
-      <nz-skeleton *ngIf="isLoading"></nz-skeleton>
-      <nz-skeleton *ngIf="isLoading"></nz-skeleton>
-      <nz-skeleton *ngIf="isLoading"></nz-skeleton>
-      <nz-skeleton *ngIf="isLoading"></nz-skeleton>
-      <nz-skeleton *ngIf="isLoading"></nz-skeleton>
-
-      <appc-listing-grid [listings]="allListingsModel?.listingsPageList" *ngIf="listingViewMode==1"></appc-listing-grid>
-      <appc-listing-list [listings]="allListingsModel?.listingsPageList" *ngIf="listingViewMode==2"></appc-listing-list>
-      <div class="clearfix"></div>
-      <div *ngIf="allListingsModel != null && allListingsModel?.listingsPageList?.length == 0">
-        <p>Không tìm thấy kết quả lọc hiện tại</p>
-      </div>
-      <nz-pagination *ngIf="allListingsModel != null && allListingsModel.listingsPageList?.length != 0" [nzPageIndex]="allListingsModel?.pagedListMetaData?.pageNumber"
-        [nzTotal]="allListingsModel?.pagedListMetaData?.totalItemCount" [nzPageSize]="allListingsModel?.pagedListMetaData?.pageSize"
-        nzShowSizeChanger [nzPageSizeOptions]="[10, 20, 30, 40]" (nzPageSizeChange)="nzPageSizeChange($event)"
-        (nzPageIndexChange)="nzPageIndexChange($event)">
-      </nz-pagination>
+      </div> -->
     </div>
     <div class="clearfix"></div>
+    
   </div>
 </div>
 <br />

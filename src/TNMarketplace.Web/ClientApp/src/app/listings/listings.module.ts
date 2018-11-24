@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { ListingListComponent } from './listing-list/listing-list.component';
 import { ListingGridComponent } from './listing-grid/listing-grid.component';
 import { ListingsComponent } from './listings/listings.component';
@@ -18,6 +18,6 @@ import { ListingService } from '@app/api';
   ])
   ],
   declarations: [ListingListComponent, ListingGridComponent, ListingsComponent],
-  providers:[ListingService]
+  providers:[ListingService, CurrencyPipe]
 })
 export class ListingsModule { }

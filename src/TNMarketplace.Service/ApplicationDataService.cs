@@ -95,6 +95,7 @@ namespace TNMarketplace.Service
                         Name = cat.Name,
                         Slug = cat.Slug,
                         IconClass = cat.IconClass,
+                        MaxPrice = cat.MaxPrice,
                         Children = new List<TreeItem>()
                     };
                     foreach(var child in categories.Where(c=>c.Parent == cat.ID))
@@ -106,6 +107,7 @@ namespace TNMarketplace.Service
                             Name = child.Name,
                             Slug = child.Slug,
                             IconClass = child.IconClass,
+                            MaxPrice = child.MaxPrice,
                             Children = new List<TreeItem>()
                         };
                         cItem.Children.Add(childItem);

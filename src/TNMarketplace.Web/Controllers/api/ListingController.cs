@@ -4,6 +4,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -121,7 +123,7 @@ namespace TNMarketplace.Web.Controllers.api
             _imageHelper = imageHelper;
             _mapper = mapper;
 
-        _unitOfWorkAsync = unitOfWorkAsync;
+            _unitOfWorkAsync = unitOfWorkAsync;
         }
         #endregion
 
@@ -132,7 +134,22 @@ namespace TNMarketplace.Web.Controllers.api
         {
             return Ok(await GetSearchResult(model));
         }
-
+        private string ConvertToUnSign(string input)
+        {
+            input = input.Trim();
+            for (int i = 0x20; i < 0x30; i++)
+            {
+                input = input.Replace(((char)i).ToString(), " ");
+            }
+            Regex regex = new Regex(@"\p{IsCombiningDiacriticalMarks}+");
+            string str = input.Normalize(NormalizationForm.FormD);
+            string str2 = regex.Replace(str, string.Empty).Replace('đ', 'd').Replace('Đ', 'D');
+            while (str2.IndexOf("?") >= 0)
+            {
+                str2 = str2.Remove(str2.IndexOf("?"), 1);
+            }
+            return str2;
+        }
         private async Task<SearchListingResponse> GetSearchResult(SearchListingRequest model)
         {
             IQueryable<Listing> items = _listingService.Queryable();
@@ -144,7 +161,7 @@ namespace TNMarketplace.Web.Controllers.api
             {
                 items = items.Where(x => x.AreaId == area.ID);
             }
-            else if (region != null )
+            else if (region != null)
             {
                 items = items.Where(x => x.RegionId == region.ID);
             }
@@ -152,14 +169,14 @@ namespace TNMarketplace.Web.Controllers.api
             {
                 items = items.Where(x => x.CategoryID == category.ID);
             }
-            
+            items = items.Where(x => x.Active && x.Enabled);
             response.ListingTypes = _mapper.Map<List<SimpleListingType>>(_dataCacheService.ListingTypes);
-            
+
 
             items = items
                 .Include(y => y.ListingPictures)
                 .Include(y => y.Category)
-                .Include(y=>y.Region)
+                .Include(y => y.Region)
                 .Include(y => y.ListingType)
                 .Include(y => y.AspNetUser)
                 .Include(y => y.ListingReviews);
@@ -167,13 +184,11 @@ namespace TNMarketplace.Web.Controllers.api
             // Search Text
             if (!string.IsNullOrEmpty(model.SearchText))
             {
-                model.SearchText = model.SearchText.ToLower();
-
-                items = items.Where(x =>
-                    x.Title.ToLower().Contains(model.SearchText) ||
-                    x.Description.ToLower().Contains(model.SearchText) ||
-                    x.Location.ToLower().Contains(model.SearchText));
-                
+                model.SearchText = ConvertToUnSign(model.SearchText);
+                items = items.Where(l =>
+                EF.Functions.Like(l.Title, $"%{model.SearchText}%")
+                    || EF.Functions.Like(l.Description, $"%{model.SearchText}%")
+                    || EF.Functions.Like(l.Location, $"%{model.SearchText}%"));
             }
 
             // Filter items by Listing Type
@@ -184,7 +199,7 @@ namespace TNMarketplace.Web.Controllers.api
             // Location
             if (!string.IsNullOrEmpty(model.Location))
             {
-                items = items.Where(x => !string.IsNullOrEmpty(x.Location) && x.Location.IndexOf(model.Location, StringComparison.OrdinalIgnoreCase) != -1);
+                items = items.Where(x=> x.Location.Contains(model.Location, StringComparison.OrdinalIgnoreCase));
             }
 
             // Picture
@@ -201,9 +216,23 @@ namespace TNMarketplace.Web.Controllers.api
             {
                 items = items.Where(x => x.Price <= model.PriceTo.Value);
             }
+            
+            switch (model.SortBy)
+            {
+                case 0:
+                    items = items.OrderByDescending(x => x.CreatedAt);
+                    break;
+                case 1:
+                    items = items.OrderByDescending(x => x.Price);
+                    break;
+                default:
+                    items = items.OrderBy(x => x.Price);
+                    break;
+            }
+            items = items.Take(200);
             // Show active and enabled only
             var itemsModelList = new List<ListingItemModel>();
-            foreach (var item in (await items.ToListAsync()).Where(x => x.Active && x.Enabled).OrderByDescending(x => x.CreatedAt))
+            foreach (var item in (await items.ToListAsync()).OrderByDescending(x => x.CreatedAt))
             {
                 itemsModelList.Add(new ListingItemModel()
                 {
@@ -241,14 +270,14 @@ namespace TNMarketplace.Web.Controllers.api
         {
             var segments = request.UrlSegments;
             segments.Reverse();
-            foreach(var s in segments)
+            foreach (var s in segments)
             {
                 if (String.IsNullOrEmpty(s))
                 {
                     continue;
                 }
                 var r = _dataCacheService.Regions.FirstOrDefault(re => s.Contains(re.Slug, StringComparison.OrdinalIgnoreCase));
-                if (r!= null)
+                if (r != null)
                 {
                     return r;
                 }
@@ -308,7 +337,7 @@ namespace TNMarketplace.Web.Controllers.api
         public async Task<IActionResult> Listing(int id)
         {
             var itemQuery = _listingService.Queryable().AsNoTracking().Where(t => t.ID == id)
-                .Include(x => x.Category).Include(x => x.Region).Include(x=>x.Area).Include(x => x.ListingMetas).ThenInclude(z => z.MetaField).Include(x => x.ListingStats).Include(x => x.ListingType);
+                .Include(x => x.Category).Include(x => x.Region).Include(x => x.Area).Include(x => x.ListingMetas).ThenInclude(z => z.MetaField).Include(x => x.ListingStats).Include(x => x.ListingType);
 
             var item = itemQuery.FirstOrDefault();
 
@@ -443,7 +472,7 @@ namespace TNMarketplace.Web.Controllers.api
                     Title = listing.Title,
                     IP = ""
                 };
-                foreach(var item in listing.Pictures)
+                foreach (var item in listing.Pictures)
                 {
                     dbListing.ListingPictures.Add(new ListingPicture()
                     {
