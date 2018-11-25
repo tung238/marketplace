@@ -52,7 +52,7 @@ h1, h2, h3, h4, h5, h6 {
 	margin:15px 0;
 }
 span.w3layouts-agileinfo {
-    width: 15%;
+    // width: 15%;
     display: block;
     float: left;
 }
@@ -66,8 +66,9 @@ span.w3layouts-agileinfo {
     color: #848484;
     font-size: 13px;
     margin: 8px 0;
-    float: right;
-    width: 83%;
+	// float: right;
+	padding-left: 10px;
+    // width: 83%;
     margin-top: 0px;
 }
 .product-details p strong {
@@ -102,28 +103,28 @@ small{
 // }
 p.p-price {
     float: left;
-    width: 50%;
+    width: 24%;
     margin: 0;
     font-size: 16px;
     font-weight: 400;
     color: #424242;
     vertical-align: middle;
-	margin-top:8px;
-	margin-left: 20px;
+	// margin-top:8px;
+	margin-left: 10px;
 }
-h3.rate {
+h4.rate {
     float: left;
     color: #0099e5;
-    font-size: 30px;
+    font-size: 16px;
 }
 .condition h4,.itemtype h4 {
     margin: 0;
-    floaT: left;
-    font-size: 22px;
+    float: left;
+	font-size: 16px;
 }
 .condition p,.itemtype p {
     margin: 0;
-	margin-left: 20px;
+	margin-left: 10px;
 }
 .product-price {
     padding: 20px 0;
@@ -1715,12 +1716,6 @@ h3.rate {
 	.pagination {
 		margin: 10px 0;
 	}
-	span.w3layouts-agileinfo {
-		width: 26%;
-	}
-	.product-details p {
-		width: 71%;
-	}
 }
 @media (max-width: 414px){
 	.w3ls-header-right {
@@ -1884,12 +1879,6 @@ h3.rate {
 		padding: 20px 20px 25px;
 		width: 100%;
 		margin: 2% 0%;
-	}
-	span.w3layouts-agileinfo {
-		width: 25%;
-	}
-	.product-details p {
-		width: 73%;
 	}
 }
 @media (max-width: 384px){
@@ -2135,12 +2124,6 @@ h3.rate {
 	}
 	.wthree-help h3 {
 		font-size: 24px;
-	}
-	span.w3layouts-agileinfo {
-		width: 28%;
-	}
-	.product-details p {
-		width: 69%;
 	}
 	span.active.uls-trigger, .btn-primary {
 		text-align: right;

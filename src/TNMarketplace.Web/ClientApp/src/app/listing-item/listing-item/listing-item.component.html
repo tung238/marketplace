@@ -15,28 +15,28 @@
           </nz-carousel>
           <!-- //FlexSlider -->
           <div class="product-details">
-            <h4><span class="w3layouts-agileinfo">Nhãn hiệu </span> : <a href="#">Company name</a>
+            <!-- <h4><span class="w3layouts-agileinfo">Nhãn hiệu </span> : <a href="#">Company name</a>
+              <div class="clearfix"></div>
+            </h4> -->
+            <!-- <h4><span class="w3layouts-agileinfo">Lượt xem </span> : <strong>150</strong></h4>
+            <h4><span class="w3layouts-agileinfo">Fuel </span> : Petrol</h4> -->
+            <h4><span class="w3layouts-agileinfo">Thông tin mô tả:</span>
               <div class="clearfix"></div>
             </h4>
-            <h4><span class="w3layouts-agileinfo">Lượt xem </span> : <strong>150</strong></h4>
-            <h4><span class="w3layouts-agileinfo">Fuel </span> : Petrol</h4>
-            <h4><span class="w3layouts-agileinfo">Summary</span> :<p style="white-space: pre-line">{{listingItem.listingCurrent?.description
+            <p style="white-space: pre-line">{{listingItem.listingCurrent?.description
                 | multiline }}</p>
-              <div class="clearfix"></div>
-            </h4>
-
           </div>
         </div>
         <div nz-col nzXs="24" nzSm="24" nzMd="10" class="product-details-grid">
           <div class="item-price">
             <div class="product-price">
               <p class="p-price">Giá</p>
-              <h3 class="rate">{{listingItem.listingCurrent?.price | currency:'VND':'symbol':'1.0-2'}}</h3>
+              <h4 class="rate">{{listingItem.listingCurrent?.price | currency:'VND':'symbol':'1.0-2'}}</h4>
               <div class="clearfix"></div>
             </div>
             <div class="condition">
-              <p class="p-price">Tình trạng</p>
-              <h4>Good</h4>
+              <p class="p-price">Phone</p>
+              <h4>{{listingItem.listingCurrent?.contactPhone | phone}}</h4>
               <div class="clearfix"></div>
             </div>
             <div class="itemtype">
@@ -45,10 +45,10 @@
               <div class="clearfix"></div>
             </div>
           </div>
-          <div class="interested text-center">
+          <!-- <div class="interested text-center">
             <h4>Quan tâm mặt hàng này?<small> Liên hệ với người bán!</small></h4>
             <p><i class="fa fa-phone"></i>{{listingItem.listingCurrent?.contactPhone | phone}}</p>
-          </div>
+          </div> -->
           <!-- <div class="tips">
             <h4>Safety Tips for Buyers</h4>
             <ol>
