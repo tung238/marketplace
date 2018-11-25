@@ -10,8 +10,8 @@ using TNMarketplace.Repository.EfCore;
 namespace TNMarketplace.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181124144004_changecollation")]
-    partial class changecollation
+    [Migration("20181125110556_AddIndexesAndCollations")]
+    partial class AddIndexesAndCollations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -458,6 +458,8 @@ namespace TNMarketplace.Web.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("ID", "Ordering", "Slug");
+
                     b.ToTable("Categories");
                 });
 
@@ -637,6 +639,7 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<string>("CreatedBy");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnName("Description");
 
                     b.Property<bool>("Enabled")
@@ -684,7 +687,7 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnName("Title")
-                        .HasMaxLength(500);
+                        .HasMaxLength(450);
 
                     b.Property<DateTime?>("UpdatedAt");
 
@@ -706,6 +709,8 @@ namespace TNMarketplace.Web.Migrations
                     b.HasIndex("RegionId");
 
                     b.HasIndex("UserID");
+
+                    b.HasIndex("ID", "Title", "Location", "Price", "CreatedAt");
 
                     b.ToTable("Listings");
                 });
@@ -1245,6 +1250,8 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<string>("UpdatedBy");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("ID", "Slug", "Ordering");
 
                     b.ToTable("Regions");
                 });

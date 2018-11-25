@@ -223,16 +223,16 @@ namespace TNMarketplace.Web.Controllers.api
                     items = items.OrderByDescending(x => x.CreatedAt);
                     break;
                 case 1:
-                    items = items.OrderByDescending(x => x.Price);
+                    items = items.OrderBy(x => x.Price);
                     break;
                 default:
-                    items = items.OrderBy(x => x.Price);
+                    items = items.OrderByDescending(x => x.Price);
                     break;
             }
             items = items.Take(200);
             // Show active and enabled only
             var itemsModelList = new List<ListingItemModel>();
-            foreach (var item in (await items.ToListAsync()).OrderByDescending(x => x.CreatedAt))
+            foreach (var item in (await items.ToListAsync()))
             {
                 itemsModelList.Add(new ListingItemModel()
                 {
@@ -297,7 +297,7 @@ namespace TNMarketplace.Web.Controllers.api
                 }
                 if (region.Areas != null)
                 {
-                    var area = region.Areas.FirstOrDefault(a => s.Contains(a.Slug, StringComparison.OrdinalIgnoreCase));
+                    var area = region.Areas.FirstOrDefault(a => s.Equals(a.Slug, StringComparison.OrdinalIgnoreCase));
                     if (area != null)
                     {
                         return area;

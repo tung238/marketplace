@@ -25,6 +25,30 @@ export class ListingsComponent implements OnInit, OnDestroy {
   listOfOption = [];
   listOfSelectedValue = [];
   maxPrice = 100000000;
+  categorySlug: any;
+  subCategorySlug: any;
+  regionSlug: any;
+  areaSlug: any;
+  regions = [];
+  areas = [];
+  breadcrumb = [];
+  regionChange(value: string): void {
+    this.areaSlug = null;
+    if(value){
+
+      let r = this.regions.find(r=>r.slug == value);
+      if(r){
+        this.areas = r.children
+      }else{
+        this.areas = [];
+      }
+    }else{
+      this.areas = [];
+    }
+  }
+
+
+
   constructor(private listingService: ListingService,
     private appService: AppService,
     private router: Router,
@@ -39,6 +63,12 @@ export class ListingsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.listingViewMode = 2;
+    var appData = this.appService.appData;
+    if (!appData) {
+      return [];
+    }
+    this.regions = appData.regionsTree;
+    
     this.prepareGetListings();
     this.mySubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -73,15 +103,31 @@ export class ListingsComponent implements OnInit, OnDestroy {
         params["pf"] = priceFrom;
         params["pt"] = priceTo;
       }
+      params["p"] = 1;
+    }
+    if(this.sortOrder){
+      params["order"] = this.sortOrder;
     }
 
-    this.router.navigate([], {
+    var url = (this.regionSlug != null ? `/${this.regionSlug}`: "");
+    url += (this.areaSlug != null ? `/${this.areaSlug}`: "");
+    url += this.categorySlug != null ? `/${this.categorySlug}`: "";
+    url += (this.subCategorySlug != null ? `/${this.subCategorySlug}`:"");
+    this.router.navigate([url], {
       queryParams: params, queryParamsHandling: 'merge'
     });
   }
   onSortOrderChange(event) {
     console.log(event);
-    this.prepareGetListings();
+    var params = { p: 1,order: this.sortOrder };
+
+    var url = (this.regionSlug != null ? `/${this.regionSlug}`: "");
+    url += (this.areaSlug != null ? `/${this.areaSlug}`: "");
+    url += this.categorySlug != null ? `/${this.categorySlug}`: "";
+    url += (this.subCategorySlug != null ? `/${this.subCategorySlug}`:"");
+    this.router.navigate([url], {
+      queryParams: params, queryParamsHandling: 'merge'
+    });
   }
   nzPageSizeChange(event) {
     if (event == 0) { return; }
@@ -90,8 +136,23 @@ export class ListingsComponent implements OnInit, OnDestroy {
   }
 
   prepareGetListings() {
+    this.breadcrumb = this.getBreadCrumb();
+
     // Trick the Router into believing it's last link wasn't previously loaded
-    var urlSegments = this.router.url.split(/[.?/]/).filter(entry => entry.trim() != '');
+    var urlSegments = []
+    
+    if(this.regionSlug){
+      urlSegments.push(this.regionSlug);
+    }
+    if(this.areaSlug){
+      urlSegments.push(this.areaSlug);
+    }
+    if (this.categorySlug){
+      urlSegments.push(this.categorySlug);
+    }
+    if (this.subCategorySlug){
+      urlSegments.push(this.subCategorySlug);
+    }
     var params = this.router.routerState.snapshot.root.children[0].queryParams;
     if (params["vm"] == "grid") {
       this.listingViewMode = 1;
@@ -111,6 +172,7 @@ export class ListingsComponent implements OnInit, OnDestroy {
     let pageNumber = params["p"] != undefined && params["p"] > 0 ? params["p"] : 1;
     let res = this.listingService.apiListingSearchGet(undefined, paths, params["s"], params["l"], this.isPhotoOnly,
       params["pf"], params["pt"], this.sortOrder, undefined, pageNumber, this.pageSize).subscribe((r) => {
+        this.allListingsModel = [];
         this.isLoading = false;
         this.allListingsModel = r;
         console.log(r);
@@ -150,12 +212,16 @@ export class ListingsComponent implements OnInit, OnDestroy {
       }
     });
     if (region) {
+      this.regionSlug = region.slug;
+      this.regionChange(this.regionSlug);
       breadcrumb.push({ iconClass: region.iconClass, routeLink: `/${region.slug}`, name: region.name });
       if (area) {
+        this.areaSlug = area.slug;
         breadcrumb.push({ routeLink: `/${region.slug}/${area.slug}`, name: area.name });
       }
     }
     if (category) {
+      this.categorySlug = category.slug;
       if (category.maxPrice > 0) {
         this.maxPrice = category.maxPrice;
       }
@@ -169,6 +235,7 @@ export class ListingsComponent implements OnInit, OnDestroy {
         }
       }
       if (subcategory) {
+        this.subCategorySlug = subcategory.slug;
         if (subcategory.maxPrice > 0) {
           this.maxPrice = category.maxPrice;
         }

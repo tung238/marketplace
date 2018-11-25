@@ -17,7 +17,9 @@ namespace TNMarketplace.Core.Entities.Mapping
             // Properties
             builder.Property(t => t.Title)
                 .IsRequired()
-                .HasMaxLength(500);
+                .HasMaxLength(450);
+            builder.Property(t => t.Description)
+                .IsRequired();
 
             builder.Property(t => t.UserID)
                 .IsRequired()
@@ -83,6 +85,8 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.HasOne(t => t.Area)
                 .WithMany(t => t.Listings)
                 .HasForeignKey(d => d.AreaId).OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.HasIndex(t => new { t.ID, t.Title, t.Location, t.Price, t.CreatedAt });
         }
     }
 }

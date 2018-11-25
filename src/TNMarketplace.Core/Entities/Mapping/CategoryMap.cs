@@ -33,6 +33,8 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.Property(t => t.Ordering).HasColumnName("Ordering");
             builder.Property(t => t.IconClass).HasColumnName("IconClass");
             builder.Property(t => t.MaxPrice).HasColumnName("MaxPrice");
+
+            builder.HasIndex(t => new { t.ID, t.Ordering, t.Slug });
         }
     }
 }

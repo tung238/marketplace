@@ -34,6 +34,8 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.Property(t => t.Type).HasColumnName("Type");
             builder.Property(t => t.NameWithType).HasColumnName("NameWithType");
             builder.Property(t => t.Ordering).HasColumnName("Ordering");
+
+            builder.HasIndex(t => new { t.ID, t.Slug, t.Ordering });
         }
     }
 }
