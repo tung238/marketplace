@@ -14,25 +14,20 @@ namespace TNMarketplace.Service
     public class DataCacheService
     {
         private readonly IServiceProvider _serviceProvider;
-        public MemoryCache MainCache { get; private set; }
+        private IMemoryCache _cache;
 
         private object _lock = new object();
 
-        public DataCacheService(IServiceProvider serviceProvider)
+        public DataCacheService(IServiceProvider serviceProvider, IMemoryCache cache)
         {
             _serviceProvider = serviceProvider;
-
-            MainCache = new MemoryCache(new MemoryCacheOptions
-            {
-                SizeLimit = 1024*5
-            });
-
-            GetCachedItem(CacheKeys.Settings);
-            GetCachedItem(CacheKeys.SettingDictionary);
-            GetCachedItem(CacheKeys.Categories);
-            GetCachedItem(CacheKeys.ContentPages);
-            GetCachedItem(CacheKeys.EmailTemplates);
-            GetCachedItem(CacheKeys.Statistics);
+            _cache = cache;
+            //GetCachedItem(CacheKeys.Settings);
+            //GetCachedItem(CacheKeys.SettingDictionary);
+            //GetCachedItem(CacheKeys.Categories);
+            //GetCachedItem(CacheKeys.ContentPages);
+            //GetCachedItem(CacheKeys.EmailTemplates);
+            //GetCachedItem(CacheKeys.Statistics);
         }
 
         public void UpdateCache(CacheKeys CacheKeyName, object CacheItem)
@@ -43,11 +38,11 @@ namespace TNMarketplace.Service
                 // Set cache entry size by extension method.
                 .SetSize(1)
                 // Keep in cache for this time, reset time if accessed.
-                .SetSlidingExpiration(TimeSpan.FromSeconds(3));
+                .SetSlidingExpiration(TimeSpan.FromHours(24));
                 //policy.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(10.00);
 
                 // Add inside cache 
-                MainCache.Set(CacheKeyName.ToString(), CacheItem, cacheEntryOptions);
+                _cache.Set(CacheKeyName.ToString(), CacheItem, cacheEntryOptions);
             }
         }
 
@@ -55,7 +50,7 @@ namespace TNMarketplace.Service
         {
             lock (_lock)
             {
-                if (!MainCache.TryGetValue(CacheKeyName.ToString(),out object result)) 
+                if (!_cache.TryGetValue(CacheKeyName.ToString(),out object result)) 
                 {
                     switch (CacheKeyName)
                     {
@@ -152,7 +147,7 @@ namespace TNMarketplace.Service
 
         public void RemoveCachedItem(CacheKeys CacheKeyName)
         {
-            MainCache.Remove(CacheKeyName.ToString());
+            _cache.Remove(CacheKeyName.ToString());
            
         }
 

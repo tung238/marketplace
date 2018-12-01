@@ -63,11 +63,11 @@ export class AppComponent implements OnInit {
   }
 
   private updateTitleAndMeta() {
-    this.title.setTitle(this.appService.appData.content['app_title']);
+    this.title.setTitle("Mua bán, rao vặt, mua bán nhà đất, bán xe hơi : moichao.com");
     this.meta.addTags([
-      { name: 'description', content: this.appService.appData.content['app_description'] },
-      { property: 'og:title', content: this.appService.appData.content['app_title'] },
-      { property: 'og:description', content: this.appService.appData.content['app_description'] }
+      { name: 'description', content: "Mua bán, rao vặt, mua bán nhà đất, bán xe hơi : moichao.com" },
+      { property: 'keywords', content: "Mua bán, rao vặt, mua bán nhà đất, bán xe hơi : moichao.com" },
+      { property: 'og:description', content: "Mua bán, rao vặt, mua bán nhà đất, bán xe hơi : moichao.com" }
     ]);
   }
 }

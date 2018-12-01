@@ -171,7 +171,7 @@ export class ListingsComponent implements OnInit, OnDestroy {
   getListings(paths: string[], params: Params) {
     let pageNumber = params["p"] != undefined && params["p"] > 0 ? params["p"] : 1;
     let res = this.listingService.apiListingSearchGet(undefined, paths, params["s"], params["l"], this.isPhotoOnly,
-      params["pf"], params["pt"], this.sortOrder, undefined, pageNumber, this.pageSize).subscribe((r) => {
+      params["pf"], params["pt"], undefined, this.sortOrder, undefined, pageNumber, this.pageSize).subscribe((r) => {
         this.allListingsModel = [];
         this.isLoading = false;
         this.allListingsModel = r;
@@ -218,6 +218,8 @@ export class ListingsComponent implements OnInit, OnDestroy {
       if (area) {
         this.areaSlug = area.slug;
         breadcrumb.push({ routeLink: `/${region.slug}/${area.slug}`, name: area.name });
+      }else{
+        this.areaSlug = null;
       }
     }
     if (category) {
@@ -248,6 +250,8 @@ export class ListingsComponent implements OnInit, OnDestroy {
             breadcrumb.push({ routeLink: `/${region.slug}/${area.slug}/${category.slug}/${subcategory.slug}`, name: subcategory.name });
           }
         }
+      }else{
+        this.subCategorySlug = null;
       }
       if (!this.priceRange){
         this.priceRange = [0, this.maxPrice];

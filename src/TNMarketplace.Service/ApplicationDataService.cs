@@ -51,29 +51,29 @@ namespace TNMarketplace.Service
 
         public async Task<object> GetApplicationData(HttpContext context)
         {
-            string data = "";
+            var data = "";
             if (!_cache.TryGetValue("GetApplicationData", out data))
             {
                 var regions = _dataCacheService.Regions;
 
                 var regionsTree = new List<TreeItem>();
-                foreach(var r in regions)
+                foreach(var r in regions.OrderBy(r=>r.Ordering).ThenBy(r=>r.Slug))
                 {
                     var rItem = new TreeItem
                     {
                         ID = r.ID,
-                        Name = r.NameWithType,
+                        Name = r.Name,
                         Slug = r.Slug,
                         NameWithType = r.NameWithType,
                         Children = new List<TreeItem>()
                     };
-                    foreach(var a in r.Areas)
+                    foreach(var a in r.Areas.OrderBy(a=>a.Ordering).ThenBy(a=>a.Slug))
                     {
                         var aItem = new TreeItem
                         {
                           
                                 ID = a.ID,
-                                Name = a.NameWithType,
+                                Name = a.Name,
                                 NameWithType = a.NameWithType,
                                 Slug = a.Slug,
                            
@@ -86,7 +86,7 @@ namespace TNMarketplace.Service
                 }
                 var categoriesTree = new List<TreeItem>();
                 var categories = _dataCacheService.Categories;
-                foreach(var cat in categories.Where(c=>c.Parent == 0 ))
+                foreach(var cat in categories.Where(c=>c.Parent == 0 ).OrderBy(c=>c.Ordering).ThenBy(c=>c.Slug))
                 {
                     var cItem = new TreeItem
                     {
@@ -98,7 +98,7 @@ namespace TNMarketplace.Service
                         MaxPrice = cat.MaxPrice,
                         Children = new List<TreeItem>()
                     };
-                    foreach(var child in categories.Where(c=>c.Parent == cat.ID))
+                    foreach(var child in categories.Where(c=>c.Parent == cat.ID).OrderBy(c=>c.Ordering))
                     {
                         var childItem = new TreeItem
                         {

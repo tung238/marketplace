@@ -88,8 +88,9 @@ namespace TNMarketplace.Repository.EfCore
         public virtual void Update(TEntity entity)
         {
             entity.ObjectState = ObjectState.Modified;
-            _dbSet.Attach(entity);
             _context.SyncObjectState(entity);
+            _dbSet.Attach(entity);
+
         }
 
         public virtual void Delete(object id)
@@ -122,7 +123,7 @@ namespace TNMarketplace.Repository.EfCore
 
         public IQueryable<TEntity> Queryable()
         {
-            return _dbSet;
+            return _dbSet.AsNoTracking();
         }
 
         //public IRepository<T> GetRepository<T>() where T : class, IObjectState

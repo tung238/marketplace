@@ -74,6 +74,7 @@ export function appServiceFactory(appService: AppService): Function {
           { path: 'dang-nhap', loadChildren: './account/+login/login.module#LoginModule' },
           { path: 'dang-ky', loadChildren: './account/+register/register.module#RegisterModule' },
           { path: 'dang-tin', loadChildren: './listing-add/listing-add.module#ListingAddModule', canActivate: [AuthGuard] },
+          { path: 'dang-tin/:id', loadChildren: './listing-add/listing-add.module#ListingAddModule', canActivate: [AuthGuard] },
           { path: 'createaccount', loadChildren: './account/+create/create.module#CreateAccountModule' },
           { path: 'tai-khoan', loadChildren: './account/+profile/profile.module#ProfileModule' },
           { path: 'signalr', loadChildren: './+signalr/signalr.module#SignalrModule' },

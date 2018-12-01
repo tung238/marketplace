@@ -22,5 +22,7 @@ namespace TNMarketplace.Web.Models
         public double? PriceFrom { get; set; }
 
         public double? PriceTo { get; set; }
+
+        public string UserName { get; set; }
     }
 }

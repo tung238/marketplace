@@ -20,6 +20,7 @@ namespace TNMarketplace.Web.Models
         //public List<ListingItemModel> Listings { get; set; }
 
         public IPagedList<ListingItemModel> ListingsPageList { get; set; }
+        public List<ListingItemModel> Listings { get; set; }
         public PagedListMetaData PagedListMetaData { get; set; }
         //public List<SimpleCategory> Categories { get; set; }
         public List<SimpleCategory> BreadCrumb { get; set; }

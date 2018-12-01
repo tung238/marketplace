@@ -153,10 +153,19 @@ namespace TNMarketplace.Web.Controllers.api
         private async Task<SearchListingResponse> GetSearchResult(SearchListingRequest model)
         {
             IQueryable<Listing> items = _listingService.Queryable();
+            items = items
+             //.Include(y => y.Category)
+             //.Include(y => y.Region)
+             //.Include(y => y.ListingType)
+             .Include(y => y.AspNetUser);
+             //.Include(y => y.ListingPictures);
             SearchListingResponse response = new SearchListingResponse();
             Region region = GetRegionFromModel(model);
             Category category = GetCategoryFromModel(model);
             Area area = region != null ? GetAreaFromModel(model, region) : null;
+            if (!string.IsNullOrEmpty(model.UserName)){
+                items = items.Where(i => i.AspNetUser.UserName.Equals(model.UserName));
+            }
             if (area != null)
             {
                 items = items.Where(x => x.AreaId == area.ID);
@@ -167,19 +176,18 @@ namespace TNMarketplace.Web.Controllers.api
             }
             if (category != null)
             {
-                items = items.Where(x => x.CategoryID == category.ID);
+                if (category.Parent != 0)
+                {
+                    items = items.Where(x => x.CategoryID == category.ID);
+                }
+                else
+                {
+                    var categoryIds = _dataCacheService.Categories.Where(c => c.ID == category.ID || c.Parent == category.ID).Select(c=>c.ID);
+                    items = items.Where(i => categoryIds.Contains(i.CategoryID));
+                }
             }
             items = items.Where(x => x.Active && x.Enabled);
             response.ListingTypes = _mapper.Map<List<SimpleListingType>>(_dataCacheService.ListingTypes);
-
-
-            items = items
-                .Include(y => y.ListingPictures)
-                .Include(y => y.Category)
-                .Include(y => y.Region)
-                .Include(y => y.ListingType)
-                .Include(y => y.AspNetUser)
-                .Include(y => y.ListingReviews);
 
             // Search Text
             if (!string.IsNullOrEmpty(model.SearchText))
@@ -203,10 +211,10 @@ namespace TNMarketplace.Web.Controllers.api
             }
 
             // Picture
-            if (model.PhotoOnly)
-            {
-                items = items.Where(x => x.ListingPictures.Count > 0);
-            }
+            //if (model.PhotoOnly)
+            //{
+            //    items = items.Where(x => x.ListingPictures.Count > 0);
+            //}
             /// Price
             if (model.PriceFrom.HasValue)
             {
@@ -229,31 +237,68 @@ namespace TNMarketplace.Web.Controllers.api
                     items = items.OrderByDescending(x => x.Price);
                     break;
             }
-            items = items.Take(200);
+            items = items.Take(10);
+         
             // Show active and enabled only
             var itemsModelList = new List<ListingItemModel>();
-            foreach (var item in (await items.ToListAsync()))
+            var listingItems = await items.ToListAsync();
+            foreach (var item in listingItems)
             {
                 itemsModelList.Add(new ListingItemModel()
                 {
                     ListingCurrent = _mapper.Map<SimpleListing>(item),
-                    UrlPicture = item.ListingPictures.Count == 0 ? "" : item.ListingPictures.First().Url
+                    UrlPicture = "" //item.ListingPictures.Count == 0 ? "" : item.ListingPictures.First().Url
                 });
             }
             var breadCrumb = GetParents(category?.ID ?? -1).Reverse().ToList();
 
             response.BreadCrumb = _mapper.Map<List<SimpleCategory>>(breadCrumb);
             //response.Categories = _mapper.Map<List<SimpleCategory>>(_dataCacheService.Categories);
+            //return paging
+            if (string.IsNullOrEmpty(model.UserName)){
+                response.ListingsPageList = itemsModelList.ToPagedList(model.PageNumber ?? 0, model.PageSize ?? 1);
+                response.PagedListMetaData = response.ListingsPageList.GetMetaData();
+                var listingIds = response.ListingsPageList.Select(r => r.ListingCurrent.ID);
+                var pictures = await _listingPictureservice.Queryable().Where(p => listingIds.Contains(p.ListingID)).ToListAsync();
+                foreach (var item in response.ListingsPageList)
+                {
+                    var listingPictures = pictures.Where(p => p.ListingID == item.ListingCurrent.ID).ToList();
+                    item.Pictures = _mapper.Map<List<PictureModel>>(listingPictures);
+                    item.UrlPicture = item.Pictures.FirstOrDefault()?.Url ?? "";
+                    item.ListingCurrent.Category = _mapper.Map<SimpleCategory>(_dataCacheService.Categories.FirstOrDefault(c => c.ID == item.ListingCurrent.CategoryID));
+                    item.ListingCurrent.ListingType = _mapper.Map<SimpleListingType>(_dataCacheService.ListingTypes.FirstOrDefault(t => t.ID == item.ListingCurrent.ListingTypeID));
+                    item.ListingCurrent.Region = _mapper.Map<SimpleRegion>(_dataCacheService.Regions.FirstOrDefault(r => r.ID == item.ListingCurrent.RegionId));
+                    item.ListingCurrent.Area = _mapper.Map<SimpleArea>(_dataCacheService.Areas.FirstOrDefault(a => a.ID == item.ListingCurrent.AreaId));
+                }
+            }
+            else
+            {
+                var listingIds = itemsModelList.Select(r => r.ListingCurrent.ID);
+                var pictures = await _listingPictureservice.Queryable().Where(p => listingIds.Contains(p.ListingID)).ToListAsync();
+                foreach(var item in itemsModelList)
+                {
+                    var listingPictures = pictures.Where(p => p.ListingID == item.ListingCurrent.ID).ToList();
+                    item.Pictures = _mapper.Map<List<PictureModel>>(listingPictures);
+                    item.UrlPicture = item.Pictures.FirstOrDefault()?.Url ?? "";
+                    item.ListingCurrent.Category = _mapper.Map<SimpleCategory>(_dataCacheService.Categories.FirstOrDefault(c => c.ID == item.ListingCurrent.CategoryID));
+                    item.ListingCurrent.ListingType = _mapper.Map<SimpleListingType>(_dataCacheService.ListingTypes.FirstOrDefault(t => t.ID == item.ListingCurrent.ListingTypeID));
+                    item.ListingCurrent.Region = _mapper.Map<SimpleRegion>(_dataCacheService.Regions.FirstOrDefault(r => r.ID == item.ListingCurrent.RegionId));
+                    item.ListingCurrent.Area = _mapper.Map<SimpleArea>(_dataCacheService.Areas.FirstOrDefault(a => a.ID == item.ListingCurrent.AreaId));
+                }
+                response.Listings = itemsModelList;
+            }
 
-            //response.Listings = itemsModelList;
-            response.ListingsPageList = itemsModelList.ToPagedList(model.PageNumber ?? 0, model.PageSize ?? 1);
-            response.PagedListMetaData = response.ListingsPageList.GetMetaData();
+
             return response;
         }
 
         private Category GetCategoryFromModel(SearchListingRequest request)
         {
             var segments = request.UrlSegments;
+            if (segments == null || segments.Count == 0)
+            {
+                return null;
+            }
             segments.Reverse();
             foreach (var s in segments)
             {
@@ -269,6 +314,10 @@ namespace TNMarketplace.Web.Controllers.api
         private Region GetRegionFromModel(SearchListingRequest request)
         {
             var segments = request.UrlSegments;
+            if(segments == null || segments.Count == 0)
+            {
+                return null;
+            }
             segments.Reverse();
             foreach (var s in segments)
             {
@@ -288,6 +337,10 @@ namespace TNMarketplace.Web.Controllers.api
         private Area GetAreaFromModel(SearchListingRequest request, Region region)
         {
             var segments = request.UrlSegments;
+            if (segments == null || segments.Count == 0)
+            {
+                return null;
+            }
             segments.Reverse();
             foreach (var s in segments)
             {
@@ -470,6 +523,7 @@ namespace TNMarketplace.Web.Controllers.api
                     ShowEmail = listing.ShowEmail ?? true,
                     ShowPhone = listing.ShowPhone ?? true,
                     Title = listing.Title,
+                    Location = listing.Location ?? "",
                     IP = ""
                 };
                 foreach (var item in listing.Pictures)
@@ -488,6 +542,8 @@ namespace TNMarketplace.Web.Controllers.api
                     return Unauthorized();
 
                 var listingExisting = await _listingService.FindAsync(listing.ID);
+                    //_listingService.Queryable()
+                    //.Include(l => l.ListingPictures).FirstOrDefaultAsync(l => l.ID == listing.ID);
 
                 listingExisting.Title = listing.Title;
                 listingExisting.Description = listing.Description;
@@ -500,7 +556,8 @@ namespace TNMarketplace.Web.Controllers.api
 
                 listingExisting.Latitude = listing.Latitude;
                 listingExisting.Longitude = listing.Longitude;
-                listingExisting.Location = listing.Location;
+                listingExisting.Location = listing.Location ?? listingExisting.Location;
+
 
                 listingExisting.ShowPhone = listing.ShowPhone ?? true;
                 listingExisting.ShowEmail = listing.ShowEmail ?? true;
@@ -509,8 +566,31 @@ namespace TNMarketplace.Web.Controllers.api
                 listingExisting.ListingTypeID = listing.ListingTypeId;
 
                 listingExisting.ObjectState = ObjectState.Modified;
-
+                
                 _listingService.Update(listingExisting);
+
+                var pictures = await _listingPictureservice.Query(l => l.ListingID == listing.ID).SelectAsync();
+                //add new upload files
+                foreach (var item in listing.Pictures)
+                {
+                    if (listingExisting.ListingPictures.FirstOrDefault(p => p.Url.Equals(item.Url, StringComparison.OrdinalIgnoreCase)) == null)
+                    {
+                        _listingPictureservice.Insert(new ListingPicture()
+                        {
+                            Url = item.Url,
+                            ListingID = listing.ID
+                        });
+                    }
+                }
+                //remove unused files
+                foreach (var item in pictures)
+                {
+                    if (listing.Pictures.FirstOrDefault(l => l.Url.Equals(item.Url, StringComparison.OrdinalIgnoreCase)) == null)
+                    {
+                        _listingPictureservice.Delete(item);
+                    }
+                }
+
             }
 
             // Delete existing fields on item
@@ -612,18 +692,21 @@ namespace TNMarketplace.Web.Controllers.api
         public async Task<ActionResult> ListingDelete(int id)
         {
             var item = await _listingService.FindAsync(id);
-            var orderQuery = await _orderService.Query(x => x.ListingID == id).SelectAsync();
-
-            // Delete item if no orders associated with it
-            if (item.Orders.Count > 0)
-            {
-                var resultFailed = new { Success = false, Message = "[[[You cannot delete item with orders! You can deactivate it instead.]]]" };
-                return Ok(resultFailed);
-            }
-
-            await _listingService.DeleteAsync(id);
-
+            item.Active = false;
+            _listingService.Update(item);
             await _unitOfWorkAsync.SaveChangesAsync();
+            //var orderQuery = await _orderService.Query(x => x.ListingID == id).SelectAsync();
+
+            //// Delete item if no orders associated with it
+            //if (item.Orders.Count > 0)
+            //{
+            //    var resultFailed = new { Success = false, Message = "[[[You cannot delete item with orders! You can deactivate it instead.]]]" };
+            //    return Ok(resultFailed);
+            //}
+
+            //await _listingService.DeleteAsync(id);
+
+            //await _unitOfWorkAsync.SaveChangesAsync();
 
             var result = new { Success = true, Message = "[[[Your listing has been deleted.]]]" };
             return Ok(result);
@@ -668,7 +751,7 @@ namespace TNMarketplace.Web.Controllers.api
                 .Include(x => x.Include(y => y.ListingPictures))
                 .Include(x => x.Include(y => y.ListingType))
                 .Include(x => x.Include(y => y.AspNetUser))
-                .Include(x => x.Include(y => y.ListingReviews))
+                //.Include(x => x.Include(y => y.ListingReviews))
                 .SelectAsync();
 
             var itemsModel = new List<ListingItemModel>();

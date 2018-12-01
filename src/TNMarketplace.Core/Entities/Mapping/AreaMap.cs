@@ -37,6 +37,7 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.Property(t => t.NameWithType).HasColumnName("NameWithType");
             builder.Property(t => t.Path).HasColumnName("Path");
             builder.Property(t => t.PathWithType).HasColumnName("PathWithType");
+            builder.Property(t => t.Ordering).HasColumnName("Ordering");
 
             // Relationships
             builder.HasOne(t => t.Region)

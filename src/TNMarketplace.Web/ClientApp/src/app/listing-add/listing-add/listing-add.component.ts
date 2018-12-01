@@ -1,33 +1,69 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ControlTextbox } from '@app/shared/forms/controls/control-textbox';
 import { ControlBase } from '@app/shared/forms/controls/control-base';
 import { ControlCascader } from '@app/shared/forms/controls/control-cascader';
 import { AppService } from '@app/app.service';
 import { ControlUpload } from '@app/shared/forms/controls/control-upload';
 import { ControlTextarea } from '@app/shared/forms/controls/control-textarea';
-import { forEach } from '@angular/router/src/utils/collection';
 import { ControlCheckboxListNew } from '@app/shared/forms/controls/control-checkbox-list-new';
 import { ListingService, Listing } from '@app/api';
 import { ListingUpdateModel } from '@app/api/model/listingUpdateModel';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { DynamicFormComponent } from '@app/shared/forms/dynamic-form/dynamic-form.component';
+import { Subject } from 'rxjs';
+import { ControlPrice } from '@app/shared/forms/controls/control-price';
 
 @Component({
   selector: 'appc-listing-add',
   templateUrl: './listing-add.component.html',
   styleUrls: ['./listing-add.component.scss']
 })
-export class ListingAddComponent implements OnInit {
+export class ListingAddComponent implements OnInit, AfterViewInit  {
   current = 0;
   public controls: Array<ControlBase<any>> = [];
   regionsTree: any[];
   categoriesTree: any[];
-  listingTypes:any[];
+  listingTypes: any[];
+  data: Subject<any> = new Subject<any>();
+  
+  @ViewChild(DynamicFormComponent) 
+  public ngForm: DynamicFormComponent;
 
   constructor(
     private appService: AppService,
     private listingService: ListingService,
+    private route: ActivatedRoute,
     private router: Router
   ) { }
+
+  ngAfterViewInit(){
+    var id = this.route.snapshot.params['id'];
+    if (id) {
+      this.listingService.apiListingListingGet(id).subscribe(data => {
+        console.log(data);
+        let listing = data.listingCurrent;
+        var filelist = data.pictures || []
+        filelist.forEach(element => {
+          element.uid = this.uuidv4()
+        });
+        this.data.next({
+          'listingType': listing.listingTypeID,
+          'regions': [listing.regionId, listing.areaId],
+          'categories': [listing.category.parent, listing.categoryID],
+          'title': listing.title,
+          'description': listing.description,
+          'price': listing.price.toString(),
+          'images': filelist,
+          'phone': listing.contactPhone,
+          'id': listing.id
+        });
+        var control = this.controls.find(c => c.key == "images");
+        if (control) {
+          (control as ControlUpload).fileList = filelist
+        }
+      })
+    }
+  }
 
   ngOnInit() {
 
@@ -36,7 +72,7 @@ export class ListingAddComponent implements OnInit {
         key: 'listingType',
         label: 'Loại tin',
         options: this.listingTypes,
-        
+
         nzLabelProperty: 'name',
         nzValueProperty: 'id',
         required: true,
@@ -46,7 +82,7 @@ export class ListingAddComponent implements OnInit {
         key: 'regions',
         label: 'Tỉnh, thành phố',
         options: this.regionsTree,
-        
+
         nzLabelProperty: 'name',
         nzValueProperty: 'id',
         required: true,
@@ -78,12 +114,11 @@ export class ListingAddComponent implements OnInit {
         required: true,
         order: 5
       }),
-      new ControlTextarea({
+      new ControlPrice({
         key: 'price',
         label: 'Gía',
         placeholder: 'Giá',
-        value: '',
-        type: 'number',
+        value: 0,
         required: true,
         order: 6
       }),
@@ -103,10 +138,21 @@ export class ListingAddComponent implements OnInit {
         type: 'text',
         required: true,
         order: 8
+      }),
+      new ControlTextbox({
+        key: 'id',
+        label: '',
+        placeholder: '',
+        value: '',
+        type: 'hidden',
+        required: false,
+        order: 9
       })
     ];
 
     this.controls = controls;
+
+
     this.appService.getAppData().then(data => {
       this.regionsTree = data.regionsTree;
       this.categoriesTree = data.categoriesTree;
@@ -118,20 +164,26 @@ export class ListingAddComponent implements OnInit {
         if (c.key == 'categories') {
           (c as ControlCascader).options = this.categoriesTree;
         }
-        if(c.key == 'listingTypes'){
+        if (c.key == 'listingTypes') {
           (c as ControlCheckboxListNew).options = this.listingTypes;
         }
       })
     })
+    
   }
-
+  uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
   listingAdd(event) {
     console.log(event);
     var control = this.controls.find(c => c.key == "images");
     var images = [];
     if (control) {
       images = (control as ControlUpload).fileList.map(f => {
-        return {url: f.url, id: 0};
+        return { url: f.url, id: 0 };
       });
     }
     var listingModel: ListingUpdateModel = {};
@@ -145,11 +197,11 @@ export class ListingAddComponent implements OnInit {
     listingModel.enabled = event.enabled;
     listingModel.listingTypeId = event.listingType;
     listingModel.pictures = images;
-    listingModel.price = event.price;
+    listingModel.price = Number(event.price);
     listingModel.regionIds = event.regions;
     listingModel.title = event.title;
-    this.listingService.apiListingListingUpdatePost(listingModel).subscribe(res=>{
-      if (res.success){
+    this.listingService.apiListingListingUpdatePost(listingModel).subscribe(res => {
+      if (res.success) {
         this.router.navigateByUrl("/");
       }
     });

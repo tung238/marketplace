@@ -1,3 +1,22 @@
-<p>
-  my-listing works!
-</p>
+<nz-table #filterTable [nzData]="displayData">
+  <thead (nzSortChange)="sort($event)" nzSingleSort>
+    <tr>
+      <th nzShowSort nzSortKey="listingCurrent?.title">Tiêu đề</th>
+      <th nzShowSort nzSortKey="listingCurrent?.category?.name">Danh mục</th>
+      <th nzShowSort nzSortKey="listingCurrent?.expiration">Ngày hết hạn</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of filterTable.data">
+      <td><a routerLink="/{{generateRouteLink(data.listingCurrent)}}">{{data.listingCurrent?.title}}</a></td>
+      <td>{{data.listingCurrent?.category?.name}}</td>
+      <td>{{data.listingCurrent?.expiration | date: 'short'}}</td>
+      <td>
+        <a (click)="editListing(data.listingCurrent.id)"><i class="fa fa-pencil"></i></a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzTitle="Bạn muốn xóa tin đăng này?" (nzOnConfirm)="confirm(data.listingCurrent.id)" (nzOnCancel)="cancel()"><i class="fa fa-trash"></i></a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

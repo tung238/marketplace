@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -20,6 +20,7 @@ import { PhonePipe } from './pipes/phone.pipe';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { MultilinePipe } from './pipes/multiline.pipe';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { CurrencyMaskDirective } from './directives/currency-mask.directive';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
     ProductListRowComponent,
     PhonePipe,
     MultilinePipe,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    CurrencyMaskDirective
   ],
   exports: [
     // Modules
@@ -64,7 +66,8 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
     MultilinePipe
   ],
   providers: [
-    FormControlService
+    FormControlService,
+    CurrencyPipe
   ]
 
 })

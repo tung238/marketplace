@@ -269,7 +269,7 @@ namespace TNMarketplace.Web.Extensions
             services.AddTransient<ICustomFieldCategoryService, CustomFieldCategoryService>();
             services.AddTransient<ICustomFieldListingService, CustomFieldListingService>();
             services.AddTransient<ICustomFieldService, CustomFieldService>();
-            services.AddTransient<DataCacheService, DataCacheService>();
+            services.AddScoped<DataCacheService, DataCacheService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IEmailTemplateService, EmailTemplateService>();
             services.AddTransient<IListingPictureService, ListingPictureService>();

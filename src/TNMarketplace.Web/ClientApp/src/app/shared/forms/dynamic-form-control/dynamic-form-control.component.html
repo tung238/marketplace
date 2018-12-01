@@ -12,10 +12,13 @@
         <!--This is not the switch case because of multiple control types-->
         <label *ngIf="control.type === 'text' || control.type === 'email' || control.type === 'password' || control.type === 'number'"
             [attr.for]="control.key">{{control.label}}</label>
-        <input class="form-control" *ngIf="control.type === 'text' || control.type === 'email' || control.type === 'password' || control.type === 'number'"
+        <input class="form-control" *ngIf="control.type === 'text' || control.type === 'email' || control.type === 'password' || control.type === 'number' || control.type === 'hidden'"
             [id]="control.key" [formControlName]="control.key" [type]="control.type" [placeholder]="control.placeholder"
             [class.is-valid]="valid" [class.is-invalid]="invalid">
-
+        <!--price-->
+        <label *ngIf="control.type==='price'" [attr.for]="control.key">{{control.label}}</label>
+        <input class="form-control" *ngIf="control.type==='price'" [type]="text" [placeholder]="control.placeholder"
+         [id]="control.key" [formControlName]="control.key" [class.is-valid]="valid" [class.is-invalid]="invalid" appcCurrencyMask>
         <!--Textarea-->
         <label *ngIf="control.type === 'textarea'" [for]="control.key">{{control.label}}</label>
         <textarea class="form-control" *ngIf="control.type === 'textarea'" [id]="control.key" rows="3"

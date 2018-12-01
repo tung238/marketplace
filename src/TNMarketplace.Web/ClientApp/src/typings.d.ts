@@ -81,6 +81,7 @@ interface IProfileModel {
     unique_name: string | null;
     email_confirmed: boolean;
     role: string[];
+    name: string;
 }
 
 interface IRegisterModel {
