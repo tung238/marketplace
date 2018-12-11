@@ -4,6 +4,7 @@ import { Router, Params, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AppService } from '@app/app.service';
 import { CurrencyPipe } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'appc-listings',
@@ -51,6 +52,7 @@ export class ListingsComponent implements OnInit, OnDestroy {
 
   constructor(private listingService: ListingService,
     private appService: AppService,
+    private titleService: Title,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -183,6 +185,8 @@ export class ListingsComponent implements OnInit, OnDestroy {
   }
   getBreadCrumb() {
     var appData = this.appService.appData;
+    let title = "Chuyên trang mua bán ";
+
     if (!appData) {
       return [];
     }
@@ -211,6 +215,7 @@ export class ListingsComponent implements OnInit, OnDestroy {
         subcategory = category.children.find(ca => ca.slug == element);
       }
     });
+    
     if (region) {
       this.regionSlug = region.slug;
       this.regionChange(this.regionSlug);
@@ -222,6 +227,7 @@ export class ListingsComponent implements OnInit, OnDestroy {
         this.areaSlug = null;
       }
     }
+
     if (category) {
       this.categorySlug = category.slug;
       if (category.maxPrice > 0) {
@@ -237,6 +243,7 @@ export class ListingsComponent implements OnInit, OnDestroy {
         }
       }
       if (subcategory) {
+        title += subcategory.name;
         this.subCategorySlug = subcategory.slug;
         if (subcategory.maxPrice > 0) {
           this.maxPrice = category.maxPrice;
@@ -252,12 +259,22 @@ export class ListingsComponent implements OnInit, OnDestroy {
         }
       }else{
         this.subCategorySlug = null;
+        title += category.name;
       }
       if (!this.priceRange){
         this.priceRange = [0, this.maxPrice];
       }
     }
+
+    if (region) {
+      if (area) {
+        title += ` ${area.nameWithType}, ${region.nameWithType}`;
+      }else{
+        title += ` ${region.nameWithType}`;
+      }
+    }
     breadcrumb.unshift({ iconClass: 'fa fa-home', routeLink: '/', name: 'Home' });
+    this.titleService.setTitle(title + " - Mua bán, rao vặt, mua bán nhà đất, bán xe hơi : moichao.com");
     return breadcrumb;
   }
 }

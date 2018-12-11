@@ -5,8 +5,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { AccountService, DataService } from '@app/core';
 import { AppService } from '../../app.service';
 import { ProfileService } from '@app/account/+profile/profile.service';
-import { UserInfoModel } from '@app/account/+profile/profile.models';
-import { NotificationsService } from '@app/simple-notifications';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'appc-header',
@@ -21,7 +20,8 @@ export class HeaderComponent implements OnInit {
     constructor(
         private accountService: AccountService,
         private dataService: DataService,
-        private notificationService: NotificationsService,
+        private toastr: ToastrService,
+
         private appService: AppService,
         private oAuthService: OAuthService,
         private profileService: ProfileService,
@@ -73,7 +73,7 @@ export class HeaderComponent implements OnInit {
             this.searchText = "";
         }
         if (!this.selectedCategory){
-            this.notificationService.alert("Cảnh báo", "Bạn chưa chọn danh mục");
+            this.toastr.warning("Bạn chưa chọn danh mục");
             return;
         }
         var category = null;

@@ -1,0 +1,33 @@
+<button nz-button nzType="primary" routerLink="/admin/thuoc-tinh/tao-moi"><i class="fa fa-plus"></i>Thêm</button>
+
+<nz-table #filterTable [nzData]="displayData">
+  <thead (nzSortChange)="sort($event)" nzSingleSort>
+    <tr>
+      <th nzShowSort nzSortKey="id">ID</th>
+      <th nzShowSort nzSortKey="categoryName">Tên danh mục</th>
+      <th nzShowSort nzSortKey="type">Kiểu</th>
+      <th nzShowSort nzSortKey="categories">Danh mục</th>
+      <th nzShowSort nzSortKey="options">Lựa chọn</th>
+      <th nzShowSort nzSortKey="required">Bắt buộc</th>
+      <th nzShowSort nzSortKey="searchable">Tìm kiếm</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of filterTable.data">
+      <td><a (click)="viewCategory(data)">{{data.id}}</a></td>
+      <td><a (click)="viewCategory(data)">{{data.categoryName}}</a></td>
+      <td>{{data.type}}</td>
+      <td>{{data.categories}}</td>
+      <td>{{data.options}}</td>
+      <td>{{data.required}}</td>
+      <td>{{data.searchable}}</td>
+
+      <td>
+        <a (click)="edit(data)"><i class="fa fa-pencil"></i></a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzTitle="Bạn muốn xóa thuộc tính này?" (nzOnConfirm)="delete(data.id)" (nzOnCancel)="cancel()"><i class="fa fa-trash"></i></a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

@@ -64,7 +64,7 @@ namespace TNMarketplace.Service
                             UpdateCache(CacheKeys.SettingDictionary, settingDictionary);
                             return settingDictionary;
                         case CacheKeys.Categories:
-                            var categories = _serviceProvider.GetService < ICategoryService>().Queryable().Where(x => x.Enabled).OrderBy(x => x.Ordering).ToList();
+                            var categories = _serviceProvider.GetService <ICategoryService>().Queryable().Where(x => x.Enabled).OrderBy(x => x.Ordering).ToList();
                             UpdateCache(CacheKeys.Categories, categories);
                             return categories;
                         case CacheKeys.ListingTypes:

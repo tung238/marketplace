@@ -12,6 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DynamicFormComponent } from '@app/shared/forms/dynamic-form/dynamic-form.component';
 import { Subject } from 'rxjs';
 import { ControlPrice } from '@app/shared/forms/controls/control-price';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'appc-listing-add',
@@ -33,6 +34,7 @@ export class ListingAddComponent implements OnInit, AfterViewInit  {
     private appService: AppService,
     private listingService: ListingService,
     private route: ActivatedRoute,
+    private titleService: Title,
     private router: Router
   ) { }
 
@@ -40,6 +42,8 @@ export class ListingAddComponent implements OnInit, AfterViewInit  {
     var id = this.route.snapshot.params['id'];
     if (id) {
       this.listingService.apiListingListingGet(id).subscribe(data => {
+        let title = (data.listingCurrent.title) || ""
+        this.titleService.setTitle(title + " - Mua bán, rao vặt, mua bán nhà đất, bán xe hơi : moichao.com");
         console.log(data);
         let listing = data.listingCurrent;
         var filelist = data.pictures || []
@@ -55,6 +59,7 @@ export class ListingAddComponent implements OnInit, AfterViewInit  {
           'price': listing.price.toString(),
           'images': filelist,
           'phone': listing.contactPhone,
+          'location': listing.location,
           'id': listing.id
         });
         var control = this.controls.find(c => c.key == "images");
@@ -140,13 +145,22 @@ export class ListingAddComponent implements OnInit, AfterViewInit  {
         order: 8
       }),
       new ControlTextbox({
+        key: 'location',
+        label: 'Địa chỉ',
+        placeholder: 'Địa chỉ',
+        value: '',
+        type: 'text',
+        required: false,
+        order: 9
+      }),
+      new ControlTextbox({
         key: 'id',
         label: '',
         placeholder: '',
         value: '',
         type: 'hidden',
         required: false,
-        order: 9
+        order: 10
       })
     ];
 
@@ -177,7 +191,7 @@ export class ListingAddComponent implements OnInit, AfterViewInit  {
       return v.toString(16);
     });
   }
-  listingAdd(event) {
+  formSumit(event) {
     console.log(event);
     var control = this.controls.find(c => c.key == "images");
     var images = [];
@@ -200,6 +214,7 @@ export class ListingAddComponent implements OnInit, AfterViewInit  {
     listingModel.price = Number(event.price);
     listingModel.regionIds = event.regions;
     listingModel.title = event.title;
+    listingModel.location = event.location;
     this.listingService.apiListingListingUpdatePost(listingModel).subscribe(res => {
       if (res.success) {
         this.router.navigateByUrl("/");

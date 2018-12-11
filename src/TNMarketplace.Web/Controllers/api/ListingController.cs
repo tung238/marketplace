@@ -237,7 +237,7 @@ namespace TNMarketplace.Web.Controllers.api
                     items = items.OrderByDescending(x => x.Price);
                     break;
             }
-            items = items.Take(10);
+            items = items.Take(200);
          
             // Show active and enabled only
             var itemsModelList = new List<ListingItemModel>();
@@ -302,7 +302,7 @@ namespace TNMarketplace.Web.Controllers.api
             segments.Reverse();
             foreach (var s in segments)
             {
-                var c = _dataCacheService.Categories.FirstOrDefault(cat => s.Contains(cat.Slug, StringComparison.OrdinalIgnoreCase));
+                var c = _dataCacheService.Categories.FirstOrDefault(cat => s.Equals(cat.Slug, StringComparison.OrdinalIgnoreCase));
                 if (c != null)
                 {
                     return c;
@@ -325,7 +325,7 @@ namespace TNMarketplace.Web.Controllers.api
                 {
                     continue;
                 }
-                var r = _dataCacheService.Regions.FirstOrDefault(re => s.Contains(re.Slug, StringComparison.OrdinalIgnoreCase));
+                var r = _dataCacheService.Regions.FirstOrDefault(re => s.Equals(re.Slug, StringComparison.OrdinalIgnoreCase));
                 if (r != null)
                 {
                     return r;
@@ -556,7 +556,7 @@ namespace TNMarketplace.Web.Controllers.api
 
                 listingExisting.Latitude = listing.Latitude;
                 listingExisting.Longitude = listing.Longitude;
-                listingExisting.Location = listing.Location ?? listingExisting.Location;
+                listingExisting.Location = listing.Location ?? "";
 
 
                 listingExisting.ShowPhone = listing.ShowPhone ?? true;

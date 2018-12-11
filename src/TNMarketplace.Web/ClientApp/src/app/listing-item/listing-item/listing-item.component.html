@@ -40,6 +40,11 @@
               <div class="clearfix"></div>
             </div>
             <div class="itemtype">
+              <p class="p-price">Địa chỉ</p>
+              <h4>{{listingItem?.listingCurrent?.location}}</h4>
+              <div class="clearfix"></div>
+            </div>
+            <div class="itemtype">
               <p class="p-price">Loại</p>
               <h4><a routerLink="/{{listingItem?.listingCurrent?.region?.slug}}/{{listingItem?.listingCurrent?.area?.slug}}/{{listingItem?.listingCurrent?.category?.slug}}">{{listingItem?.listingCurrent?.category?.name}}</a></h4>
               <div class="clearfix"></div>

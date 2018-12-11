@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { DataService } from '@app/core';
-import { NotificationsService } from '@app/simple-notifications';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'appc-user-photo',
@@ -16,7 +16,7 @@ export class UserPhotoComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private ns: NotificationsService
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -43,7 +43,7 @@ export class UserPhotoComponent implements OnInit {
     this.dataService
       .post(this.URL, file)
       .subscribe(() => {
-        this.ns.success('Success', 'Image changed successfully');
+        this.toastr.success('Đổi hình đại diện thành công.');
         this.existingImage = this.selectedImage.url;
         this.selectedImage = undefined;
       });

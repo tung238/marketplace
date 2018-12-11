@@ -1,10 +1,9 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
-
-import { NotificationsService } from '@app/simple-notifications';
 import { ProfileService } from '../profile.service';
 import { UpdatePasswordModel } from '../profile.models';
 import { ControlBase } from '../../../shared/forms/controls/control-base';
 import { ControlTextbox } from '../../../shared/forms/controls/control-textbox';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'appc-update-password',
@@ -44,7 +43,8 @@ export class UpdatePasswordComponent implements OnInit {
   public reset = new EventEmitter<boolean>();
   constructor(
     public profileService: ProfileService,
-    private ns: NotificationsService
+    private toastr: ToastrService,
+
   ) { }
 
   public ngOnInit() { }
@@ -53,7 +53,7 @@ export class UpdatePasswordComponent implements OnInit {
     this.profileService.changePassword(model)
       .subscribe(() => {
         this.reset.emit(true);
-        this.ns.success('Password changed successfully');
+        this.toastr.success('Thay đổi mật khẩu thành công.');
       });
   }
 }

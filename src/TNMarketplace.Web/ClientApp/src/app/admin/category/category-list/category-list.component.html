@@ -1,3 +1,28 @@
-<p>
-  category-list works!
-</p>
+<button nz-button nzType="primary" routerLink="/admin/danh-muc/tao-moi"><i class="fa fa-plus"></i>Thêm</button>
+
+<nz-table #filterTable [nzData]="displayData">
+  <thead (nzSortChange)="sort($event)" nzSingleSort>
+    <tr>
+      <th nzShowSort nzSortKey="id">ID</th>
+      <th nzShowSort nzSortKey="name">Tên danh mục</th>
+      <th nzShowSort nzSortKey="slug">Slug</th>
+      <th nzShowSort nzSortKey="parent">ID danh mục cha</th>
+      <th nzShowSort nzSortKey="ordering">Thứ tự</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of filterTable.data">
+      <td><a (click)="viewCategory(data)">{{data.id}}</a></td>
+      <td><a (click)="viewCategory(data)">{{data.name}}</a></td>
+      <td>{{data.slug}}</td>
+      <td>{{data.parent}}</td>
+      <td>{{data.ordering}}</td>
+      <td>
+        <a (click)="editCategory(data)"><i class="fa fa-pencil"></i></a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzTitle="Bạn muốn xóa danh mục này?" (nzOnConfirm)="confirm(data.id)" (nzOnCancel)="cancel()"><i class="fa fa-trash"></i></a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

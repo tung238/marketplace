@@ -3,7 +3,7 @@ import { ListingService } from '@app/api';
 import { AccountService } from '@app/core';
 import { AppService } from '@app/app.service';
 import { Router } from '@angular/router';
-import { NotificationsService } from '@app/simple-notifications';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'appc-my-listing',
@@ -37,7 +37,7 @@ export class MyListingComponent implements OnInit {
   constructor(private listingService: ListingService,
     private appService: AppService,
     private router: Router,
-    private ns: NotificationsService,
+    private toastr: ToastrService,
     private accountService: AccountService) { }
 
   ngOnInit() {
@@ -50,15 +50,18 @@ export class MyListingComponent implements OnInit {
   editListing(id){
     this.router.navigate(['/dang-tin', id]);
   }
-  deleteListing(id){
+  confirm(id){
     this.listingService.apiListingListingDeletePost(id).subscribe(res=>{
-      this.ns.success("","Xóa tin thành công");
+      this.toastr.success("Xóa tin thành công");
       this.listingService.apiListingSearchGet(undefined, [], undefined, undefined, false,
         undefined, undefined, this.accountService.user.name, 0).subscribe(data=>{
           this.data = data.listings;
           this.search();
         })
     })
+  }
+  cancel(){
+    
   }
   generateRouteLink(listing) {
     var str = listing.title;
@@ -90,7 +93,7 @@ export class MyListingComponent implements OnInit {
         segments.unshift(listing.category.slug);
       } else {
         let categories = this.appService.appData.categoriesTree;
-        let category = categories.find(c => c.id = listing.category.parent);
+        let category = categories.find(c => c.id == listing.category.parent);
         if (category) {
           segments.unshift(category.slug);
           segments.unshift(listing.category.slug);

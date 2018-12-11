@@ -7,13 +7,7 @@ import { Router, NavigationStart } from '@angular/router';
   styleUrls: ['./admin-layout.component.scss']
 })
 export class AdminLayoutComponent implements OnInit {
-
-  public notificationOptions = {
-    position: ['top', 'right'],
-    timeOut: 5000,
-    lastOnBottom: true
-  };
-  isCollapsed = true;
+  isCollapsed = false;
   constructor(    private router: Router,
   ) { }
 

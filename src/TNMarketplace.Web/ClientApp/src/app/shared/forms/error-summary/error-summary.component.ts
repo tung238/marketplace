@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NotificationsService, NotificationEvent, Notification } from '@app/simple-notifications';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'appc-error-summary',
@@ -9,7 +9,9 @@ import { NotificationsService, NotificationEvent, Notification } from '@app/simp
 export class ErrorSummaryComponent implements OnInit, OnDestroy {
     notification: Notification;
     sub: any;
-    constructor(private ns: NotificationsService) {
+    constructor(    
+        private toastr: ToastrService,
+        ) {
     }
 
     mapNotificationType(type: string) {
@@ -19,17 +21,18 @@ export class ErrorSummaryComponent implements OnInit, OnDestroy {
         return type;
     }
     ngOnInit() {
-        this.sub = this.ns.getChangeEmitter()
-            .subscribe((x: NotificationEvent) => {
-                if (x.add) {
-                    this.notification = x.notification;
-                } else {
-                    this.notification = null;
-                }
-            });
+        
+        // this.sub = this.ns.getChangeEmitter()
+        //     .subscribe((x: NotificationEvent) => {
+        //         if (x.add) {
+        //             this.notification = x.notification;
+        //         } else {
+        //             this.notification = null;
+        //         }
+        //     });
     }
 
     ngOnDestroy() {
-        this.sub.unsubscribe();
+        // this.sub.unsubscribe();
     }
 }

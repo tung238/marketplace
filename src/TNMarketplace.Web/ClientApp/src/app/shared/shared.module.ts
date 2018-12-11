@@ -21,6 +21,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { MultilinePipe } from './pipes/multiline.pipe';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { CurrencyMaskDirective } from './directives/currency-mask.directive';
+import { TagInputComponent } from './forms/dynamic-form-control/tag-input.component';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { CurrencyMaskDirective } from './directives/currency-mask.directive';
     PhonePipe,
     MultilinePipe,
     BreadcrumbComponent,
-    CurrencyMaskDirective
+    CurrencyMaskDirective,
+    TagInputComponent
   ],
   exports: [
     // Modules
@@ -63,7 +65,8 @@ import { CurrencyMaskDirective } from './directives/currency-mask.directive';
     UppercasePipe,
     BreadcrumbComponent,
     PhonePipe,
-    MultilinePipe
+    MultilinePipe,
+    NgZorroAntdModule
   ],
   providers: [
     FormControlService,

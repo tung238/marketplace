@@ -1,14 +1,44 @@
 <nz-layout>
     <!-- header component -->
     <appc-header></appc-header>
-    <nz-content>
-        <!-- component routing placeholder -->
-        <router-outlet></router-outlet>
-    </nz-content>
+    <nz-layout>
+        <nz-sider>
+            <div class="logo">
+            </div>
+            <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzTheme]="'light'">
+                <!-- <li nz-submenu>
+                <span title><i nz-icon type="user"></i><span class="nav-text">User</span></span>
+                <ul>
+                    <li nz-menu-item>Tom</li>
+                    <li nz-menu-item>Bill</li>
+                    <li nz-menu-item>Alex</li>
+                </ul>
+                </li>
+                <li nz-submenu>
+                <span title><i nz-icon type="team"></i><span class="nav-text">Team</span></span>
+                <ul>
+                    <li nz-menu-item>Team 1</li>
+                    <li nz-menu-item>Team 2</li>
+                </ul>
+                </li> -->
+                <li nz-menu-item routerLinkActive="ant-menu-item-selected"><a routerLink="/admin/dashboard" class="nav-text"><i nz-icon type="file"></i>Dashboard</a></li>
+                <li nz-menu-item routerLinkActive="ant-menu-item-selected"><a routerLink="/admin/danh-muc" class="nav-text"><i nz-icon type="file"></i>Danh mục</a></li>
+                <li nz-menu-item routerLinkActive="ant-menu-item-selected"><a routerLink="/admin/thuoc-tinh" class="nav-text"><i nz-icon type="file"></i>Thuộc tính</a></li>
+                <li nz-menu-item routerLinkActive="ant-menu-item-selected"><a routerLink="/admin/tin-dang" class="nav-text"><i nz-icon type="file"></i>Tin đăng</a></li>
+                <li nz-menu-item routerLinkActive="ant-menu-item-selected"><a routerLink="/admin/nguoi-dung" class="nav-text"><i nz-icon type="file"></i>Người dùng</a></li>
+                <li nz-menu-item routerLinkActive="ant-menu-item-selected"><a routerLink="/admin/phan-quyen" class="nav-text"><i nz-icon type="file"></i>Phân quyền</a></li>
+            </ul>
+        </nz-sider>
+        <nz-content>
 
+            <!-- component routing placeholder -->
+            <div class="container">
+            <router-outlet></router-outlet>
+        </div>
+        </nz-content>
+    </nz-layout>
     <!-- footer component -->
     <appc-footer></appc-footer>
 
     <nz-back-top></nz-back-top>
 </nz-layout>
-<appc-simple-notifications [options]="notificationOptions"></appc-simple-notifications>

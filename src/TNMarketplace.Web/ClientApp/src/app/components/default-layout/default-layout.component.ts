@@ -8,11 +8,6 @@ import { AppService } from '@app/app.service';
   styleUrls: ['./default-layout.component.scss']
 })
 export class DefaultLayoutComponent implements OnInit {
-  public notificationOptions = {
-    position: ['top', 'right'],
-    timeOut: 5000,
-    lastOnBottom: true
-  };
   isCollapsed = true;
   rootCategories: any[]
   constructor(    private router: Router,

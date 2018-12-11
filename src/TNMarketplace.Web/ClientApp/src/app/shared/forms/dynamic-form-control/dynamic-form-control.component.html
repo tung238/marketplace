@@ -3,6 +3,7 @@
     [class.form-check]="control.type === 'checkbox'">
 
     <div class="form-group">
+
         <label *ngSwitchCase="'dropdown'" [attr.for]="control.key">{{control.label}}</label>
         <select class="form-control" *ngSwitchCase="'dropdown'" [id]="control.key" [formControlName]="control.key"
             [class.is-valid]="valid" [class.is-invalid]="invalid">
@@ -18,7 +19,8 @@
         <!--price-->
         <label *ngIf="control.type==='price'" [attr.for]="control.key">{{control.label}}</label>
         <input class="form-control" *ngIf="control.type==='price'" [type]="text" [placeholder]="control.placeholder"
-         [id]="control.key" [formControlName]="control.key" [class.is-valid]="valid" [class.is-invalid]="invalid" appcCurrencyMask>
+            [id]="control.key" [formControlName]="control.key" [class.is-valid]="valid" [class.is-invalid]="invalid"
+            appcCurrencyMask>
         <!--Textarea-->
         <label *ngIf="control.type === 'textarea'" [for]="control.key">{{control.label}}</label>
         <textarea class="form-control" *ngIf="control.type === 'textarea'" [id]="control.key" rows="3"
@@ -42,27 +44,39 @@
         </div>
         <!--Cascader-->
         <label *ngIf="control.type === 'cascader'" [for]="control.key">{{control.label}}</label>
-        <nz-cascader *ngIf="control.type === 'cascader'" [(nzOptions)]="control.options" [nzShowSearch]="true"
-             [id]="control.key" [formControlName]="control.key" [class.is-valid]="valid"
-            [class.is-invalid]="invalid" [nzLabelProperty]="control.nzLabelProperty" [nzValueProperty]="control.nzValueProperty">
+        <nz-cascader *ngIf="control.type === 'cascader'" [(nzOptions)]="control.options" [nzShowSearch]="true" [id]="control.key"
+            [formControlName]="control.key" [class.is-valid]="valid" [class.is-invalid]="invalid" [nzLabelProperty]="control.nzLabelProperty"
+            [nzValueProperty]="control.nzValueProperty">
         </nz-cascader>
         <!--Upload-->
         <label *ngIf="control.type === 'upload'" [for]="control.key">{{control.label}}</label>
-        <nz-upload *ngIf="control.type === 'upload'" nzAction="/api/fileupload/upload" 
-        nzListType="picture-card" [(nzFileList)]="control.fileList" [nzSize]="2048" (nzChange) = "control.fileListChange($event)"
-        [nzFileType]="image/jpeg" 
-        
+        <nz-upload *ngIf="control.type === 'upload'" nzAction="/api/fileupload/upload" nzListType="picture-card"
+            [(nzFileList)]="control.fileList" [nzSize]="2048" (nzChange)="control.fileListChange($event)" [nzFileType]="image/jpeg"
             [nzShowButton]="fileList?.length < 3" [nzPreview]="handlePreview">
             <i nz-icon type="plus"></i>
             <div class="ant-upload-text">Upload</div>
         </nz-upload>
         <!--new radio group-->
-        <nz-radio-group *ngIf="control.type === 'checkboxlistnew'" [nzButtonStyle]="'solid'" [id]="control.key" [formControlName]="control.key" [class.is-valid]="valid"
-        [class.is-invalid]="invalid">
+        <nz-radio-group *ngIf="control.type === 'checkboxlistnew'" [nzButtonStyle]="'solid'" [id]="control.key"
+            [formControlName]="control.key" [class.is-valid]="valid" [class.is-invalid]="invalid">
             <label nz-radio-button nzValue="1">Bán</label>
             <label nz-radio-button nzValue="2">Mua</label>
             <label nz-radio-button nzValue="3">Cho Thuê</label>
-          </nz-radio-group>
+        </nz-radio-group>
         <div class="error" *ngIf="errorMessage(control)"> {{ errorMessage(control) }} </div>
+
+        <!--select box-->
+        <label *ngIf="control.type==='select'" [attr.for]="control.key">{{control.label}}</label>
+        <nz-select *ngIf="control.type === 'select'" [id]="control.key" [formControlName]="control.key"
+            [class.is-valid]="valid" [nzSize]="size" nzMode="multiple" nzPlaceHolder="control.placeholder">
+            <nz-option *ngFor="let option of control.options" [nzLabel]="option.value" [nzValue]="option.key"></nz-option>
+        </nz-select>
+
+          <!--tag box-->
+          <label *ngIf="control.type==='tag'" [attr.for]="control.key">{{control.label}}</label>
+          <nz-select *ngIf="control.type === 'tag'" [id]="control.key" [formControlName]="control.key"
+              [class.is-valid]="valid" [nzSize]="size" nzMode="multiple" nzPlaceHolder="control.placeholder">
+              <nz-option *ngFor="let option of control.options" [nzLabel]="option.value" [nzValue]="option.key"></nz-option>
+          </nz-select>
     </div>
 </div>

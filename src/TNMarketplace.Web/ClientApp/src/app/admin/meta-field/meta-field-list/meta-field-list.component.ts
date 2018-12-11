@@ -3,11 +3,11 @@ import { ListingService, AdminListingService } from '@app/api';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'appc-category-list',
-  templateUrl: './category-list.component.html',
-  styleUrls: ['./category-list.component.scss']
+  selector: 'appc-meta-field-list',
+  templateUrl: './meta-field-list.component.html',
+  styleUrls: ['./meta-field-list.component.scss']
 })
-export class CategoryListComponent implements OnInit {
+export class MetaFieldListComponent implements OnInit {
   sortName = null;
   sortValue = null;
   listOfSearchName = [];
@@ -22,7 +22,7 @@ export class CategoryListComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.adminListingService.apiAdminAdminListingCategoriesGet().subscribe(res=>{
+    this.adminListingService.apiAdminAdminListingCustomFieldsGet().subscribe(res=>{
       this.data = res;
       this.search()
     })
@@ -43,22 +43,13 @@ export class CategoryListComponent implements OnInit {
       this.displayData = this.data;
     }
   }
-  viewCategory(category){
-    if (category.parent > 0){
-      const parentCat = this.data.find(c=>c.id == category.parent);
-      this.router.navigate([`/${parentCat.slug}/${category.slug}`]);
-    }else{
-      this.router.navigate([`/${category.slug}`]);
-    }
+  edit(data){
+    this.router.navigate(["/admin/thuoc-tinh/sua", data.id]);
   }
-  editCategory(category){
-    this.router.navigate(["/admin/danh-muc/sua", category.id]);
-  }
-  confirm(id){
+  delete(id){
     // this.adminListingService.api
   }
   cancel(){
 
   }
-
 }

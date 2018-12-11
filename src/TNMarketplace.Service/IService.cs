@@ -28,5 +28,6 @@ namespace TNMarketplace.Service
         Task<bool> DeleteAsync(params object[] keyValues);
         Task<bool> DeleteAsync(CancellationToken cancellationToken, params object[] keyValues);
         IQueryable<TEntity> Queryable();
+        IQueryable<TEntity> TrackingQueryable();
     }
 }

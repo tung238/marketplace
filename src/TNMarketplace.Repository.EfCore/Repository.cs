@@ -126,6 +126,11 @@ namespace TNMarketplace.Repository.EfCore
             return _dbSet.AsNoTracking();
         }
 
+        public IQueryable<TEntity> TrackingQueryable()
+        {
+            return _dbSet;
+        }
+
         //public IRepository<T> GetRepository<T>() where T : class, IObjectState
         //{
         //    return _unitOfWork.Repository<T>();

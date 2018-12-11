@@ -10,7 +10,6 @@ import { environment } from '../environments/environment';
 
 import { CoreModule } from './core';
 import { AppSharedModule } from './appshared';
-import { SimpleNotificationsModule } from './simple-notifications';
 
 // Components
 import { AppComponent } from './app.component';
@@ -28,6 +27,7 @@ import { AuthGuard } from './auth.guard';
 import { DefaultLayoutComponent } from './components/default-layout/default-layout.component';
 import { AdminLayoutComponent } from './components/admin-layout/admin-layout.component';
 import { ProfileService } from './account/+profile/profile.service';
+import { ToastrModule } from 'ngx-toastr';
 
 registerLocaleData(localeVi);
 registerLocaleData(en);
@@ -52,6 +52,11 @@ export function appServiceFactory(appService: AppService): Function {
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     PrebootModule.withConfig({ appRoot: 'appc-root' }),
     BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      positionClass: 'toast-bottom-left',
+      preventDuplicates: true,
+    }),
     BrowserTransferStateModule,
     FormsModule,
     ApiModule,
@@ -59,7 +64,7 @@ export function appServiceFactory(appService: AppService): Function {
     NgZorroAntdModule,
     CoreModule.forRoot(),
     AppSharedModule,
-    SimpleNotificationsModule.forRoot(),
+    // SimpleNotificationsModule.forRoot(),
     OAuthModule.forRoot(),
     RouterModule.forRoot([
       { path: 'admin', component: AdminLayoutComponent, loadChildren: './admin/admin.module#AdminModule' },

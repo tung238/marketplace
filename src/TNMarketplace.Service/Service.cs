@@ -54,5 +54,7 @@ namespace TNMarketplace.Service
         public virtual async Task<bool> DeleteAsync(CancellationToken cancellationToken, params object[] keyValues) { return await _repository.DeleteAsync(cancellationToken, keyValues); }
 
         public IQueryable<TEntity> Queryable() { return _repository.Queryable(); }
+
+        public IQueryable<TEntity> TrackingQueryable() { return _repository.TrackingQueryable(); }
     }
 }

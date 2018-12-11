@@ -57,7 +57,7 @@ export class ProductGridRowComponent implements OnInit {
         segments.unshift(item.category.slug);
       } else {
         let categories = this.appService.appData.categoriesTree;
-        let category = categories.find(c => c.id = item.category.parent);
+        let category = categories.find(c => c.id == item.category.parent);
         if (category) {
           segments.unshift(category.slug);
           segments.unshift(item.category.slug);

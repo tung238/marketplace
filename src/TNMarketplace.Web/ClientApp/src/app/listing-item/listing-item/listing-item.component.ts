@@ -3,6 +3,7 @@ import { ListingService } from '../../api';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { Location } from '@angular/common';
 import { AppService } from '@app/app.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'appc-listing-item',
@@ -16,6 +17,7 @@ export class ListingItemComponent implements OnInit {
 
   constructor(private listingService: ListingService, 
     private appService: AppService,
+    private titleService: Title,
     private router: Router) {
 
    }
@@ -36,6 +38,8 @@ export class ListingItemComponent implements OnInit {
   getListingById(listingId: number){
     this.listingService.apiListingListingGet(listingId).subscribe((response: any) =>{
       this.listingItem = response;
+      let title = (response.listingCurrent.title) || ""; 
+      this.titleService.setTitle(title + " - Mua bán, rao vặt, mua bán nhà đất, bán xe hơi : moichao.com");
       console.log(response);
     })
   }

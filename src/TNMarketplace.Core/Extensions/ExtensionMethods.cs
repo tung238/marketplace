@@ -19,7 +19,7 @@ namespace TNMarketplace.Core
         public string NameWithType { get; set; }
         public string IconClass { get; set; }
         public bool IsLeaf { get; set; }
-        public int MaxPrice { get; set; }
+        public double? MaxPrice { get; set; }
         public List<TreeItem> Children { get; set; }
     }
 

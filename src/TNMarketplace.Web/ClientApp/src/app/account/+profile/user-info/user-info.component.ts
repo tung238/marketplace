@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
-import { NotificationsService } from '@app/simple-notifications';
 import { UserInfoModel } from '../profile.models';
 import { ProfileService } from '../profile.service';
 import { ControlBase } from '../../../shared/forms/controls/control-base';
 import { ControlTextbox } from '../../../shared/forms/controls/control-textbox';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'appc-user-info',
@@ -44,7 +43,8 @@ export class UserInfoComponent implements OnInit {
 
   constructor(
     public profileService: ProfileService,
-    private ns: NotificationsService
+    private toastr: ToastrService,
+
   ) { }
 
   public ngOnInit() { }
@@ -52,7 +52,7 @@ export class UserInfoComponent implements OnInit {
   public save(model: UserInfoModel): void {
     this.profileService.userInfo(model)
       .subscribe((res: UserInfoModel) => {
-        this.ns.success(`Name changed to ${res.firstName} ${res.lastName}`);
+        this.toastr.success(`Cập nhật thông tin cá nhân thành công.`);
       });
 
   }
