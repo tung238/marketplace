@@ -1,11 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnChanges, AfterViewInit, OnDestroy, forwardRef, Input } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'appc-tag-input',
   template: `
+    <div class="clear-fix"></div>
     <nz-tag
       *ngFor="let tag of tags; let i = index;"
-      [nzMode]="i === 0 ? 'default' : 'closeable'"
+      [nzMode]="'closeable'"
       (nzAfterClose)="handleClose(tag)">
       {{ sliceTagName(tag) }}
     </nz-tag>
@@ -25,27 +27,63 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
       (blur)="handleInputConfirm()"
       (keydown.enter)="handleInputConfirm()">
   `,
-  styles  : [
-      `.editable-tag ::ng-deep .ant-tag {
+  styles: [
+    `.editable-tag ::ng-deep .ant-tag {
       background: rgb(255, 255, 255);
       border-style: dashed;
-    }`]
+    }`],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TagInputComponent),
+      multi: true
+    }
+  ],
 })
-export class TagInputComponent implements OnInit {
+export class TagInputComponent implements OnInit, ControlValueAccessor, OnChanges, AfterViewInit, OnDestroy {
+  // tslint:disable-next-line:no-any
+  onChange: (value: any) => void = () => null;
+  // tslint:disable-next-line:no-any
+  onTouched: () => any = () => null;
 
-  tags = [ 'Unremovable', 'Tag 2', 'Tag 3' ];
+  @Input() tags = [];
+
   inputVisible = false;
   inputValue = '';
-  
-  @ViewChild('inputElement') 
+
+  @ViewChild('inputElement')
   inputElement: ElementRef;
 
 
-  ngOnInit(){
-    
+  ngOnInit() {
+
   }
+
+  ngOnChanges() {
+
+  }
+  ngOnDestroy() {
+
+  }
+  ngAfterViewInit() {
+
+  }
+
+  registerOnChange(fn: (_: boolean) => {}): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () => {}): void {
+    this.onTouched = fn;
+  }
+
+  writeValue(value: any[]) {
+    this.tags = value;
+  }
+
   handleClose(removedTag: {}): void {
     this.tags = this.tags.filter(tag => tag !== removedTag);
+    this.onChange(this.tags);
   }
 
   sliceTagName(tag: string): string {
@@ -63,6 +101,7 @@ export class TagInputComponent implements OnInit {
   handleInputConfirm(): void {
     if (this.inputValue && this.tags.indexOf(this.inputValue) === -1) {
       this.tags.push(this.inputValue);
+      this.onChange(this.tags);
     }
     this.inputValue = '';
     this.inputVisible = false;

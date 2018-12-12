@@ -4,8 +4,8 @@
   <thead (nzSortChange)="sort($event)" nzSingleSort>
     <tr>
       <th nzShowSort nzSortKey="id">ID</th>
-      <th nzShowSort nzSortKey="categoryName">Tên danh mục</th>
-      <th nzShowSort nzSortKey="type">Kiểu</th>
+      <th nzShowSort nzSortKey="name">Tên Thuộc tính</th>
+      <th nzShowSort nzSortKey="typeName">Kiểu</th>
       <th nzShowSort nzSortKey="categories">Danh mục</th>
       <th nzShowSort nzSortKey="options">Lựa chọn</th>
       <th nzShowSort nzSortKey="required">Bắt buộc</th>
@@ -16,8 +16,8 @@
   <tbody>
     <tr *ngFor="let data of filterTable.data">
       <td><a (click)="viewCategory(data)">{{data.id}}</a></td>
-      <td><a (click)="viewCategory(data)">{{data.categoryName}}</a></td>
-      <td>{{data.type}}</td>
+      <td><a (click)="viewCategory(data)">{{data.typeName}}</a></td>
+      <td>{{data.typeName}}</td>
       <td>{{data.categories}}</td>
       <td>{{data.options}}</td>
       <td>{{data.required}}</td>

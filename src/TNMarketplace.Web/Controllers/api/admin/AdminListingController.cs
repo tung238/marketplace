@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using TNMarketplace.Core.Entities;
 using TNMarketplace.Core.Infrastructure;
 using TNMarketplace.Core.ViewModels;
@@ -178,17 +179,18 @@ namespace TNMarketplace.Web.Controllers.api.admin
 
             if (id.HasValue)
             {
-                var fieldQuery = _customFieldService.Queryable()
+                var fieldQuery = _customFieldService.Queryable().Where(c=>c.ID == id.Value)
                 .Include(x => x.MetaCategories).ThenInclude(s => s.Category);
                 field = fieldQuery.FirstOrDefault();
             }
             else
+            {
                 field = new MetaField()
                 {
                     Required = false,
                     Searchable = false
                 };
-
+            }
             var categories = await _categoryService.Query().SelectAsync();
 
             var model = new MetaFieldModel()
@@ -201,43 +203,69 @@ namespace TNMarketplace.Web.Controllers.api.admin
         }
 
         [HttpPost("CustomFieldUpdate")]
-        public async Task<IActionResult> CustomFieldUpdate(MetaField metaField, List<int> Categories)
+        public async Task<IActionResult> CustomFieldUpdate(CustomFieldUpdateModel model)
         {
-            if (metaField.ID == 0) { 
+            MetaField metaField = null;
+            if (model.ID == null || model.ID == 0) {
+                metaField = new MetaField()
+                {
+                    ControlTypeID = model.ControlTypeID ?? 0,
+                    Name = model.Name,
+                    Required = model.Required,
+                    Searchable = model.Searchable,
+                    Options = JsonConvert.SerializeObject(model.Options),
+                    Placeholder = model.Placeholder,
+                    Ordering = model.Ordering
+            };
 
+                if (model.Categories != null)
+                {
+                    // Insert meta categories
+                    foreach(var c in model.Categories)
+                    {
+                        var metaCategory = new MetaCategory()
+                        {
+                            CategoryID = c,
+                            FieldID = metaField.ID,
+                            ObjectState = ObjectState.Added
+                        };
+                        metaField.MetaCategories.Add(metaCategory);
+                    }
+                }
                 _customFieldService.Insert(metaField);
             }
             else
             {
-                var metaFieldExistingQuery = _customFieldService.TrackingQueryable().Where(x => x.ID == metaField.ID).Include(x => x.MetaCategories);
-                var metaFieldExisting = metaFieldExistingQuery.FirstOrDefault();
+                var metaFieldExistingQuery = _customFieldService.TrackingQueryable().Where(x => x.ID == model.ID).Include(x => x.MetaCategories);
+                metaField = metaFieldExistingQuery.FirstOrDefault();
 
-                metaFieldExisting.Name = metaField.Name;
-                metaFieldExisting.ControlTypeID = metaField.ControlTypeID;
-                metaFieldExisting.Options = metaField.Options;
-                metaFieldExisting.Required = metaField.Required;
-                metaFieldExisting.Searchable = metaField.Searchable;
+                metaField.Name = model.Name;
+                metaField.ControlTypeID = model.ControlTypeID ?? 0;
+                metaField.Options = JsonConvert.SerializeObject(model.Options);
+                metaField.Required = model.Required;
+                metaField.Searchable = model.Searchable;
+                metaField.Placeholder = model.Placeholder;
+                metaField.Ordering = model.Ordering;
 
-                _customFieldService.Update(metaFieldExisting);
+                _customFieldService.Update(metaField);
 
                 // Delete existing
-                foreach (var category in metaFieldExisting.MetaCategories)
+                foreach (var category in metaField.MetaCategories)
                 {
                     await _customFieldCategoryService.DeleteAsync(category.ID);
                 }
-            }
 
-            if (Categories != null)
-            {
-                // Insert meta categories
-                var metaCategories = Categories.Select(x => new MetaCategory()
+                if (model.Categories != null)
                 {
-                    CategoryID = x,
-                    FieldID = metaField.ID,
-                    ObjectState = ObjectState.Added
-                }).ToList();
-
-                _customFieldCategoryService.InsertRange(metaCategories);
+                    // Insert meta categories
+                    var metaCategories = model.Categories.Select(x => new MetaCategory()
+                    {
+                        CategoryID = x,
+                        FieldID = metaField.ID,
+                        ObjectState = ObjectState.Added
+                    }).ToList();
+                    _customFieldCategoryService.InsertRange(metaCategories);
+                }
             }
 
             await _unitOfWorkAsync.SaveChangesAsync();

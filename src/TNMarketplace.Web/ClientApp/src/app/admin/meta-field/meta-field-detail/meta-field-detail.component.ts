@@ -9,8 +9,9 @@ import { Title } from '@angular/platform-browser';
 import { ControlTextbox } from '@app/shared/forms/controls/control-textbox';
 import { ControlTextarea } from '@app/shared/forms/controls/control-textarea';
 import { ControlDropdown } from '@app/shared/forms/controls/control-dropdown';
-import {ControlSelect} from '@app/shared/forms/controls/control-select';
+import { ControlSelect } from '@app/shared/forms/controls/control-select';
 import { ControlCheckbox } from '@app/shared/forms/controls/control-checkbox';
+import { ControlTag } from '@app/shared/forms/controls/control-tag';
 
 @Component({
   selector: 'appc-meta-field-detail',
@@ -23,18 +24,21 @@ export class MetaFieldDetailComponent implements OnInit {
     var id = this.route.snapshot.params['id'];
     if (id) {
       this.adminListingService.apiAdminAdminListingCustomFieldGet(id).subscribe(cc => {
-        const data = cc.category;
+        const data = cc.metaField;
         let title = (data.name) || ""
         this.titleService.setTitle(title + " - Mua bán, rao vặt, mua bán nhà đất, bán xe hơi : moichao.com");
         console.log(data);
+        let options = JSON.parse(data.options || "[]");
         this.data.next({
           'id': data.id,
           'controlTypeID': data.controlTypeID,
           'name': data.name,
-          'options': data.options,
-          'required': data.parent,
-          'searchable': data.iconClass,
-          'categories': data.categories
+          'options': options,
+          'placeholder': data.placeholder,
+          'ordering': data.ordering,
+          'required': data.required,
+          'searchable': data.searchable,
+          'categories': data.metaCategories.map(m => { return m.categoryID })
         });
       })
     }
@@ -45,8 +49,9 @@ export class MetaFieldDetailComponent implements OnInit {
   @ViewChild(DynamicFormComponent)
   public ngForm: DynamicFormComponent;
 
-  formSumit(data){
-    this.adminListingService.apiAdminAdminListingCustomFieldUpdatePost(data).subscribe(c=>{
+  formSumit(data) {
+    data.controlTypeID = Number(data.controlTypeID);
+    this.adminListingService.apiAdminAdminListingCustomFieldUpdatePost(data).subscribe(c => {
       this.toastr.success('Cập nhật thành công.');
     })
   }
@@ -73,22 +78,39 @@ export class MetaFieldDetailComponent implements OnInit {
         key: 'controlTypeID',
         label: 'Kiểu',
         placeholder: 'Chọn kiểu',
-        value: '',
+        value: 0,
         required: true,
         order: 1,
         options: [
-          {id: 0, value: 'Dropdown list'},
-          {id: 1, value: 'Radio list'},
-          {id: 2, value: 'Checkbox list'},
-          {id: 3, value: 'Textbox'},
-          {id: 4, value: 'Multiline texbox'},
+          { key: 0, value: 'Dropdown list' },
+          { key: 1, value: 'Radio list' },
+          { key: 2, value: 'Checkbox list' },
+          { key: 3, value: 'Textbox' },
+          { key: 4, value: 'Multiline texbox' },
         ]
       }),
-      new ControlTextarea({
+      new ControlTag({
         key: 'options',
         label: 'Lựa chọn',
         placeholder: 'Lựa chọn',
-        value: '',
+        value: [],
+        required: false,
+        order: 2
+      }),
+      new ControlTextbox({
+        key: 'placeHolder',
+        label: 'Placeholder',
+        placeholder: 'Placeholder',
+        value: "",
+        required: false,
+        order: 2
+      }),
+      new ControlTextbox({
+        key: 'ordering',
+        type: 'number',
+        label: 'Ordering',
+        placeholder: 'Ordering',
+        value: 0,
         required: true,
         order: 2
       }),
@@ -109,27 +131,28 @@ export class MetaFieldDetailComponent implements OnInit {
       new ControlSelect({
         key: 'categories',
         label: 'Danh mục',
-        value: 0,
+        value: [],
         required: true,
+        placeholder: 'Chọn danh mục',
         order: 5
       }),
       new ControlTextbox({
         key: 'id',
         label: '',
-        value: '',
+        value: 0,
         type: 'hidden',
         required: false,
         order: 6
       })
     ];
     const id = this.route.snapshot.params['id'];
-    this.headerText = id ? "Sửa thuộc tính": "Thêm mới thuộc tính";
+    this.headerText = id ? "Sửa thuộc tính" : "Thêm mới thuộc tính";
     this.controls = controls;
 
     this.adminListingService.apiAdminAdminListingCategoriesGet().subscribe(data => {
       var control = this.controls.find(c => c.key == "categories");
       if (control) {
-        (control as ControlSelect).options = data.filter(c=>{
+        (control as ControlSelect).options = data.filter(c => {
           return c.parent != 0;
         }).map(c => { return { key: c.id, value: c.name } });
       }

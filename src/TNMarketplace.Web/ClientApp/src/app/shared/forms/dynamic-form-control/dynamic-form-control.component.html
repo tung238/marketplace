@@ -63,20 +63,23 @@
             <label nz-radio-button nzValue="2">Mua</label>
             <label nz-radio-button nzValue="3">Cho Thuê</label>
         </nz-radio-group>
-        <div class="error" *ngIf="errorMessage(control)"> {{ errorMessage(control) }} </div>
 
         <!--select box-->
         <label *ngIf="control.type==='select'" [attr.for]="control.key">{{control.label}}</label>
         <nz-select *ngIf="control.type === 'select'" [id]="control.key" [formControlName]="control.key"
-            [class.is-valid]="valid" [nzSize]="size" nzMode="multiple" nzPlaceHolder="control.placeholder">
+            [class.is-valid]="valid" [nzSize]="size" nzMode="multiple" [nzPlaceHolder]="control.placeholder">
             <nz-option *ngFor="let option of control.options" [nzLabel]="option.value" [nzValue]="option.key"></nz-option>
         </nz-select>
 
-          <!--tag box-->
-          <label *ngIf="control.type==='tag'" [attr.for]="control.key">{{control.label}}</label>
-          <nz-select *ngIf="control.type === 'tag'" [id]="control.key" [formControlName]="control.key"
-              [class.is-valid]="valid" [nzSize]="size" nzMode="multiple" nzPlaceHolder="control.placeholder">
-              <nz-option *ngFor="let option of control.options" [nzLabel]="option.value" [nzValue]="option.key"></nz-option>
-          </nz-select>
+        <!--tag box-->
+        <label *ngIf="control.type==='tag'" [attr.for]="control.key">{{control.label}}</label>
+        <appc-tag-input *ngIf="control.type === 'tag'" [id]="control.key" [formControlName]="control.key"
+            [class.is-valid]="valid" [tags]="control.value">
+        </appc-tag-input>
+
+
+
+        <div class="error" *ngIf="errorMessage(control)"> {{ errorMessage(control) }} </div>
+
     </div>
 </div>

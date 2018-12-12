@@ -13,6 +13,7 @@ export class MetaFieldListComponent implements OnInit {
   listOfSearchName = [];
   searchAddress: string;
   data = [];
+  controlTypeMapp = ["Dropdown list", "Radio list", "Checkbox list", "Textbox", "Multiline texbox"];
   displayData = [ ...this.data ];
 
   constructor(
@@ -24,6 +25,12 @@ export class MetaFieldListComponent implements OnInit {
   ngOnInit() {
     this.adminListingService.apiAdminAdminListingCustomFieldsGet().subscribe(res=>{
       this.data = res;
+      this.data.forEach(d=>{
+        d.typeName = this.controlTypeMapp[d.controlTypeID];
+        d.categories = d.metaCategories.map(m=>{
+          return m.category.name;
+        }).join(", ");
+      })
       this.search()
     })
 

@@ -143,7 +143,7 @@ namespace TNMarketplace.Repository.EfCore
 
         public virtual async Task<TEntity> FindAsync(CancellationToken cancellationToken, params object[] keyValues)
         {
-            return await _dbSet.FindAsync(cancellationToken, keyValues);
+            return await _dbSet.FindAsync(keyValues, cancellationToken);
         }
 
         public virtual async Task<bool> DeleteAsync(params object[] keyValues)
