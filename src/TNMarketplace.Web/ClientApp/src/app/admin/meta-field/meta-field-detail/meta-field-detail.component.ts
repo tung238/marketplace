@@ -29,7 +29,7 @@ export class MetaFieldDetailComponent implements OnInit {
         this.titleService.setTitle(title + " - Mua bán, rao vặt, mua bán nhà đất, bán xe hơi : moichao.com");
         console.log(data);
         let options = JSON.parse(data.options || "[]");
-        this.data.next({
+        this.data = {
           'id': data.id,
           'controlTypeID': data.controlTypeID,
           'name': data.name,
@@ -39,12 +39,12 @@ export class MetaFieldDetailComponent implements OnInit {
           'required': data.required,
           'searchable': data.searchable,
           'categories': data.metaCategories.map(m => { return m.categoryID })
-        });
+        };
       })
     }
   }
   public controls: Array<ControlBase<any>> = [];
-  data: Subject<any> = new Subject<any>();
+  data: any;
 
   @ViewChild(DynamicFormComponent)
   public ngForm: DynamicFormComponent;
@@ -53,6 +53,7 @@ export class MetaFieldDetailComponent implements OnInit {
     data.controlTypeID = Number(data.controlTypeID);
     this.adminListingService.apiAdminAdminListingCustomFieldUpdatePost(data).subscribe(c => {
       this.toastr.success('Cập nhật thành công.');
+      this.router.navigate(["/admin/thuoc-tinh"]);
     })
   }
 

@@ -16,10 +16,19 @@ export class DynamicFormControlComponent {
     constructor() { }
 
     get valid() {
+        var c = this.form.controls[this.control.key];
+        if (!c){
+            return false;
+        }
         return this.form.controls[this.control.key].valid && (this.form.controls[this.control.key].touched || this.frm.submitted);
     }
 
     get invalid() {
+        console.log(this.control.key);
+        var c = this.form.controls[this.control.key];
+        if (!c){
+            return true;
+        }
         return !this.form.controls[this.control.key].valid && (this.form.controls[this.control.key].touched || this.frm.submitted);
     }
 

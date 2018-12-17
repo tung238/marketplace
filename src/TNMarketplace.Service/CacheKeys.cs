@@ -9,6 +9,7 @@ namespace TNMarketplace.Service
         Settings,
         SettingDictionary,
         Categories,
+        MetaCategories,
         ListingTypes,
         ContentPages,
         EmailTemplates,

@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./user-info.component.scss']
 })
 export class UserInfoComponent implements OnInit {
+  data: any;
   public controls: Array<ControlBase<string>> = [
     new ControlTextbox({
       key: 'firstName',
@@ -47,7 +48,11 @@ export class UserInfoComponent implements OnInit {
 
   ) { }
 
-  public ngOnInit() { }
+  public ngOnInit() {
+    this.profileService.userInfo().subscribe(data=>{
+      this.data = data;
+    })
+   }
 
   public save(model: UserInfoModel): void {
     this.profileService.userInfo(model)

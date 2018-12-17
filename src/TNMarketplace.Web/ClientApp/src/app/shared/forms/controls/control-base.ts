@@ -4,18 +4,22 @@ export class ControlBase<T> {
     public label: string;
     public placeholder: string;
     public required: boolean;
+    public isHidden: boolean;
+    public isCustomField: boolean;
     public minlength: number | undefined;
     public maxlength: number | undefined;
     public order: number;
     public type: string;
     public class: string;
 
-    constructor(options: {
+constructor(options: {
         value?: T,
         key?: string,
         label?: string,
         placeholder?: string,
         required?: boolean,
+        isCustomField?: boolean,
+        isHidden?: boolean,
         minlength?: number,
         maxlength?: number,
         order?: number,
@@ -27,6 +31,8 @@ export class ControlBase<T> {
         this.label = options.label || '';
         this.placeholder = options.placeholder || '';
         this.required = !!options.required;
+        this.isCustomField = options.isCustomField || false;
+        this.isHidden = options.isHidden || false;
         this.minlength = options.minlength;
         this.maxlength = options.maxlength;
         this.order = options.order === undefined ? 1 : options.order;

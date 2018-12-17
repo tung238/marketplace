@@ -4,8 +4,8 @@
 
     <div class="form-group">
 
-        <label *ngSwitchCase="'dropdown'" [attr.for]="control.key">{{control.label}}</label>
-        <select class="form-control" *ngSwitchCase="'dropdown'" [id]="control.key" [formControlName]="control.key"
+        <label *ngIf="control.type === 'dropdown' && !control.isHidden" [attr.for]="control.key">{{control.label}}</label>
+        <select *ngIf="control.type === 'dropdown'" class="form-control" [id]="control.key" [formControlName]="control.key"
             [class.is-valid]="valid" [class.is-invalid]="invalid">
             <option *ngFor="let opt of control.options" [value]="opt.key">{{opt.value}}</option>
         </select>
@@ -17,39 +17,37 @@
             [id]="control.key" [formControlName]="control.key" [type]="control.type" [placeholder]="control.placeholder"
             [class.is-valid]="valid" [class.is-invalid]="invalid">
         <!--price-->
-        <label *ngIf="control.type==='price'" [attr.for]="control.key">{{control.label}}</label>
+        <label *ngIf="control.type==='price' && !control.isHidden" [attr.for]="control.key">{{control.label}}</label>
         <input class="form-control" *ngIf="control.type==='price'" [type]="text" [placeholder]="control.placeholder"
             [id]="control.key" [formControlName]="control.key" [class.is-valid]="valid" [class.is-invalid]="invalid"
             appcCurrencyMask>
         <!--Textarea-->
-        <label *ngIf="control.type === 'textarea'" [for]="control.key">{{control.label}}</label>
+        <label *ngIf="control.type === 'textarea' && !control.isHidden" [for]="control.key">{{control.label}}</label>
         <textarea class="form-control" *ngIf="control.type === 'textarea'" [id]="control.key" rows="3"
             [formControlName]="control.key" [class.is-valid]="valid" [class.is-invalid]="invalid"></textarea>
 
         <!--Checkbox-->
-        <label *ngSwitchCase="'checkbox'" [attr.for]="control.key" class="custom-control custom-checkbox">
+        <label *ngSwitchCase="'checkbox' && !control.isHidden" [attr.for]="control.key" class="custom-control custom-checkbox">
             <input #ck *ngSwitchCase="'checkbox'" (change)="control.value = ck.checked" [id]="control.key"
                 [formControlName]="control.key" [type]="control.type" class="custom-control-input">
             <span>{{control.label}}</span>
         </label>
 
         <!--Checkbox list-->
-        <div *ngIf="control.type === 'checkboxlist'">
-            <div *ngFor="let item of control.options.options">
-                <label>
-                    <input class="custom-control-input" type="checkbox" [id]="item.key" [value]="item.key" [checked]="f.value[control.key].indexOf(item.key)> -1"
-                        (change)="control.updateCheckedOptions(item.key, $event, f)"> {{item.value}}
-                </label>
-            </div>
-        </div>
+        <label *ngIf="control.type === 'checkboxlist' && !control.isHidden" [attr.for]="control.key">{{control.label}}</label>
+        <appc-checkbox-list *ngIf="control.type === 'checkboxlist' && !control.isHidden" [control]="control" [formControlName]="control.key"></appc-checkbox-list>
+        
+        <!--radio list-->
+        <label *ngIf="control.type === 'radiolist' && !control.isHidden" [attr.for]="control.key">{{control.label}}</label>
+        <appc-radio-list *ngIf="control.type === 'radiolist' && !control.isHidden" [control]="control" [formControlName]="control.key"></appc-radio-list>
         <!--Cascader-->
-        <label *ngIf="control.type === 'cascader'" [for]="control.key">{{control.label}}</label>
-        <nz-cascader *ngIf="control.type === 'cascader'" [(nzOptions)]="control.options" [nzShowSearch]="true" [id]="control.key"
+        <label *ngIf="control.type === 'cascader' && !control.isHidden" [for]="control.key">{{control.label}}</label>
+        <nz-cascader *ngIf="control.type === 'cascader'" [(nzOptions)]="control.options" [nzShowSearch]="true" [id]="control.key" (nzSelectionChange)="control.onSelectionChange($event)"
             [formControlName]="control.key" [class.is-valid]="valid" [class.is-invalid]="invalid" [nzLabelProperty]="control.nzLabelProperty"
             [nzValueProperty]="control.nzValueProperty">
         </nz-cascader>
         <!--Upload-->
-        <label *ngIf="control.type === 'upload'" [for]="control.key">{{control.label}}</label>
+        <label *ngIf="control.type === 'upload' && !control.isHidden" [for]="control.key">{{control.label}}</label>
         <nz-upload *ngIf="control.type === 'upload'" nzAction="/api/fileupload/upload" nzListType="picture-card"
             [(nzFileList)]="control.fileList" [nzSize]="2048" (nzChange)="control.fileListChange($event)" [nzFileType]="image/jpeg"
             [nzShowButton]="fileList?.length < 3" [nzPreview]="handlePreview">
@@ -65,14 +63,14 @@
         </nz-radio-group>
 
         <!--select box-->
-        <label *ngIf="control.type==='select'" [attr.for]="control.key">{{control.label}}</label>
+        <label *ngIf="control.type==='select' && !control.isHidden" [attr.for]="control.key">{{control.label}}</label>
         <nz-select *ngIf="control.type === 'select'" [id]="control.key" [formControlName]="control.key"
             [class.is-valid]="valid" [nzSize]="size" nzMode="multiple" [nzPlaceHolder]="control.placeholder">
             <nz-option *ngFor="let option of control.options" [nzLabel]="option.value" [nzValue]="option.key"></nz-option>
         </nz-select>
 
         <!--tag box-->
-        <label *ngIf="control.type==='tag'" [attr.for]="control.key">{{control.label}}</label>
+        <label *ngIf="control.type==='tag' && !control.isHidden" [attr.for]="control.key">{{control.label}}</label>
         <appc-tag-input *ngIf="control.type === 'tag'" [id]="control.key" [formControlName]="control.key"
             [class.is-valid]="valid" [tags]="control.value">
         </appc-tag-input>

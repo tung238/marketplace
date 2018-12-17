@@ -22,6 +22,8 @@ import { MultilinePipe } from './pipes/multiline.pipe';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { CurrencyMaskDirective } from './directives/currency-mask.directive';
 import { TagInputComponent } from './forms/dynamic-form-control/tag-input.component';
+import { CheckboxListComponent } from './forms/dynamic-form-control/checkbox-list.component';
+import { RadioListComponent } from './forms/dynamic-form-control/radio-list.component';
 
 @NgModule({
   imports: [
@@ -46,7 +48,9 @@ import { TagInputComponent } from './forms/dynamic-form-control/tag-input.compon
     MultilinePipe,
     BreadcrumbComponent,
     CurrencyMaskDirective,
-    TagInputComponent
+    TagInputComponent,
+    CheckboxListComponent,
+    RadioListComponent
   ],
   exports: [
     // Modules

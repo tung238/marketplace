@@ -8,8 +8,7 @@ namespace TNMarketplace.Web.Models
 {
     public class CustomFieldListingModel
     {
-        public List<MetaCategory> MetaCategories { get; set; }
-
-        public int ListingID { get; set; }
+        public int MetaId { get; set; }
+        public string Value { get; set; }
     }
 }

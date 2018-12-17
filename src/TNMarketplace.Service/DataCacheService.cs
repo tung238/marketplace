@@ -87,6 +87,10 @@ namespace TNMarketplace.Service
                             var areas = _serviceProvider.GetService<IAreaService>().Queryable().ToList();
                             UpdateCache(CacheKeys.Areas, areas);
                             return areas;
+                        case CacheKeys.MetaCategories:
+                            var metas = _serviceProvider.GetService<ICustomFieldCategoryService>().Queryable().Include(x => x.Category).Include(x => x.MetaField).ToList();
+                            UpdateCache(CacheKeys.MetaCategories, metas);
+                            return metas;
                         case CacheKeys.Statistics:
                             SaveCategoryStats();
 
@@ -227,6 +231,14 @@ namespace TNMarketplace.Service
             get
             {
                 return GetCachedItem(CacheKeys.Statistics) as Statistics;
+            }
+        }
+
+        public List<MetaCategory> MetaCategories
+        {
+            get
+            {
+                return GetCachedItem(CacheKeys.MetaCategories) as List<MetaCategory>;
             }
         }
 

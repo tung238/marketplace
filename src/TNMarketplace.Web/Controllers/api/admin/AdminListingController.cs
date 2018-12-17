@@ -269,6 +269,7 @@ namespace TNMarketplace.Web.Controllers.api.admin
             }
 
             await _unitOfWorkAsync.SaveChangesAsync();
+            _dataCacheService.RemoveCachedItem(CacheKeys.MetaCategories);
             return Ok();
         }
         //[HttpGet]

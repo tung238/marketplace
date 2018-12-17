@@ -11,7 +11,7 @@ namespace TNMarketplace.Web.Models
     {
         public ListingUpdateModel()
         {
-            CustomFields = new CustomFieldListingModel();
+            CustomFields = new List<CustomFieldListingModel>();
         }
 
         public int ID { get; set; }
@@ -36,6 +36,6 @@ namespace TNMarketplace.Web.Models
         public System.DateTime Created { get; set; }
         public System.DateTime LastUpdated { get; set; }
         public List<PictureModel> Pictures { get; set; }
-        public CustomFieldListingModel CustomFields { get; set; }
+        public List<CustomFieldListingModel> CustomFields { get; set; }
     }
 }

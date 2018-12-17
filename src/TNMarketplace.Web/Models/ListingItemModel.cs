@@ -22,5 +22,7 @@ namespace TNMarketplace.Web.Models
         public SimpleUser User { get; set; }
 
         public List<ListingReview> ListingReviews { get; set; }
+
+        public List<MetaCategory> MetaCategories { get; set; }
     }
 }

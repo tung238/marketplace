@@ -455,8 +455,40 @@ namespace TNMarketplace.Web.Controllers.api
             return Ok(itemModel);
         }
 
+
+        [HttpGet("ListingUpdate")]
+        public async Task<IActionResult> ListingUpdate(int? id)
+        {
+            var item = new Listing();
+            var pictures = new List<ListingPicture>();
+            if (id.HasValue)
+            {
+                var itemQuery = _listingService.Queryable().AsNoTracking().Where(t => t.ID == id)
+                    .Include(x => x.Category).Include(x => x.Region).Include(x => x.Area).Include(x => x.ListingMetas).ThenInclude(z => z.MetaField).Include(x => x.ListingStats).Include(x => x.ListingType);
+
+                item = itemQuery.FirstOrDefault();
+
+                if (item == null)
+                    return NotFound();
+
+                pictures = (await _listingPictureservice.Query(x => x.ListingID == id).SelectAsync()).ToList();
+            }
+
+            var user = await _userManager.FindByIdAsync(item.UserID);
+
+            var itemModel = new ListingItemModel()
+            {
+                ListingCurrent = _mapper.Map<SimpleListing>(item),
+                Pictures = _mapper.Map<List<PictureModel>>(pictures),
+                MetaCategories = _dataCacheService.MetaCategories,
+                User = _mapper.Map<SimpleUser>(user)
+            };
+
+            return Ok(itemModel);
+        }
+
         [HttpPost("ListingUpdate")]
-        public async Task<ActionResult> ListingUpdate(ListingUpdateModel listing)
+        public async Task<IActionResult> ListingUpdate(ListingUpdateModel listing)
         {
             if (_dataCacheService.Categories.Count == 0)
             {
@@ -608,27 +640,21 @@ namespace TNMarketplace.Web.Controllers.api
 
             foreach (var metaCategory in customFieldCategories)
             {
-                //var field = metaCategory.MetaField;
-                //var controlType = (Enum_MetaFieldControlType)field.ControlTypeID;
+                var field = listing.CustomFields.FirstOrDefault(c => c.MetaId == metaCategory.FieldID);
+                if (field == null)
+                {
+                    continue;
+                }
 
-                //string controlId = string.Format("customfield_{0}_{1}_{2}", metaCategory.ID, metaCategory.CategoryID, metaCategory.FieldID);
+                var itemMeta = new ListingMeta()
+                {
+                    ListingID = listing.ID,
+                    Value = field.Value,
+                    FieldID = field.MetaId,
+                    ObjectState = ObjectState.Added
+                };
 
-                //var formValue = form[controlId];
-
-                //if (string.IsNullOrEmpty(formValue))
-                //    continue;
-
-                //formValue = formValue.ToString();
-
-                //var itemMeta = new ListingMeta()
-                //{
-                //    ListingID = listing.ID,
-                //    Value = formValue,
-                //    FieldID = field.ID,
-                //    ObjectState = ObjectState.Added
-                //};
-
-                //_customFieldListingService.Insert(itemMeta);
+                _customFieldListingService.Insert(itemMeta);
             }
 
             await _unitOfWorkAsync.SaveChangesAsync();
