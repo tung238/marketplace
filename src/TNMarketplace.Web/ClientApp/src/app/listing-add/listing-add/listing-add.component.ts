@@ -227,13 +227,14 @@ export class ListingAddComponent implements OnInit, AfterViewInit {
     }
     var categoryID = categories[1]
     var seen = new Set();
-    var controls = this.controls;
+    
     //remove existing custom fields
-    controls.forEach((element, index) => {
+    this.controls.forEach((element, index) => {
       if ((element as ControlBase<any>).isCustomField) {
-        controls.splice(index, 1);
+        this.controls.splice(index, 1);
       }
     });
+    var controls = [...this.controls];
     this.metaCategories.forEach(element => {
       var k = element.metaField.id;
       if (!seen.has(k) && element.categoryID == categoryID) {

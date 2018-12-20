@@ -32,9 +32,9 @@ namespace TNMarketplace.Core.ViewModels
         public virtual SimpleRegion Region { get; set; }
         public virtual SimpleArea Area { get; set; }
 
-        public virtual ICollection<ListingMeta> ListingMetas { get; set; }
-        public virtual ICollection<ListingReview> ListingReviews { get; set; }
+        public virtual ICollection<SimpleListingMeta> ListingMetas { get; set; }
+        public virtual ICollection<SimpleListingReview> ListingReviews { get; set; }
         public virtual SimpleListingType ListingType { get; set; }
-        public virtual ICollection<ListingStat> ListingStats { get; set; }
+        public virtual ICollection<SimpleListingStat> ListingStats { get; set; }
     }
 }

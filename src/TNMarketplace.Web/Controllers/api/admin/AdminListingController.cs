@@ -168,9 +168,9 @@ namespace TNMarketplace.Web.Controllers.api.admin
         {
             var metaFields = await _customFieldService.Queryable()
                 .Include(x => x.MetaCategories).ThenInclude(s => s.Category)
-                .OrderByDescending(x => x.ID).ToListAsync();
+                .OrderByDescending(x => x.ID).AsNoTracking().ToListAsync();
 
-            return Ok(metaFields);
+            return Json(_mapper.Map<List<SimpleMetaField>>( metaFields));
         }
         [HttpGet("CustomField")]
         public async Task<IActionResult> CustomField(int? id)
@@ -195,8 +195,8 @@ namespace TNMarketplace.Web.Controllers.api.admin
 
             var model = new MetaFieldModel()
             {
-                MetaField = field,
-                Categories = categories.ToList()
+                MetaField = _mapper.Map<SimpleMetaField>(field),
+                Categories = _mapper.Map<List<SimpleCategory>>(categories.ToList())
             };
 
             return Ok(model);

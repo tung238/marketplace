@@ -7,8 +7,8 @@ namespace TNMarketplace.Core.ViewModels
 {
     public class MetaFieldModel
     {
-        public MetaField MetaField { get; set; }
+        public SimpleMetaField MetaField { get; set; }
 
-        public List<Category> Categories { get; set; }
+        public List<SimpleCategory> Categories { get; set; }
     }
 }

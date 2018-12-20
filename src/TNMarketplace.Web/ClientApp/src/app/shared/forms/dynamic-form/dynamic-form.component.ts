@@ -17,34 +17,35 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     private _controls: Array<ControlBase<any>> = [];
     private existingControls: Array<ControlBase<any>> = [];
     private _data: any;
-    @Input() public set data(value){
-        if (this._data != value){
+    @Input() public set data(value) {
+        if (this._data != value) {
             this._data = value;
-            if (this.sortedControls){
+            if (this.sortedControls) {
                 this.formatDateToDisplay(this.data, this.sortedControls);
             }
-            if (this.form){
+            if (this.form) {
                 this.form.patchValue(this.data);
             }
         }
     }
-    public get data(){
+    public get data() {
         return this._data;
     }
-    @Input() public set controls(value: Array<ControlBase<any>>){
-        if(this._controls == value || value == null || value.length == 0){
+    @Input() public set controls(value: Array<ControlBase<any>>) {
+        if (this._controls == value || value == null || value.length == 0) {
             return;
         }
         this.existingControls = this._controls;
-        this._controls = value;
-        this.sortedControls = this.controls.sort((a, b) => a.order - b.order);
+        this.sortedControls = value.sort((a, b) => a.order - b.order);
         this.toControlGroup(this.sortedControls);
         if (this.data) {
             this.formatDateToDisplay(this.data, this.sortedControls);
             this.form.patchValue(this.data);
         }
+        this._controls = value;
     }
-    public get controls(){
+    public get controls() {
+        // console.log(this._controls)
         return this._controls;
     }
     @Input() public reset = new Subject<boolean>();
@@ -63,7 +64,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     constructor(public _controlService: FormControlService) { }
 
     public ngOnInit() {
-        this.sortedControls = this.controls.sort((a, b) => a.order - b.order);
+        this.sortedControls = this._controls.sort((a, b) => a.order - b.order);
         this.toControlGroup(this.sortedControls);
 
         // if (this.data) {
@@ -122,21 +123,21 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     }
 
     public toControlGroup(controls: Array<ControlBase<any>>) {
-        const group: any = {};
+        var group: any = {};
 
         //remove existing custom fields
-        if (this.form){
-        Object.keys(this.form.controls).forEach(key=>{
-            var existingControl = this.existingControls.find(c=> c.key == key && c.isCustomField == true);
-            if(existingControl){
-                this.form.removeControl(key);
-            }
-        });
-    }
+        if (this.form) {
+            Object.keys(this.form.controls).forEach(key => {
+                var existingControl = this.existingControls.find(c => c.key == key && c.isCustomField == true);
+                if (existingControl) {
+                    this.form.removeControl(key);
+                }
+            });
+        }
         controls.forEach(control => {
             //no need to re-add base input fields
-            var existingControl = this.existingControls.find(c=> c.key == control.key);
-            if (existingControl){
+            var existingControl = this.existingControls.find(c => c.key == control.key);
+            if (existingControl) {
                 return;
             }
             const validators: ValidatorFn[] = [];
@@ -162,11 +163,11 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
             }
             group[control.key] = new FormControl(control.value || '', validators);
         });
-        if (this.form && Object.keys(this.form.controls).length > 0){
-            Object.keys(group).forEach(key=>{
+        if (this.form && Object.keys(this.form.controls).length > 0) {
+            Object.keys(group).forEach(key => {
                 this.form.addControl(key, group[key]);
             })
-        }else{
+        } else {
             this.form = new FormGroup(group, ValidationService.passwordMatchValidator);
         }
     }

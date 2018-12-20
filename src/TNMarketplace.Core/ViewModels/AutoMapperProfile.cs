@@ -12,6 +12,11 @@ namespace TNMarketplace.Core.ViewModels
             CreateMap<Category, SimpleCategory>();
             CreateMap<Region, SimpleRegion>();
             CreateMap<ListingPicture, PictureModel>();
+            CreateMap<MetaCategory, SimpleMetaCategory>();
+            CreateMap<MetaField, SimpleMetaField>();
+            CreateMap<ListingMeta, SimpleListingMeta>();
+            CreateMap<ListingStat, SimpleListingStat>();
+            CreateMap<ListingReview, SimpleListingReview>();
         }
     }
 }

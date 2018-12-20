@@ -428,7 +428,7 @@ namespace TNMarketplace.Web.Controllers.api
                 Pictures = _mapper.Map<List<PictureModel>>(pictures),
                 DatesBooked = datesBooked,
                 User = _mapper.Map<SimpleUser>(user),
-                ListingReviews = reviews.ToList()
+                ListingReviews = _mapper.Map<List<SimpleListingReview>>(reviews.ToList())
             };
 
             // Update stat count
@@ -480,7 +480,7 @@ namespace TNMarketplace.Web.Controllers.api
             {
                 ListingCurrent = _mapper.Map<SimpleListing>(item),
                 Pictures = _mapper.Map<List<PictureModel>>(pictures),
-                MetaCategories = _dataCacheService.MetaCategories,
+                MetaCategories = _mapper.Map<List<SimpleMetaCategory>>( _dataCacheService.MetaCategories),
                 User = _mapper.Map<SimpleUser>(user)
             };
 
@@ -533,6 +533,11 @@ namespace TNMarketplace.Web.Controllers.api
                 listing.ListingTypeId = listingTypes.FirstOrDefault().ID;
             }
 
+            // Get custom fields
+            var customFieldCategoryQuery = await _customFieldCategoryService.Query(x => x.CategoryID == listing.CategoryIds.Last())
+                .Include(x => x.Include(y => y.MetaField).ThenInclude(z => z.ListingMetas)).SelectAsync();
+            var customFieldCategories = customFieldCategoryQuery.ToList();
+
             if (listing.ID == 0)
             {
                 var dbListing = new Listing()
@@ -565,6 +570,24 @@ namespace TNMarketplace.Web.Controllers.api
                         ObjectState = ObjectState.Added,
                         Url = item.Url
                     });
+                }
+
+                foreach (var metaCategory in customFieldCategories)
+                {
+                    var field = listing.CustomFields.FirstOrDefault(c => c.MetaId == metaCategory.FieldID);
+                    if (field == null)
+                    {
+                        continue;
+                    }
+
+                    var itemMeta = new ListingMeta()
+                    {
+                        Value = field.Value,
+                        FieldID = field.MetaId,
+                        ObjectState = ObjectState.Added
+                    };
+
+                    dbListing.ListingMetas.Add(itemMeta);
                 }
                 _listingService.Insert(dbListing);
             }
@@ -623,38 +646,32 @@ namespace TNMarketplace.Web.Controllers.api
                     }
                 }
 
-            }
-
-            // Delete existing fields on item
-            var customFieldItemQuery = await _customFieldListingService.Query(x => x.ListingID == listing.ID).SelectAsync();
-            var customFieldIds = customFieldItemQuery.Select(x => x.ID).ToList();
-            foreach (var customFieldId in customFieldIds)
-            {
-                await _customFieldListingService.DeleteAsync(customFieldId);
-            }
-
-            // Get custom fields
-            var customFieldCategoryQuery = await _customFieldCategoryService.Query(x => x.CategoryID == listing.CategoryIds.Last())
-                .Include(x => x.Include(y => y.MetaField).ThenInclude(z => z.ListingMetas)).SelectAsync();
-            var customFieldCategories = customFieldCategoryQuery.ToList();
-
-            foreach (var metaCategory in customFieldCategories)
-            {
-                var field = listing.CustomFields.FirstOrDefault(c => c.MetaId == metaCategory.FieldID);
-                if (field == null)
+                // Delete existing fields on item
+                var customFieldItemQuery = await _customFieldListingService.Query(x => x.ListingID == listing.ID).SelectAsync();
+                var customFieldIds = customFieldItemQuery.Select(x => x.ID).ToList();
+                foreach (var customFieldId in customFieldIds)
                 {
-                    continue;
+                    await _customFieldListingService.DeleteAsync(customFieldId);
                 }
 
-                var itemMeta = new ListingMeta()
+                foreach (var metaCategory in customFieldCategories)
                 {
-                    ListingID = listing.ID,
-                    Value = field.Value,
-                    FieldID = field.MetaId,
-                    ObjectState = ObjectState.Added
-                };
+                    var field = listing.CustomFields.FirstOrDefault(c => c.MetaId == metaCategory.FieldID);
+                    if (field == null)
+                    {
+                        continue;
+                    }
 
-                _customFieldListingService.Insert(itemMeta);
+                    var itemMeta = new ListingMeta()
+                    {
+                        ListingID = listing.ID,
+                        Value = field.Value,
+                        FieldID = field.MetaId,
+                        ObjectState = ObjectState.Added
+                    };
+
+                    _customFieldListingService.Insert(itemMeta);
+                }
             }
 
             await _unitOfWorkAsync.SaveChangesAsync();
@@ -799,8 +816,8 @@ namespace TNMarketplace.Web.Controllers.api
             var model = new ProfileModel()
             {
                 Listings = itemsModel,
-                User = user,
-                ListingReviews = reviews.ToList()
+                User = _mapper.Map<SimpleUser>(user),
+                ListingReviews = _mapper.Map<List<SimpleListingReview>>(reviews.ToList())
             };
 
             return Ok(model);

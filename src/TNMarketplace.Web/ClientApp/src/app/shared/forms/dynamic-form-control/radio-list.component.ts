@@ -6,7 +6,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
   template: `
   <div>
   <label *ngFor="let item of control.options.options">
-      <input type="radio" [id]="item.key" [value]="item.key" [name]="control.label" [(ngModel)]="checkedItem">
+      <input type="radio" [id]="item.key" [value]="item.key" [name]="control.label" [(ngModel)]="checkedItem" (click)="updateCheckedOption(item.key, $event)">
         <span>{{item.key}}</span>
   </label>
 </div>
@@ -50,7 +50,9 @@ export class RadioListComponent implements OnInit, ControlValueAccessor, OnChang
   setDisabledState?(isDisabled: boolean): void {
     
   }
-
+  updateCheckedOption(item, event){
+    this.onChange(item);
+  }
   constructor() { }
 
   ngOnInit() {

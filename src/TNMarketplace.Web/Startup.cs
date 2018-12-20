@@ -35,6 +35,8 @@ namespace TNMarketplace.Web
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCustomizedMvc();
+            services.AddCors();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -61,8 +63,6 @@ namespace TNMarketplace.Web
                 .AddMessagePackProtocol();
 
             services.AddCustomLocalization(HostingEnvironment);
-
-            services.AddCustomizedMvc();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -119,6 +119,12 @@ namespace TNMarketplace.Web
             //}
 
             app.AddCustomLocalization();
+            if (!env.IsDevelopment())
+            {
+                app.UseCors(builder =>
+       builder.WithOrigins("https://www.moichao.com"));
+
+            }
 
             app.UseHttpsRedirection();
 

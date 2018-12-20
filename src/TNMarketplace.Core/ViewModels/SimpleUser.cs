@@ -10,6 +10,5 @@ namespace TNMarketplace.Core.ViewModels
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public bool EmailConfirmed { get; set; }
-        public virtual ApplicationUserPhoto ProfilePhoto { get; set; }
     }
 }

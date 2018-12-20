@@ -24,7 +24,7 @@ export class DynamicFormControlComponent {
     }
 
     get invalid() {
-        console.log(this.control.key);
+        // console.log(this.control.key);
         var c = this.form.controls[this.control.key];
         if (!c){
             return true;
