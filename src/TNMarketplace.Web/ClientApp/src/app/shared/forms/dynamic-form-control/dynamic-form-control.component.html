@@ -15,7 +15,7 @@
             [attr.for]="control.key">{{control.label}}</label>
         <input class="form-control" *ngIf="control.type === 'text' || control.type === 'email' || control.type === 'password' || control.type === 'number' || control.type === 'hidden'"
             [id]="control.key" [formControlName]="control.key" [type]="control.type" [placeholder]="control.placeholder"
-            [class.is-valid]="valid" [class.is-invalid]="invalid">
+            [class.is-valid]="valid" [class.is-invalid]="invalid" >
         <!--price-->
         <label *ngIf="control.type==='price' && !control.isHidden" [attr.for]="control.key">{{control.label}}</label>
         <input class="form-control" *ngIf="control.type==='price'" [type]="text" [placeholder]="control.placeholder"
@@ -27,10 +27,10 @@
             [formControlName]="control.key" [class.is-valid]="valid" [class.is-invalid]="invalid"></textarea>
 
         <!--Checkbox-->
-        <label *ngSwitchCase="'checkbox' && !control.isHidden" [attr.for]="control.key" class="custom-control custom-checkbox">
-            <input #ck *ngSwitchCase="'checkbox'" (change)="control.value = ck.checked" [id]="control.key"
-                [formControlName]="control.key" [type]="control.type" class="custom-control-input">
-            <span>{{control.label}}</span>
+        <label *ngIf="control.type === 'checkbox' && !control.isHidden" [attr.for]="control.key">
+            <input [id]="control.key"
+            [formControlName]="control.key" type="checkbox" class="custom-control-input">
+           {{control.label}}
         </label>
 
         <!--Checkbox list-->

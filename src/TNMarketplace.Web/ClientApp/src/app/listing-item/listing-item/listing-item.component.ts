@@ -13,6 +13,9 @@ import { Title } from '@angular/platform-browser';
 export class ListingItemComponent implements OnInit {
 
   listingItem: any = {};
+  listingMetas1: any[] = [];
+  listingMetas2: any[] = [];
+
   array = [ 1, 2, 3 ];
 
   constructor(private listingService: ListingService, 
@@ -38,6 +41,12 @@ export class ListingItemComponent implements OnInit {
   getListingById(listingId: number){
     this.listingService.apiListingListingGet(listingId).subscribe((response: any) =>{
       this.listingItem = response;
+      var listingMetas = response.listingCurrent.listingMetas;
+      listingMetas.forEach(element => {
+        element.value = element.value.split(/[\[",\]]/).filter(entry => entry.trim() != '').join(", ");
+      });
+      this.listingMetas1 = listingMetas.filter(e=>e.metaField.controlTypeID != 3 && e.metaField.controlTypeID != 4);
+      this.listingMetas2 = listingMetas.filter(e=>e.metaField.controlTypeID == 3 || e.metaField.controlTypeID == 4);
       let title = (response.listingCurrent.title) || ""; 
       this.titleService.setTitle(title + " - Mua bán, rao vặt, mua bán nhà đất, bán xe hơi : moichao.com");
       console.log(response);

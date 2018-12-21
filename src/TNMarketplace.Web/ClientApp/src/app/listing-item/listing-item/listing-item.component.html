@@ -24,7 +24,21 @@
               <div class="clearfix"></div>
             </h4>
             <p style="white-space: pre-line">{{listingItem.listingCurrent?.description
-                | multiline }}</p>
+              | multiline }}</p>
+            <h4><span class="w3layouts-agileinfo">Thông tin {{listingItem.listingCurrent?.category?.name}}:</span>
+              <div class="clearfix"></div>
+            </h4>
+            <div nz-col nzXs="24" nzSm="24" nzMd="12" *ngFor="let item of listingMetas1">
+              <div nz-col nzXs="12" nzSm="12" nzMd="6">{{item.metaField.name}}:</div>
+              <div nz-col nzXs="12" nzSm="12" nzMd="6">{{item.value}}</div>
+            </div>
+            <div class="clear-fix"></div>
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" *ngFor="let item of listingMetas2">
+              <div>{{item.metaField.name}}:</div>
+              <div class="clear-fix"></div>
+              <div>{{item.value}}</div>
+              <div class="clear-fix"></div>
+            </div>
           </div>
         </div>
         <div nz-col nzXs="24" nzSm="24" nzMd="10" class="product-details-grid">

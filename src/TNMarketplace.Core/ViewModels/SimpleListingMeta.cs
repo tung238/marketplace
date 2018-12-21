@@ -10,5 +10,8 @@ namespace TNMarketplace.Core.ViewModels
         public int ListingID { get; set; }
         public int FieldID { get; set; }
         public string Value { get; set; }
+
+        public virtual SimpleMetaField MetaField { get; set; }
+
     }
 }
