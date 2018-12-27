@@ -42,10 +42,10 @@
         <appc-radio-list *ngIf="control.type === 'radiolist' && !control.isHidden" [control]="control" [formControlName]="control.key"></appc-radio-list>
         <!--Cascader-->
         <label *ngIf="control.type === 'cascader' && !control.isHidden" [for]="control.key">{{control.label}}</label>
-        <nz-cascader *ngIf="control.type === 'cascader'" [(nzOptions)]="control.options" [nzShowSearch]="true" [id]="control.key" (nzSelectionChange)="control.onSelectionChange($event)"
+        <nz-select2 *ngIf="control.type === 'cascader'" [(nzOptions)]="control.options" [nzShowSearch]="true" [id]="control.key" (nzSelectionChange)="control.onSelectionChange($event)"
             [formControlName]="control.key" [class.is-valid]="valid" [class.is-invalid]="invalid" [nzLabelProperty]="control.nzLabelProperty"
             [nzValueProperty]="control.nzValueProperty">
-        </nz-cascader>
+        </nz-select2>
         <!--Upload-->
         <label *ngIf="control.type === 'upload' && !control.isHidden" [for]="control.key">{{control.label}}</label>
         <nz-upload *ngIf="control.type === 'upload'" nzAction="/api/fileupload/upload" nzListType="picture-card"

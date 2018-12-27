@@ -119,12 +119,11 @@ namespace TNMarketplace.Web
             //}
 
             app.AddCustomLocalization();
-            if (!env.IsDevelopment())
-            {
-                app.UseCors(builder =>
-       builder.WithOrigins("https://www.moichao.com"));
-
-            }
+            
+            app.UseCors(builder =>
+                builder.WithOrigins("*.moichao.com")
+                .SetIsOriginAllowedToAllowWildcardSubdomains().AllowAnyMethod().AllowCredentials()
+                .AllowAnyHeader());
 
             app.UseHttpsRedirection();
 

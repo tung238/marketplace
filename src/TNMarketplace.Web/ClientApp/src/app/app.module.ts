@@ -67,7 +67,7 @@ export function appServiceFactory(appService: AppService): Function {
     // SimpleNotificationsModule.forRoot(),
     OAuthModule.forRoot(),
     RouterModule.forRoot([
-      { path: 'admin', component: AdminLayoutComponent, loadChildren: './admin/admin.module#AdminModule' },
+      { path: 'admin', component: AdminLayoutComponent, loadChildren: './admin/admin.module#AdminModule', canActivate: [AuthGuard] },
       {
         path: '',
         component: DefaultLayoutComponent,
@@ -81,7 +81,7 @@ export function appServiceFactory(appService: AppService): Function {
           { path: 'dang-tin', loadChildren: './listing-add/listing-add.module#ListingAddModule', canActivate: [AuthGuard] },
           { path: 'dang-tin/:id', loadChildren: './listing-add/listing-add.module#ListingAddModule', canActivate: [AuthGuard] },
           { path: 'createaccount', loadChildren: './account/+create/create.module#CreateAccountModule' },
-          { path: 'tai-khoan', loadChildren: './account/+profile/profile.module#ProfileModule' },
+          { path: 'tai-khoan', loadChildren: './account/+profile/profile.module#ProfileModule', canActivate: [AuthGuard] },
           { path: 'signalr', loadChildren: './+signalr/signalr.module#SignalrModule' },
           { path: 'privacy', component: PrivacyComponent },
           { path: 'khong-tim-thay', component: NotFoundComponent },

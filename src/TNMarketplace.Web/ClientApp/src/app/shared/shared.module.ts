@@ -24,10 +24,12 @@ import { CurrencyMaskDirective } from './directives/currency-mask.directive';
 import { TagInputComponent } from './forms/dynamic-form-control/tag-input.component';
 import { CheckboxListComponent } from './forms/dynamic-form-control/checkbox-list.component';
 import { RadioListComponent } from './forms/dynamic-form-control/radio-list.component';
+import { NzSelect2Module } from './components/select2/nz-select2.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    NzSelect2Module,
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
@@ -56,6 +58,7 @@ import { RadioListComponent } from './forms/dynamic-form-control/radio-list.comp
     // Modules
     CommonModule,
     FormsModule,
+    NzSelect2Module,
     ReactiveFormsModule,
     AppSharedModule,
     // Providers, Components, directive, pipes

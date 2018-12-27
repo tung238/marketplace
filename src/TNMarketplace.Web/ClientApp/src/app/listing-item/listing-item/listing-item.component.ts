@@ -15,6 +15,9 @@ export class ListingItemComponent implements OnInit {
   listingItem: any = {};
   listingMetas1: any[] = [];
   listingMetas2: any[] = [];
+  regionRouteLink ="";
+  areaRouteLink = "";
+  categoryRouteLink = "";
 
   array = [ 1, 2, 3 ];
 
@@ -125,6 +128,33 @@ export class ListingItemComponent implements OnInit {
     }
     breadcrumb.push({name: `Tin đăng #${this.getListingId()}`});
     breadcrumb.unshift({iconClass: 'fa fa-home', routeLink:'/', name:'Home'});
+    var regionRouteLink ="";
+    var areaRouteLink = "";
+    var categoryRouteLink = "";
+    if (region){
+      regionRouteLink += `/${region.slug}`;
+      if(!area){
+        categoryRouteLink += `/${region.slug}`;
+        areaRouteLink += `/${region.slug}`;
+      }else{
+        categoryRouteLink += `/${region.slug}/${area.slug}`;
+        areaRouteLink += `/${region.slug}/${area.slug}`;
+      }
+    }
+    if (category){
+      if(!subcategory){
+        regionRouteLink += `/${category.slug}`;
+        areaRouteLink += `/${category.slug}`;
+        categoryRouteLink += `/${category.slug}`;
+      }else{
+        regionRouteLink += `/${category.slug}/${subcategory.slug}`;
+        areaRouteLink += `/${category.slug}/${subcategory.slug}`;
+        categoryRouteLink += `/${category.slug}/${subcategory.slug}`;
+      }
+    }
+    this.regionRouteLink = regionRouteLink;
+    this.areaRouteLink = areaRouteLink;
+    this.categoryRouteLink = categoryRouteLink;
     return breadcrumb;
   }
 }

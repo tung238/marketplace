@@ -31,11 +31,11 @@
         </div>
         <div class="w3ls-header-right">
             <ul>
-                <li class="dropdown head-dpdn" *ngIf="!user">
+                <li class="dropdown head-dpdn" *ngIf="!oAuthService.hasValidAccessToken()">
                     <a routerLink="/dang-nhap"><i class="fa fa-user" aria-hidden="true"></i> Đăng
                         nhập</a>
                 </li>
-                <li class="dropdown head-dpdn" *ngIf="user">
+                <li class="dropdown head-dpdn" *ngIf="oAuthService.hasValidAccessToken()">
                     <nz-dropdown>
                         <a nz-dropdown>
                             {{user.name}} <i nz-icon type="down"></i>
@@ -48,14 +48,13 @@
                                 <a routerLink="/tai-khoan">Thông tin tài khoản</a>
                             </li>
                             <li nz-menu-item>
-                                <a (click)="logout()" href="javascript:void(null);">{{'app_nav_logout' |
-                                    translate}} </a>
+                                <a (click)="logout()" href="javascript:void(null);">Đăng xuất</a>
                             </li>
                         </ul>
                     </nz-dropdown>
                 </li>
-                <li class="dropdown head-dpdn" *ngIf="!user">
-                    <a routerLink="/dang-ky">{{'app_nav_register' | translate}}</a>
+                <li class="dropdown head-dpdn" *ngIf="!oAuthService.hasValidAccessToken()">
+                    <a routerLink="/dang-ky">Đăng ký</a>
                 </li>
                 <li class="dropdown head-dpdn">
                     <a routerLink="/tro-giup"><i class="fa fa-question-circle" aria-hidden="true"></i> Trợ giúp</a>

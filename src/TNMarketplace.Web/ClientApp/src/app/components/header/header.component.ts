@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
         private toastr: ToastrService,
 
         private appService: AppService,
-        private oAuthService: OAuthService,
+        public oAuthService: OAuthService,
         private profileService: ProfileService,
         private router: Router
     ) { }
