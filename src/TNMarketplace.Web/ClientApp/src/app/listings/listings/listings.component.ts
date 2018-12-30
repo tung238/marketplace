@@ -35,15 +35,15 @@ export class ListingsComponent implements OnInit, OnDestroy {
   breadcrumb = [];
   regionChange(value: string): void {
     this.areaSlug = null;
-    if(value){
+    if (value) {
 
-      let r = this.regions.find(r=>r.slug == value);
-      if(r){
+      let r = this.regions.find(r => r.slug == value);
+      if (r) {
         this.areas = r.children
-      }else{
+      } else {
         this.areas = [];
       }
-    }else{
+    } else {
       this.areas = [];
     }
   }
@@ -70,7 +70,7 @@ export class ListingsComponent implements OnInit, OnDestroy {
       return [];
     }
     this.regions = appData.regionsTree;
-    
+
     this.prepareGetListings();
     this.mySubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -107,26 +107,26 @@ export class ListingsComponent implements OnInit, OnDestroy {
       }
       params["p"] = 1;
     }
-    if(this.sortOrder){
+    if (this.sortOrder) {
       params["order"] = this.sortOrder;
     }
 
-    var url = (this.regionSlug != null ? `/${this.regionSlug}`: "");
-    url += (this.areaSlug != null ? `/${this.areaSlug}`: "");
-    url += this.categorySlug != null ? `/${this.categorySlug}`: "";
-    url += (this.subCategorySlug != null ? `/${this.subCategorySlug}`:"");
+    var url = (this.regionSlug != null ? `/${this.regionSlug}` : "");
+    url += (this.areaSlug != null ? `/${this.areaSlug}` : "");
+    url += this.categorySlug != null ? `/${this.categorySlug}` : "";
+    url += (this.subCategorySlug != null ? `/${this.subCategorySlug}` : "");
     this.router.navigate([url], {
       queryParams: params, queryParamsHandling: 'merge'
     });
   }
   onSortOrderChange(event) {
     console.log(event);
-    var params = { p: 1,order: this.sortOrder };
+    var params = { p: 1, order: this.sortOrder };
 
-    var url = (this.regionSlug != null ? `/${this.regionSlug}`: "");
-    url += (this.areaSlug != null ? `/${this.areaSlug}`: "");
-    url += this.categorySlug != null ? `/${this.categorySlug}`: "";
-    url += (this.subCategorySlug != null ? `/${this.subCategorySlug}`:"");
+    var url = (this.regionSlug != null ? `/${this.regionSlug}` : "");
+    url += (this.areaSlug != null ? `/${this.areaSlug}` : "");
+    url += this.categorySlug != null ? `/${this.categorySlug}` : "";
+    url += (this.subCategorySlug != null ? `/${this.subCategorySlug}` : "");
     this.router.navigate([url], {
       queryParams: params, queryParamsHandling: 'merge'
     });
@@ -142,17 +142,17 @@ export class ListingsComponent implements OnInit, OnDestroy {
 
     // Trick the Router into believing it's last link wasn't previously loaded
     var urlSegments = []
-    
-    if(this.regionSlug){
+
+    if (this.regionSlug) {
       urlSegments.push(this.regionSlug);
     }
-    if(this.areaSlug){
+    if (this.areaSlug) {
       urlSegments.push(this.areaSlug);
     }
-    if (this.categorySlug){
+    if (this.categorySlug) {
       urlSegments.push(this.categorySlug);
     }
-    if (this.subCategorySlug){
+    if (this.subCategorySlug) {
       urlSegments.push(this.subCategorySlug);
     }
     var params = this.router.routerState.snapshot.root.children[0].queryParams;
@@ -184,6 +184,11 @@ export class ListingsComponent implements OnInit, OnDestroy {
     return (new CurrencyPipe("vi-VN")).transform(value, "VND");
   }
   getBreadCrumb() {
+    //clear data
+    this.regionSlug = null;
+    this.areaSlug = null;
+    this.categorySlug = null;
+    this.subCategorySlug = null;
     var appData = this.appService.appData;
     let title = "Chuyên trang mua bán ";
 
@@ -198,24 +203,38 @@ export class ListingsComponent implements OnInit, OnDestroy {
     var area: any;
     var category: any;
     var subcategory: any;
-    urlSegments.forEach(element => {
-      if (!region) {
-        region = regions.find(re => re.slug == element);
+    for(var i =0; i<urlSegments.length; i++){
+      region = regions.find(re => re.slug == urlSegments[i]);
+      if (region) {
+        urlSegments.splice(i, 1);
+        break;
       }
-      if (!category) {
-        category = categories.find(cat => cat.slug == element);
+    }
+    for(var i =0; i<urlSegments.length; i++){
+      category = categories.find(cat => cat.slug == urlSegments[i]);
+      if (category) {
+        urlSegments.splice(i, 1);
+        break;
       }
-    });
-
-    urlSegments.forEach(element => {
-      if (region && !area) {
-        area = region.children.find(c => c.slug == element);
+    }
+    if (region) {
+      for(var i =0; i<urlSegments.length; i++){
+        area = region.children.find(c => c.slug == urlSegments[i]);
+        if (area) {
+          urlSegments.splice(i, 1);
+          break;
+        }
       }
-      if (category && !subcategory) {
-        subcategory = category.children.find(ca => ca.slug == element);
+    }
+    if (category) {
+      for(var i =0; i<urlSegments.length; i++){
+        subcategory = category.children.find(ca => ca.slug == urlSegments[i]);
+        if (subcategory) {
+          urlSegments.splice(i, 1);
+          break;
+        }
       }
-    });
-    
+    }
     if (region) {
       this.regionSlug = region.slug;
       this.regionChange(this.regionSlug);
@@ -223,7 +242,7 @@ export class ListingsComponent implements OnInit, OnDestroy {
       if (area) {
         this.areaSlug = area.slug;
         breadcrumb.push({ routeLink: `/${region.slug}/${area.slug}`, name: area.name });
-      }else{
+      } else {
         this.areaSlug = null;
       }
     }
@@ -257,11 +276,11 @@ export class ListingsComponent implements OnInit, OnDestroy {
             breadcrumb.push({ routeLink: `/${region.slug}/${area.slug}/${category.slug}/${subcategory.slug}`, name: subcategory.name });
           }
         }
-      }else{
+      } else {
         this.subCategorySlug = null;
         title += category.name;
       }
-      if (!this.priceRange){
+      if (!this.priceRange) {
         this.priceRange = [0, this.maxPrice];
       }
     }
@@ -269,7 +288,7 @@ export class ListingsComponent implements OnInit, OnDestroy {
     if (region) {
       if (area) {
         title += ` ${area.nameWithType}, ${region.nameWithType}`;
-      }else{
+      } else {
         title += ` ${region.nameWithType}`;
       }
     }

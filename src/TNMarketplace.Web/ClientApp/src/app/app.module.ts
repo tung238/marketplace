@@ -28,6 +28,7 @@ import { DefaultLayoutComponent } from './components/default-layout/default-layo
 import { AdminLayoutComponent } from './components/admin-layout/admin-layout.component';
 import { ProfileService } from './account/+profile/profile.service';
 import { ToastrModule } from 'ngx-toastr';
+import { SharedModule } from './shared/shared.module';
 
 registerLocaleData(localeVi);
 registerLocaleData(en);
@@ -62,6 +63,7 @@ export function appServiceFactory(appService: AppService): Function {
     ApiModule,
     HttpClientModule,
     NgZorroAntdModule,
+    SharedModule,
     CoreModule.forRoot(),
     AppSharedModule,
     // SimpleNotificationsModule.forRoot(),

@@ -14,9 +14,11 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class HeaderComponent implements OnInit {
     public isCollapsed = true;
-    selectedCategory: any;
+    selectedRegions: any[] = [];
+    selectedCategories: any[] = [];
     searchText: string;
     categories = [];
+    regions = [];
     constructor(
         private accountService: AccountService,
         private dataService: DataService,
@@ -42,16 +44,10 @@ export class HeaderComponent implements OnInit {
         return this.cultures.filter(x => x.current)[0];
     }
     public ngOnInit(): void {
-        
-        this.appService.getAppData().then(res => {
-            // var categories = [{ slug: "tat-ca-danh-muc", name: "Tất cả danh mục" }];
-            var categories = [];
-            res.categoriesTree.forEach(c => {
-                categories.push({ slug: c.slug, name: c.name });
-            })
-            this.categories = categories;
-            this.selectedCategory = categories[0].slug;
-        })
+        this.appService.getAppData().then(data => {
+            this.regions = data.regionsTree;
+            this.categories = data.categoriesTree;
+        });
     }
 
     public toggleNav() {
@@ -68,39 +64,51 @@ export class HeaderComponent implements OnInit {
 
     doSearch() {
         console.log(this.searchText);
-        console.log(this.selectedCategory);
+        console.log(this.selectedRegions);
+        console.log(this.selectedCategories);
         if (!this.searchText){
             this.searchText = "";
         }
-        if (!this.selectedCategory){
-            this.toastr.warning("Bạn chưa chọn danh mục");
-            return;
-        }
         var category = null;
         var subcategory = null;
-        if (this.selectedCategory == "tat-ca-danh-muc") {
-            category = this.selectedCategory;
-        } else {
-            this.appService.appData.categoriesTree.forEach(c => {
-                if (c.slug == this.selectedCategory && category == null) {
-                    category = c.slug;
-                }
-                c.children.forEach(child => {
-                    if (child.slug == this.selectedCategory && subcategory == null) {
-                        category = c.slug;
-                        subcategory = child.slug;
-                    }
-                });
-            })
+        var region = null;
+        var area = null;
+        if (this.selectedCategories.length > 0) {
+            category = this.selectedCategories[0];
+        }
+        if (category){
+            if (this.selectedCategories.length > 1){
+                subcategory = this.selectedCategories[1];
+            }
+        }
+        if (this.selectedRegions.length > 0) {
+            region = this.selectedRegions[0];
+        }
+        if (region){
+            if (this.selectedRegions.length > 1){
+               area = this.selectedRegions[1];
+            }
         }
 
         var query = ""
-        if (subcategory) {
-            query = `/${category}/${subcategory}`
-        } else {
-            query = `/${category}`
+        if (subcategory && subcategory.id > 0) {
+            query = `/${category.slug}/${subcategory.slug}`
+        } else if (category){
+            query = `/${category.slug}`
+        }
+        if (area && area.id > 0){
+            query = `/${region.slug}/${area.slug}${query}`;
+        }else if (region){
+            query = `/${region.slug}/${query}`;
         }
         this.router.navigate([query], { 
             queryParams: {s: `${this.searchText}`}});
+    }
+
+    onRegionsSelectionChange(event){
+        this.selectedRegions = event;
+    }
+    onCategoriesSelectionChange(event){
+        this.selectedCategories = event;
     }
 }

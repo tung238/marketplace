@@ -27,6 +27,10 @@ export class NzSelect2OptionComponent {
     return this.option ? this.option[ this.nzLabelProperty ] : '';
   }
 
+  isBack(): boolean{
+    return (this.option.parent || {}).id == this.option.id;
+  }
+
   renderHighlightString(str: string): string {
     const safeHtml = this.sanitizer.sanitize(SecurityContext.HTML, `<span class="ant-cascader-menu-item-keyword">${this.highlightText}</span>`);
     if (!safeHtml) {

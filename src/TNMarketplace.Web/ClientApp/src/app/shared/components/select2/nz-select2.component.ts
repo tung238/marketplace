@@ -120,7 +120,8 @@ export class NzSelect2Component implements OnDestroy, ControlValueAccessor {
   onChange = Function.prototype;
   onTouched = Function.prototype;
   positions: ConnectionPositionPair[] = [ ...EXPANDED_DROPDOWN_POSITIONS ];
-  dropdownWidthStyle: string;
+  dropdownWidthStyle = '400px';
+  public activeIndex = 0;
   isSearching = false;
   isFocused = false;
 
@@ -177,6 +178,10 @@ export class NzSelect2Component implements OnDestroy, ControlValueAccessor {
   }
 
   setMenuVisible(visible: boolean): void {
+    if (this.input) {
+      const width = this.input.nativeElement.offsetWidth;
+      this.dropdownWidthStyle = `${width}px`;
+    }
     if (this.nzDisabled) {
       return;
     }
@@ -259,12 +264,25 @@ export class NzSelect2Component implements OnDestroy, ControlValueAccessor {
   //#endregion
 
   //#region Mutating data
+  private setOptionBackActivated(option: Select2Option, columnIndex: number, select: boolean = false, loadChildren: boolean = true){
+    //remove last?
+    // Load child options.
+    let options = this.columns[columnIndex - 1];
+    
+    this.setColumnData(options, columnIndex - 1);
+    this.activatedOptions = this.activatedOptions.slice(0, columnIndex - 1);
+    this.activeIndex -= 1;
+    this.cdr.detectChanges();
+  }
 
   private setOptionActivated(option: Select2Option, columnIndex: number, select: boolean = false, loadChildren: boolean = true): void {
     if (!option || option.disabled) {
       return;
     }
-
+    if ((option.parent || {}).id == option.id){
+      this.setOptionBackActivated(option, columnIndex, select, loadChildren);
+      return;
+    }
     this.activatedOptions[ columnIndex ] = option;
 
     // Set parent option and all ancestor options as active.
@@ -281,7 +299,19 @@ export class NzSelect2Component implements OnDestroy, ControlValueAccessor {
 
     // Load child options.
     if (option.children && option.children.length && !option.isLeaf) {
+      if(option.children.findIndex(c=>c.id == 0) == -1){
+        var option2 = {id: 0, title: "Tất cả", value: 'all', isLeaf: true};
+        option2[this.nzLabelProperty] = "Tất cả";
+        option.children.unshift(option2)
+      }
+      if(columnIndex >= 0 && option.children.findIndex(c=>c.id == option.id) == -1){
+        var option1 = {id: option.id, title: option.title, children: option.children, isLeaf: option.isLeaf}
+        option1[this.nzValueProperty] = option[this.nzValueProperty];
+        option1[this.nzLabelProperty] = option[this.nzLabelProperty];
+        option.children.unshift(option1);
+      }
       option.children.forEach(child => child.parent = option);
+      
       this.setColumnData(option.children, columnIndex + 1);
     } else if (!option.isLeaf && loadChildren) {
       this.loadChildrenAsync(option, columnIndex);
@@ -301,6 +331,9 @@ export class NzSelect2Component implements OnDestroy, ControlValueAccessor {
       this.nzLoadData(option, columnIndex).then(() => {
         option.loading = this.isLoading = false;
         if (option.children) {
+          if (columnIndex > 0){
+            option.children.unshift(option)
+          }
           option.children.forEach(child => child.parent = columnIndex < 0 ? undefined : option);
           this.setColumnData(option.children, columnIndex + 1);
           this.cdr.detectChanges();
@@ -325,15 +358,15 @@ export class NzSelect2Component implements OnDestroy, ControlValueAccessor {
     };
 
     this.nzSelect.emit({ option, index: columnIndex });
-
     if (option.isLeaf || this.nzChangeOnSelect || shouldPerformSelection(option, columnIndex)) {
       this.selectedOptions = this.activatedOptions;
       this.buildDisplayLabel();
       this.onValueChange();
     }
-
     if (option.isLeaf) {
       this.delaySetMenuVisible(false, this.nzMouseLeaveDelay);
+    }else{
+      this.activeIndex = columnIndex + 1;
     }
   }
 
@@ -357,6 +390,7 @@ export class NzSelect2Component implements OnDestroy, ControlValueAccessor {
     this.selectedOptions = [];
     this.activatedOptions = [];
     this.inputValue = '';
+    this.activeIndex = 0;
     this.setMenuVisible(false);
 
     this.onValueChange();

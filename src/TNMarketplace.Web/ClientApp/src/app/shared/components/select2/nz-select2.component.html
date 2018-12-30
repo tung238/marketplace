@@ -6,7 +6,7 @@
     <input
       #input
       nz-input
-      class="ant-cascader-input"
+      class="search-control"
       [class.ant-cascader-input-disabled]="nzDisabled"
       [class.ant-cascader-input-lg]="nzSize === 'large'"
       [class.ant-cascader-input-sm]="nzSize === 'small'"
@@ -61,18 +61,18 @@
     [ngClass]="menuCls"
     [ngStyle]="nzMenuStyle"
     (mouseleave)="onTriggerMouseLeave($event)">
-    <ul *ngFor="let options of columns; let i = index;" class="ant-cascader-menu" [ngClass]="menuColumnCls"
+    <ul class="ant-cascader-menu" [ngClass]="menuColumnCls"
         [style.height]="isSearching && !columns[0].length ? 'auto': ''" [style.width]="dropdownWidthStyle">
       <li
         nz-select2-option
-        *ngFor="let option of options"
+        *ngFor="let option of columns[activeIndex]"
         [nzLabelProperty]="nzLabelProperty"
-        [activated]="isOptionActivated(option, i)"
+        [activated]="isOptionActivated(option, activeIndex)"
         [highlightText]="isSearching ? inputValue : ''"
         [option]="option"
-        (mouseenter)="onOptionMouseEnter(option, i, $event)"
-        (mouseleave)="onOptionMouseLeave(option, i, $event)"
-        (click)="onOptionClick(option, i, $event)">
+        (mouseenter)="onOptionMouseEnter(option, activeIndex, $event)"
+        (mouseleave)="onOptionMouseLeave(option, activeIndex, $event)"
+        (click)="onOptionClick(option, activeIndex, $event)">
       </li>
       <li *ngIf="isSearching && !columns[0].length" class="ant-cascader-menu-item ant-cascader-menu-item-expanded ant-cascader-menu-item-disabled">
         {{ nzNotFoundContent || ('Select.notFoundContent' | nzI18n) }}

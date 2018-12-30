@@ -4,6 +4,7 @@ export type NzSelect2Size = 'small' | 'large' | 'default' ;
 
 // tslint:disable:no-any
 export interface Select2Option {
+  id?: number;
   value?: any;
   label?: string;
   title?: string;
