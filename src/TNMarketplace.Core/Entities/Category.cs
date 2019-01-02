@@ -23,6 +23,7 @@ namespace TNMarketplace.Core.Entities
         public bool Enabled { get; set; }
         public int Ordering { get; set; }
         public double? MaxPrice { get; set; }
+        public string PriceRanges { get; set; }
         //public virtual ICollection<CategoryListingType> CategoryListingTypes { get; set; }
         public virtual ICollection<CategoryStat> CategoryStats { get; set; }
         public virtual ICollection<Listing> Listings { get; set; }

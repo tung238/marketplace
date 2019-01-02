@@ -57,7 +57,11 @@ namespace TNMarketplace.Web.Controllers.api
                 Username = user.UserName,
                 IsEmailConfirmed = user.EmailConfirmed,
                 Email = user.Email,
-                PhoneNumber = user.PhoneNumber
+                PhoneNumber = user.PhoneNumber,
+                IsBroker = user.IsBroker,
+                RegionId = user.RegionId,
+                AreaId = user.AreaId,
+                Location = user.Location
             });
         }
 
@@ -72,6 +76,10 @@ namespace TNMarketplace.Web.Controllers.api
             user.UserName = string.IsNullOrEmpty(model.Username) ? user.UserName : model.Username;
             user.Email = string.IsNullOrEmpty(model.Email) ? user.Email : model.Email;
             user.PhoneNumber = model.PhoneNumber;
+            user.IsBroker = model.IsBroker;
+            user.RegionId = model.RegionId;
+            user.AreaId = model.AreaId;
+            user.Location = model.Location;
 
             var result = await _userManager.UpdateAsync(user);
             if (result == IdentityResult.Success)
@@ -83,7 +91,11 @@ namespace TNMarketplace.Web.Controllers.api
                     Username = user.UserName,
                     IsEmailConfirmed = user.EmailConfirmed,
                     Email = user.Email,
-                    PhoneNumber = user.PhoneNumber
+                    PhoneNumber = user.PhoneNumber,
+                    IsBroker = user.IsBroker,
+                    RegionId = user.RegionId,
+                    AreaId = user.AreaId,
+                    Location = user.Location
                 });
             }
 

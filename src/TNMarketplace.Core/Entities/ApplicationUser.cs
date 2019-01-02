@@ -23,6 +23,13 @@ namespace TNMarketplace.Core.Entities
 
         public ApplicationUserPhoto ProfilePhoto { get; set; }
 
+        public int? RegionId { get; set; }
+        public int? AreaId { get; set; }
+        public bool IsBroker { get; set; }
+        public virtual Region Region { get; set; }
+        public virtual Area Area { get; set; }
+        public string Location { get; set; }
+
         [NotMapped]
         public string Name
         {

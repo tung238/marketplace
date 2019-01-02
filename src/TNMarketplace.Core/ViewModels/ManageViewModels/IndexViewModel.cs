@@ -12,6 +12,10 @@ namespace TNMarketplace.Core.ViewModels.ManageViewModels
 
         public bool IsEmailConfirmed { get; set; }
         public string Email { get; set; }
+        public int? RegionId { get; set; }
+        public int? AreaId { get; set; }
+        public string Location { get; set; }
+        public bool IsBroker { get; set; }
 
         [Phone]
         [Display(Name = "Phone number")]

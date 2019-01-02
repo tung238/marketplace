@@ -11,6 +11,7 @@ import { AdminListingService } from '@app/api';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { ControlSelect } from '@app/shared/forms/controls/control-select';
 
 @Component({
   selector: 'appc-category-detail',
@@ -75,6 +76,35 @@ export class CategoryDetailComponent implements OnInit, AfterViewInit {
       required: false,
       order: 6
     }),
+    new ControlSelect({
+      key: 'priceRanges',
+      label: 'Khoảng giá',
+      value: [],
+      required: false,
+      placeholder: 'Khoảng giá tìm kiếm',
+      order: 7,
+      options: [
+        {key: "1", value: "< 1 triệu"},
+        {key: "2", value: "1-3 triệu"},
+        {key: "3", value: "3-5 triệu"},
+        {key: "4", value: "5-10 triệu"},
+        {key: "5", value: "10-15 triệu"},
+        {key: "6", value: "15-20 triệu"},
+        {key: "7", value: "20-40 triệu"},
+        {key: "8", value: "40-70 triệu"},
+        {key: "9", value: "70-100 triệu"},
+        {key: "10", value: "100-300 triệu"},
+        {key: "11", value: "300-500 triệu"},
+        {key: "12", value: "500-800 triệu"},
+        {key: "13", value: "800 triệu - 1 tỷ"},
+        {key: "14", value: "1-2 tỷ"},
+        {key: "15", value: "2-3 tỷ"},
+        {key: "16", value: "3-5 tỷ"},
+        {key: "17", value: "5-7 tỷ"},
+        {key: "18", value: "7-10 tỷ"},
+        {key: "19", value: "> 10 tỷ"}
+      ]
+    }),
     new ControlTextbox({
       key: 'id',
       label: '',
@@ -82,7 +112,7 @@ export class CategoryDetailComponent implements OnInit, AfterViewInit {
       value: '',
       type: 'hidden',
       required: false,
-      order: 7
+      order: 8
     })
   ];
   ngAfterViewInit(): void {
@@ -93,6 +123,7 @@ export class CategoryDetailComponent implements OnInit, AfterViewInit {
         let title = (data.name) || ""
         this.titleService.setTitle(title + " - Mua bán, rao vặt, mua bán nhà đất, bán xe hơi : moichao.com");
         console.log(data);
+        let ranges = (data.priceRanges || "").split(",").filter(entry => entry.trim() != '') || [];
         this.data = {
           'id': data.id,
           'name': data.name,
@@ -103,6 +134,7 @@ export class CategoryDetailComponent implements OnInit, AfterViewInit {
           'enabled': data.enabled,
           'maxPrice': data.maxPrice,
           'ordering': data.ordering,
+          'priceRanges': ranges
         };
       })
     }
@@ -114,6 +146,7 @@ export class CategoryDetailComponent implements OnInit, AfterViewInit {
 
   formSumit(data){
     data.maxPrice = Number(data.maxPrice);
+    data.priceRanges = data.priceRanges.join(",");
     this.adminListingService.apiAdminAdminListingCategoryUpdatePost(data).subscribe(c=>{
       this.toastr.success('Cập nhật thành công.');
       this.router.navigate(["/admin/danh-muc"]);

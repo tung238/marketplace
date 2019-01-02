@@ -13,6 +13,8 @@ namespace TNMarketplace.Core.Entities.Mapping
             builder.HasKey(t => t.Id);
             builder.Property(t => t.Id).HasMaxLength(128);
 
+            builder.HasOne(u => u.Region).WithMany(r => r.Users).IsRequired(false).HasForeignKey(u => u.RegionId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(u => u.Area).WithMany(a => a.Users).IsRequired(false).HasForeignKey(u => u.AreaId).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

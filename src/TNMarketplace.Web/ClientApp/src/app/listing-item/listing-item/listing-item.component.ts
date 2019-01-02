@@ -48,8 +48,8 @@ export class ListingItemComponent implements OnInit {
       listingMetas.forEach(element => {
         element.value = element.value.split(/[\[",\]]/).filter(entry => entry.trim() != '').join(", ");
       });
-      this.listingMetas1 = listingMetas.filter(e=>e.metaField.controlTypeID != 3 && e.metaField.controlTypeID != 4);
-      this.listingMetas2 = listingMetas.filter(e=>e.metaField.controlTypeID == 3 || e.metaField.controlTypeID == 4);
+      this.listingMetas1 = listingMetas.filter(e=>e.metaField.controlTypeID != 2 && e.metaField.controlTypeID != 4);
+      this.listingMetas2 = listingMetas.filter(e=>e.metaField.controlTypeID == 2 || e.metaField.controlTypeID == 4);
       let title = (response.listingCurrent.title) || ""; 
       this.titleService.setTitle(title + " - Mua bán, rao vặt, mua bán nhà đất, bán xe hơi : moichao.com");
       console.log(response);

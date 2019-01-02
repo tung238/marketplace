@@ -9,5 +9,7 @@ namespace TNMarketplace.Service
     public interface IApplicationDataService
     {
         Task<object> GetApplicationData(HttpContext context);
+
+        void RemoveCachedApplicationData();
     }
 }

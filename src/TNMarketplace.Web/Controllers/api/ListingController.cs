@@ -313,7 +313,7 @@ namespace TNMarketplace.Web.Controllers.api
 
         private Region GetRegionFromModel(SearchListingRequest request)
         {
-            var segments = request.UrlSegments;
+            var segments = new List<String>(request.UrlSegments);
             if(segments == null || segments.Count == 0)
             {
                 return null;
@@ -336,7 +336,7 @@ namespace TNMarketplace.Web.Controllers.api
 
         private Area GetAreaFromModel(SearchListingRequest request, Region region)
         {
-            var segments = request.UrlSegments;
+            var segments = new List<String>(request.UrlSegments);
             if (segments == null || segments.Count == 0)
             {
                 return null;

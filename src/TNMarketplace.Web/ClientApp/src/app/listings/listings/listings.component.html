@@ -36,7 +36,7 @@
         (nzPageIndexChange)="nzPageIndexChange($event)">
       </nz-pagination>
     </div>
-    <div nz-col nzXs="24" nzSm="24" nzMd="6" class="side-bar">
+    <!-- <div nz-col nzXs="24" nzSm="24" nzMd="6" class="side-bar">
       <form>
         <div class="range">
           <h3 class="agileits-sear-head">Khu vực</h3>
@@ -59,7 +59,7 @@
           <p *ngIf="priceRange">{{priceRange[0] | currency:'VND':'symbol':'1.0-2'}} - {{priceRange[1]
             |currency:'VND':'symbol':'1.0-2'}}</p>
           <nz-slider name="range" [(ngModel)]="priceRange" nzRange [nzMax]="maxPrice" [nzTipFormatter]="formatter"></nz-slider>
-        </div>
+        </div> -->
         <!-- <div class="w3-brand-select">
           <h3 class="agileits-sear-head">Brand name</h3>
           <nz-select name="brand" [nzMaxMultipleCount]="3" style="width: 100%" nzMode="multiple" nzPlaceHolder="Please select"
@@ -67,7 +67,7 @@
             <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
           </nz-select>
         </div> -->
-      </form>
+      <!-- </form> -->
       <!-- <div class="w3ls-featured-ads">
         <h2 class="sear-head fer">Featured Ads</h2>
         <div class="w3l-featured-ad">
@@ -108,7 +108,7 @@
         </div>
         <div class="clearfix"></div>
       </div> -->
-    </div>
+    <!-- </div> -->
     <div class="clearfix"></div>
 
   </div>

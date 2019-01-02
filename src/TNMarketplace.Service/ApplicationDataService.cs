@@ -96,6 +96,7 @@ namespace TNMarketplace.Service
                         Slug = cat.Slug,
                         IconClass = cat.IconClass,
                         MaxPrice = cat.MaxPrice,
+                        PriceRanges = cat.PriceRanges,
                         Children = new List<TreeItem>()
                     };
                     foreach(var child in categories.Where(c=>c.Parent == cat.ID).OrderBy(c=>c.Ordering))
@@ -108,6 +109,7 @@ namespace TNMarketplace.Service
                             Slug = child.Slug,
                             IconClass = child.IconClass,
                             MaxPrice = child.MaxPrice,
+                            PriceRanges = child.PriceRanges,
                             Children = new List<TreeItem>()
                         };
                         cItem.Children.Add(childItem);
@@ -129,6 +131,11 @@ namespace TNMarketplace.Service
                 _cache.Set("GetApplicationData", data);
             }
             return data;
+        }
+
+        public void RemoveCachedApplicationData()
+        {
+            _cache.Remove("GetApplicationData");
         }
 
         private Dictionary<string, string> GetContentByCulture(HttpContext context)

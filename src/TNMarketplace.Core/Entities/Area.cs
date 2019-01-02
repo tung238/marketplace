@@ -18,5 +18,6 @@ namespace TNMarketplace.Core.Entities
         public int Ordering { get; set; }
         public virtual Region Region { get; set; }
         public virtual ICollection<Listing> Listings { get; set; }
+        public virtual ICollection<ApplicationUser> Users { get; set; }
     }
 }

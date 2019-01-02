@@ -26,21 +26,20 @@
             <p style="white-space: pre-line">{{listingItem.listingCurrent?.description
               | multiline }}</p>
             <ng-container *ngIf="listingMetas1.length > 0 || listingMetas2.length > 0">
-            <h4><span class="w3layouts-agileinfo">Thông tin {{listingItem.listingCurrent?.category?.name}}:</span>
+            <h4><span class="w3layouts-agileinfo">Thông tin thêm:</span>
               <div class="clearfix"></div>
             </h4>
           </ng-container>
-            <div style="padding-left: 10px;">
-              <div nz-col nzXs="24" nzSm="24" nzMd="12" *ngFor="let item of listingMetas1">
-                <div style="padding:5px" nz-col nzXs="12" nzSm="12" nzMd="6">{{item.metaField.name}}:</div>
-                <div style="padding:5px;color: #848484;" nz-col nzXs="12" nzSm="12" nzMd="6">{{item.value}}</div>
+            <div>
+              <div style="padding: 5px 0;" nz-col nzXs="24" nzSm="24" nzMd="12" *ngFor="let item of listingMetas1">
+                <div nz-col nzXs="8" nzSm="8" nzMd="8">{{item.metaField.name}}:</div>
+                <div nz-col nzXs="16" nzSm="16" nzMd="16">{{item.value}}</div>
               </div>
               <div class="clear-fix"></div>
-              <div nz-col nzXs="24" nzSm="24" nzMd="24" *ngFor="let item of listingMetas2">
-                <div style="padding-top: 5px" nz-col>{{item.metaField.name}}:</div>
-                <div class="clear-fix"></div>
-                <div style="padding:5px;color: #848484;" nz-col>{{item.value}}</div>
-                <div class="clear-fix"></div>
+              <div style="padding: 5px 0;" nz-col nzXs="24" nzSm="24" nzMd="24" *ngFor="let item of listingMetas2">
+                <div nz-col nzXs="24" nzSm="8" nzMd="4">
+                  {{item.metaField.name}}:</div>
+                <div nz-col nzXs="24" nzSm="16" nzMd="20">{{item.value}}</div>
               </div>
             </div>
           </div>

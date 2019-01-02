@@ -46,7 +46,7 @@ namespace TNMarketplace.Web.Controllers.api.admin
 
         private readonly DataCacheService _dataCacheService;
         private readonly SqlDbService _sqlDbService;
-
+        private readonly IApplicationDataService _applicationDataService;
         private readonly IUnitOfWorkAsync _unitOfWorkAsync;
         private readonly IMapper _mapper;
         #endregion
@@ -68,6 +68,7 @@ namespace TNMarketplace.Web.Controllers.api.admin
             IListingPictureService listingPictureservice,
             IListingReviewService listingReviewService,
             DataCacheService dataCacheService,
+            IApplicationDataService applicationDataService,
             IMapper mapper,
             SqlDbService sqlDbService)
         {
@@ -94,6 +95,7 @@ namespace TNMarketplace.Web.Controllers.api.admin
             _unitOfWorkAsync = unitOfWorkAsync;
             _dataCacheService = dataCacheService;
             _sqlDbService = sqlDbService;
+            _applicationDataService = applicationDataService;
         }
         #endregion
 
@@ -156,11 +158,13 @@ namespace TNMarketplace.Web.Controllers.api.admin
                 categoryExisting.Ordering = model.Ordering;
                 categoryExisting.MaxPrice = model.MaxPrice;
                 categoryExisting.Slug = model.Slug;
+                categoryExisting.PriceRanges = model.PriceRanges;
                 _categoryService.Update(categoryExisting);
             }
 
             await _unitOfWorkAsync.SaveChangesAsync();
             _dataCacheService.RemoveCachedItem(CacheKeys.Categories);
+            _applicationDataService.RemoveCachedApplicationData();
             return Ok();
         }
         [HttpGet("CustomFields")]

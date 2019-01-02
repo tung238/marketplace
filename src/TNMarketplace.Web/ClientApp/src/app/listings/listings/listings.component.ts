@@ -33,6 +33,28 @@ export class ListingsComponent implements OnInit, OnDestroy {
   regions = [];
   areas = [];
   breadcrumb = [];
+  options = [
+    {key: "1", pf:0, pt: 1000000},
+    {key: "2", pf:1000000, pt: 3000000},
+    {key: "3", pf:3000000, pt:5000000},
+    {key: "4", pf:5000000, pt:10000000},
+    {key: "5", pf:10000000, pt:15000000},
+    {key: "6", pf:15000000, pt:20000000},
+    {key: "7", pf:20000000, pt:40000000},
+    {key: "8", pf:40000000, pt:70000000},
+    {key: "9", pf:70000000, pt:100000000},
+    {key: "10", pf:100000000, pt:300000000},
+    {key: "11", pf:300000000, pt:500000000},
+    {key: "12", pf:500000000, pt:800000000},
+    {key: "13", pf:800000000, pt:1000000000},
+    {key: "14", pf:1000000000, pt:2000000000},
+    {key: "15", pf: 2000000000, pt: 3000000000},
+    {key: "16", pf:3000000000, pt: 5000000000},
+    {key: "17", pf:5000000000, pt: 7000000000},
+    {key: "18", pf:7000000000, pt: 10000000000},
+    {key: "19", pf:10000000000, pt: 99000000000}
+  ];
+
   regionChange(value: string): void {
     this.areaSlug = null;
     if (value) {
@@ -95,30 +117,30 @@ export class ListingsComponent implements OnInit, OnDestroy {
 
     // this.prepareGetListings();
   }
-  doSearch() {
+  // doSearch() {
 
-    var params = { s: this.searchText };
-    if (this.priceRange) {
-      var priceFrom = this.priceRange[0];
-      var priceTo = this.priceRange[1];
-      if (priceFrom != 0 || priceTo != this.maxPrice) {
-        params["pf"] = priceFrom;
-        params["pt"] = priceTo;
-      }
-      params["p"] = 1;
-    }
-    if (this.sortOrder) {
-      params["order"] = this.sortOrder;
-    }
+  //   var params = { s: this.searchText };
+  //   if (this.priceRange) {
+  //     var priceFrom = this.priceRange[0];
+  //     var priceTo = this.priceRange[1];
+  //     if (priceFrom != 0 || priceTo != this.maxPrice) {
+  //       params["pf"] = priceFrom;
+  //       params["pt"] = priceTo;
+  //     }
+  //     params["p"] = 1;
+  //   }
+  //   if (this.sortOrder) {
+  //     params["order"] = this.sortOrder;
+  //   }
 
-    var url = (this.regionSlug != null ? `/${this.regionSlug}` : "");
-    url += (this.areaSlug != null ? `/${this.areaSlug}` : "");
-    url += this.categorySlug != null ? `/${this.categorySlug}` : "";
-    url += (this.subCategorySlug != null ? `/${this.subCategorySlug}` : "");
-    this.router.navigate([url], {
-      queryParams: params, queryParamsHandling: 'merge'
-    });
-  }
+  //   var url = (this.regionSlug != null ? `/${this.regionSlug}` : "");
+  //   url += (this.areaSlug != null ? `/${this.areaSlug}` : "");
+  //   url += this.categorySlug != null ? `/${this.categorySlug}` : "";
+  //   url += (this.subCategorySlug != null ? `/${this.subCategorySlug}` : "");
+  //   this.router.navigate([url], {
+  //     queryParams: params, queryParamsHandling: 'merge'
+  //   });
+  // }
   onSortOrderChange(event) {
     console.log(event);
     var params = { p: 1, order: this.sortOrder };
@@ -172,8 +194,9 @@ export class ListingsComponent implements OnInit, OnDestroy {
 
   getListings(paths: string[], params: Params) {
     let pageNumber = params["p"] != undefined && params["p"] > 0 ? params["p"] : 1;
+    let priceRange = this.options.find(o=>o.key == params["priceRange"]) || {key:"", pf: undefined, pt: undefined};
     let res = this.listingService.apiListingSearchGet(undefined, paths, params["s"], params["l"], this.isPhotoOnly,
-      params["pf"], params["pt"], undefined, this.sortOrder, undefined, pageNumber, this.pageSize).subscribe((r) => {
+    priceRange.pf, priceRange.pt, undefined, this.sortOrder, undefined, pageNumber, this.pageSize).subscribe((r) => {
         this.allListingsModel = [];
         this.isLoading = false;
         this.allListingsModel = r;

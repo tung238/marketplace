@@ -35,7 +35,8 @@
                 </li>
             </ul>
         </div>
-        <div class="search-form" nz-row>
+        <div class="search-form">
+        <div nz-row nzType="flex" nzJustify="start">
             <div nz-col nzXs="24" nzSm="12" nzMd="8">
                 <nz-input-group [nzPrefix]="prefixTemplate" style="padding:5px 0;">
                     <input type="text" class="search-control" nz-input placeholder="Bạn cần tìm gì?" [(ngModel)]="searchText">
@@ -43,19 +44,31 @@
                 <ng-template #prefixTemplate><i class="fa fa-search"></i></ng-template>
             </div>
             <div nz-col nzXs="24" nzSm="12" nzMd="8">
-                <nz-select2 style="width:100%; padding:5px 0;" [(nzOptions)]="regions" [nzShowSearch]="true" (nzSelectionChange)="onRegionsSelectionChange($event)"
-                    [nzLabelProperty]="'name'" [nzValueProperty]="'id'" nzPlaceHolder="Tỉnh, thành phố">
+                <nz-select2 style="width:100%; padding:5px 0;" [(nzOptions)]="regions" [nzShowSearch]="true"
+                    (nzSelectionChange)="onRegionsSelectionChange($event)" [nzLabelProperty]="'name'" [nzValueProperty]="'id'"
+                    nzPlaceHolder="Tỉnh, thành phố">
                 </nz-select2>
             </div>
-            <div nz-col nzXs="24" nzSm="12" nzMd="8">
-                <nz-input-group style="width:100%; padding:5px 0;" nzSearch nzSize="large" [nzSuffix]="suffixButton">
-                    <nz-select2 style="width:100%" [(nzOptions)]="categories" [nzShowSearch]="true" (nzSelectionChange)="onCategoriesSelectionChange($event)"
+            <div nz-col nzXs="24" nzSm="24" nzMd="8">
+                <div style="display:table;width:100%;">
+                    <nz-select2 style="width:100%;display:table-cell;padding:5px 0;" [(nzOptions)]="categories"
+                        [nzShowSearch]="true" (nzSelectionChange)="onCategoriesSelectionChange($event)"
                         [nzLabelProperty]="'name'" [nzValueProperty]="'id'" nzPlaceHolder="Danh mục"></nz-select2>
-                </nz-input-group>
-                <ng-template #suffixButton>
-                    <button style="border-radius:0px;" nz-button nzType="primary" nzSize="large" (click)="doSearch()">Tìm kiếm</button>
-                </ng-template>
+
+                    <button style="border-radius:0px;display:table-cell;padding:5px 0;width:100px" nz-button nzType="primary"
+                        nzSize="large" (click)="doSearch()">Tìm kiếm</button>
+                </div>
+            </div>
+
+        </div>
+        <div nz-row nzType="flex" nzJustify="start">
+            <div nz-col nzXs="24" nzSm="12" nzMd="8">
+                <nz-select style=" width:100%;padding:5px 0;" nzShowSearch nzAllowClear nzPlaceHolder="Khoảng giá"
+                    [(ngModel)]="selectedPriceRange">
+                    <nz-option *ngFor="let option of priceRanges" [nzLabel]="option.value" [nzValue]="option.key"></nz-option>
+                </nz-select>
             </div>
         </div>
     </div>
+</div>
 </header>

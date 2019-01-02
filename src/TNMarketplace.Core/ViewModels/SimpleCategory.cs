@@ -17,5 +17,7 @@ namespace TNMarketplace.Core.ViewModels
         public int Ordering { get; set; }
         public string IconClass { get; set; }
         public double? MaxPrice { get; set; }
+        public string PriceRanges { get; set; }
+
     }
 }

@@ -1,14 +1,14 @@
-<button nz-button nzType="primary" routerLink="/admin/danh-muc/tao-moi"><i class="fa fa-plus"></i>Thêm</button>
+<button nz-button nzType="primary" routerLink="/admin/danh-muc/tao-moi"><i class="fa fa-plus"></i>&nbsp;Thêm</button>
 
 <nz-table #filterTable [nzData]="displayData">
   <thead (nzSortChange)="sort($event)" nzSingleSort>
     <tr>
-      <th nzShowSort nzSortKey="id">ID</th>
+      <th nzWidth="50px" nzShowSort nzSortKey="id">ID</th>
       <th nzShowSort nzSortKey="name">Tên danh mục</th>
       <th nzShowSort nzSortKey="slug">Slug</th>
-      <th nzShowSort nzSortKey="parent">ID danh mục cha</th>
-      <th nzShowSort nzSortKey="ordering">Thứ tự</th>
-      <th>Action</th>
+      <th nzWidth="90px" nzShowSort nzSortKey="parent">DM cha</th>
+      <th nzWidth="80px" nzShowSort nzSortKey="ordering">Thứ tự</th>
+      <th nzWidth="80px">Action</th>
     </tr>
   </thead>
   <tbody>

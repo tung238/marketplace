@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TNMarketplace.Repository.EfCore;
 
 namespace TNMarketplace.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190101143220_Category_PriceRanges")]
+    partial class Category_PriceRanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -210,8 +212,6 @@ namespace TNMarketplace.Web.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<int?>("AreaId");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -225,14 +225,10 @@ namespace TNMarketplace.Web.Migrations
                     b.Property<string>("FirstName")
                         .HasMaxLength(250);
 
-                    b.Property<bool>("IsBroker");
-
                     b.Property<bool>("IsEnabled");
 
                     b.Property<string>("LastName")
                         .HasMaxLength(250);
-
-                    b.Property<string>("Location");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -252,8 +248,6 @@ namespace TNMarketplace.Web.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
-                    b.Property<int?>("RegionId");
-
                     b.Property<string>("SecurityStamp");
 
                     b.Property<bool>("TwoFactorEnabled");
@@ -263,8 +257,6 @@ namespace TNMarketplace.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AreaId");
-
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -272,8 +264,6 @@ namespace TNMarketplace.Web.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("RegionId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -1476,19 +1466,6 @@ namespace TNMarketplace.Web.Migrations
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("TNMarketplace.Core.Entities.ApplicationUser", b =>
-                {
-                    b.HasOne("TNMarketplace.Core.Entities.Area", "Area")
-                        .WithMany("Users")
-                        .HasForeignKey("AreaId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("TNMarketplace.Core.Entities.Region", "Region")
-                        .WithMany("Users")
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("TNMarketplace.Core.Entities.ApplicationUserClaim", b =>
