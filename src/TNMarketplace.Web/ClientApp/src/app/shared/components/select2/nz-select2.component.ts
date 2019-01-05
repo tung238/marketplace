@@ -279,7 +279,7 @@ export class NzSelect2Component implements OnDestroy, ControlValueAccessor {
     if (!option || option.disabled) {
       return;
     }
-    if ((option.parent || {}).id == option.id){
+    if (option.id && (option.parent || {}).id == option.id){
       this.setOptionBackActivated(option, columnIndex, select, loadChildren);
       return;
     }

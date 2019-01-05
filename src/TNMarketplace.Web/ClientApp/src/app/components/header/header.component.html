@@ -39,15 +39,15 @@
                     <ng-template #prefixTemplate><i class="fa fa-search"></i></ng-template>
                 </div>
                 <div nz-col nzXs="24" nzSm="12" nzMd="8">
-                    <nz-select2 style="width:100%; padding:5px 0;" [(nzOptions)]="regions" [nzShowSearch]="true"
-                        (nzSelectionChange)="onRegionsSelectionChange($event)" [nzLabelProperty]="'name'"
+                    <nz-select2 style="width:100%; padding:5px 0;" [nzOptions]="regions" [nzShowSearch]="true"
+                        (nzSelectionChange)="onRegionsSelectionChange($event)" [(ngModel)]="selectedRegions" [nzLabelProperty]="'name'"
                         [nzValueProperty]="'id'" nzPlaceHolder="Tỉnh, thành phố">
                     </nz-select2>
                 </div>
                 <div nz-col nzXs="24" nzSm="24" nzMd="8">
                     <div style="display:table;width:100%;">
-                        <nz-select2 style="width:100%;display:table-cell;padding:5px 0;" [(nzOptions)]="categories"
-                            [nzShowSearch]="true" (nzSelectionChange)="onCategoriesSelectionChange($event)"
+                        <nz-select2 style="width:100%;display:table-cell;padding:5px 0;" [nzOptions]="categories"
+                            [nzShowSearch]="true" [(ngModel)]="selectedCategories" (nzSelectionChange)="onCategoriesSelectionChange($event)"
                             [nzLabelProperty]="'name'" [nzValueProperty]="'id'" nzPlaceHolder="Danh mục"></nz-select2>
 
                         <button style="border-radius:0px;display:table-cell;padding:5px 0;width:100px" nz-button nzType="primary"
