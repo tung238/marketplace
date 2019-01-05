@@ -1,6 +1,7 @@
 li {
     background: #F9F9F9;
     margin-bottom: 30px;
+    overflow: hidden;
     padding: 20px;
     list-style-type: none;
 	    transition:0.5s all;
@@ -36,37 +37,37 @@ li p {
     overflow: hidden;
     word-wrap: break-word;
     color: #C1C1C1;
-    font-size: 13px;
-    margin-top: 15px;
+    font-size: 14px;
+    margin: 0.5em 0;
 }
 li .title{
 	overflow: hidden;
     word-wrap: break-word;
-    font-size: 20px;
+    font-size: 18px;
     text-decoration: none;
     color: #000000;
     font-weight: 500;
     letter-spacing: 1px;
 }
-li .adprice{
-	display: block;
-    font-size: 20px;
-    color: #ACD3F7;
-    margin: 5px 0 0 0;
-}
+// li .adprice{
+// 	display: block;
+//     font-size: 20px;
+//     color: #ACD3F7;
+//     margin: 5px 0 0 0;
+// }
 span.adprice {
     display: block;
-    font-size: 20px;
+    font-size: 18px;
     color: rgba(1, 161, 133, 0.57);
     margin: 5px 0 0 0;
 }
 li .list-left {
-    width: 60%;
+    width: 75%;
     margin-left: 3%;
     float: left;
 }
 li .list-right{
-    width: 15%;
+    width: 20%;
     float: right;
     text-align: right;
 }
@@ -80,6 +81,7 @@ li .date{
     font-weight: 400;
 }
 li .cityname{
+    font-size: 14px;
 	display:block;
 	color: #404040;
 }
@@ -100,4 +102,72 @@ li .list-right.title {
     text-decoration: none;
     color: #0099e5;
     font-weight: 700;
+}
+
+.catpath2{
+    display:none;
+}
+.catpath1{
+    display:block;
+}
+
+@media (max-width: 375px){
+}
+
+@media (max-width: 414px){
+    li p{
+        font-size: 12px;
+    }
+    li .title{
+        font-size: 13px;
+    }
+    li .adprice{
+        font-size: 13px;
+    }
+    li .date{
+        font-size: 12px;
+    }
+    li .cityname{
+        font-size: 12px;
+    }
+}
+@media (max-width: 568px){
+    li .date{
+        margin: 0 0 5px 0;
+    }
+    li {
+        padding: 10px;
+    }
+    .catpath2{
+        padding-left: 2.4%;
+        display:block;
+    }
+    .catpath1{
+        display:none;
+    }
+    li .list-left {
+        width: 63%;
+    }
+    li .list-right{
+        width: 30%;
+    }
+}
+@media (max-width: 640px){
+}
+@media (max-width: 768px){
+    li p{
+        font-size: 13px;
+    }
+    li .title{
+        font-size: 15px;
+    }
+    li .adprice{
+        font-size: 15px;
+    }
+    li .date{
+        font-size: 13px;
+    }
+    li .cityname{
+        font-size: 13px;
+    }
 }

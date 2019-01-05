@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 
@@ -13,6 +13,8 @@ import { ToastrService } from 'ngx-toastr';
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+    @ViewChild('menu') public menu: ElementRef;
+
     public isCollapsed = true;
     selectedRegions: any[] = [];
     selectedCategories: any[] = [];
@@ -50,7 +52,8 @@ export class HeaderComponent implements OnInit {
         private appService: AppService,
         public oAuthService: OAuthService,
         private profileService: ProfileService,
-        private router: Router
+        private router: Router,
+        private renderer: Renderer2
     ) { }
 
     public get isLoggedIn(): boolean {
@@ -160,6 +163,14 @@ export class HeaderComponent implements OnInit {
         }
         this.priceRanges = this.options.filter(o => rangeKeys.includes(o.key));
         this.selectedPriceRange = null;
+    }
+
+    myFunction() {
+        if (this.menu.nativeElement.className === "topnav") {
+            this.renderer.addClass(this.menu.nativeElement, "responsive")
+        } else {
+            this.renderer.removeClass(this.menu.nativeElement, "responsive")
+        }
     }
 
 }

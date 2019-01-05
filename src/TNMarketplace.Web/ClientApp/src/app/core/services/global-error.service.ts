@@ -12,21 +12,21 @@ export class GlobalErrorHandler implements ErrorHandler {
 
   handleError(errorResponse: any): void {
     if (errorResponse.status === 401) {
-      this.toastr.error('Vui lòng đăng nhập.');
+      this.toastr.error('Vui lòng đăng nhập.', '', { onActivateTick: true });
     } else if (errorResponse.status === 400) {
       console.log('***** HANDLE ERROR *****');
       this.toastr.error(errorResponse.error.message,
-        this.formatErrors(errorResponse.error.errors)
+        this.formatErrors(errorResponse.error.errors), { onActivateTick: true }
       );
     } else {
       // All other errors including 500
-      const error = (errorResponse && errorResponse.rejection) ? errorResponse.rejection.error : errorResponse;
-      this.toastr.error('', error.error.message);
+      const error = (errorResponse && errorResponse.rejection) ? errorResponse.rejection : errorResponse;
+      this.toastr.error((error.error.message || error.error),'', { onActivateTick: true });
       // IMPORTANT: Don't Rethrow the error otherwise it will not emit errors after once
       // https://stackoverflow.com/questions/44356040/angular-global-error-handler-working-only-once
       // throw errorResponse;
     }
-    console.error(errorResponse);
+    // console.error(errorResponse);
     this.inj.get(ApplicationRef).tick();
   }
 

@@ -1,15 +1,20 @@
 <a [routerLink]="generateRouteLink()">
   <li>
     <img src="{{listingItem.urlPicture}}" title="" alt="">
-    <section class="list-left">
-      <h5 class="title">{{listingItem.listingCurrent.title}}</h5>
+    <div style="width:80%;float:right">
+      <section class="list-left">
+        <h5 class="title">{{listingItem.listingCurrent.title}}</h5>
         <span class="adprice">{{listingItem.listingCurrent.price | currency:'VND':'symbol':'1.0-2'}}</span>
-        <p class="catpath">{{listingItem.listingCurrent.area?.pathWithType || listingItem.listingCurrent.region?.nameWithType}}</p>
-    </section>
-    <section class="list-right">
-      <span class="date">{{listingItem.listingCurrent.createdAt | date: 'dd/MM/yyyy'}}</span>
-      <span class="cityname">{{listingItem.listingCurrent.contactPhone | phone}}</span>
-    </section>
-    <div class="clearfix"></div>
+        <p class="catpath1">{{listingItem.listingCurrent.area?.pathWithType ||
+          listingItem.listingCurrent.region?.nameWithType}}</p>
+      </section>
+      <section class="list-right">
+        <span class="date">{{listingItem.listingCurrent.createdAt | date: 'dd/MM/yyyy'}}</span>
+        <span class="cityname">{{listingItem.listingCurrent.contactPhone | phone}}</span>
+      </section>
+      <div class="clearfix"></div>
+      <p class="catpath2">{{listingItem.listingCurrent.area?.pathWithType ||
+        listingItem.listingCurrent.region?.nameWithType}}</p>
+    </div>
   </li>
 </a>

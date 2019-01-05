@@ -76,13 +76,22 @@ export class CategoryDetailComponent implements OnInit, AfterViewInit {
       required: false,
       order: 6
     }),
+    new ControlPrice({
+      key: 'ordering',
+      label: 'Thứ tự',
+      placeholder: 'Thứ tự',
+      type: 'number',
+      value: 0,
+      required: true,
+      order: 7
+    }),
     new ControlSelect({
       key: 'priceRanges',
       label: 'Khoảng giá',
       value: [],
       required: false,
       placeholder: 'Khoảng giá tìm kiếm',
-      order: 7,
+      order: 8,
       options: [
         {key: "1", value: "< 1 triệu"},
         {key: "2", value: "1-3 triệu"},
@@ -112,7 +121,7 @@ export class CategoryDetailComponent implements OnInit, AfterViewInit {
       value: '',
       type: 'hidden',
       required: false,
-      order: 8
+      order: 9
     })
   ];
   ngAfterViewInit(): void {

@@ -71,6 +71,7 @@ namespace TNMarketplace.Web.Extensions
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;
                 options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
             })
             .AddEntityFrameworkStores<TNMarketplace.Repository.EfCore.ApplicationDbContext>()
             .AddDefaultTokenProviders();

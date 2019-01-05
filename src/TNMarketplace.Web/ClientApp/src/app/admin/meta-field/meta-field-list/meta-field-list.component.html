@@ -17,11 +17,11 @@
     <tr *ngFor="let data of filterTable.data">
       <td><a (click)="viewCategory(data)">{{data.id}}</a></td>
       <td><a (click)="viewCategory(data)">{{data.name}}</a></td>
-      <td>{{data.typeName}}</td>
-      <td>{{data.categories}}</td>
-      <td>{{data.options}}</td>
-      <td>{{data.required}}</td>
-      <td>{{data.searchable}}</td>
+      <td><div>{{data.typeName}}</div></td>
+      <td><div>{{data.categories}}</div></td>
+      <td><div>{{data.options}}</div></td>
+      <td><div>{{data.required}}</div></td>
+      <td><div>{{data.searchable}}</div></td>
 
       <td>
         <a (click)="edit(data)"><i class="fa fa-pencil"></i></a>
