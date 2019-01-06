@@ -44,13 +44,13 @@
                         [nzValueProperty]="'id'" nzPlaceHolder="Tỉnh, thành phố">
                     </nz-select2>
                 </div>
-                <div nz-col nzXs="24" nzSm="24" nzMd="8">
+                <div nz-col nzXs="24" nzSm="24" nzMd="8" style="padding: 5px 0;">
                     <div style="display:table;width:100%;">
-                        <nz-select2 style="width:100%;display:table-cell;padding:5px 0;" [nzOptions]="categories"
+                        <nz-select2 style="width:100%;display:table-cell;vertical-align: middle;" [nzOptions]="categories"
                             [nzShowSearch]="true" [(ngModel)]="selectedCategories" (nzSelectionChange)="onCategoriesSelectionChange($event)"
                             [nzLabelProperty]="'name'" [nzValueProperty]="'id'" nzPlaceHolder="Danh mục"></nz-select2>
 
-                        <button style="border-radius:0px;display:table-cell;padding:5px 0;width:100px" nz-button nzType="primary"
+                        <button style="border-radius:0px;display:table-cell;vertical-align: middle;width:100px" nz-button nzType="primary"
                             nzSize="large" (click)="doSearch()">Tìm kiếm</button>
                     </div>
                 </div>

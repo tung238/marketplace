@@ -60,12 +60,12 @@ export class ListingItemComponent implements OnInit {
     let str = urlSegments[urlSegments.length - 1];
     let arr = str.split(/id|.html/)
     var listingId = 0;
-    arr.forEach(item=>{
-      if (item){
-        listingId = parseInt(item);
-        return;
+    for(var item in arr){
+      if (!isNaN(arr[item] as any)){
+        listingId = parseInt(arr[item]);
+        break;
       }
-    })
+    }
     return listingId;
   }
   getBreadCrumb(){
